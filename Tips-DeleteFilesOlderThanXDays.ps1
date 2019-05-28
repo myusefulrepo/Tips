@@ -8,4 +8,4 @@ filter FileAge($days)
     }
 }
 
-get-childitem c:\windows\temp -recurse | FileAge 10 | del -whatif
+Get-ChildItem c:\windows\temp -recurse | FileAge 10 | Remove-Item -whatif

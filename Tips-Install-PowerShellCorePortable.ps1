@@ -3,7 +3,7 @@
 
 ## Install latest PowerShell Core Zip x64 release
 $latestRelease = Invoke-WebRequest -Uri https://github.com/PowerShell/PowerShell/releases/latest -UseBasicParsing
-$zipRelativeLink = $latestRelease.Links | Where href -Match '-win-x64.zip' | % href
+$zipRelativeLink = $latestRelease.Links | Where-Object href -Match '-win-x64.zip' | ForEach-Object href
 $zipPath = Join-Path -Path $env:TEMP -ChildPath $zipRelativeLink.Split('/')[-1]
 
 if (-not (Test-Path -Path $zipPath))
