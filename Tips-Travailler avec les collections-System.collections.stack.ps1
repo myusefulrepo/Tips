@@ -5,7 +5,7 @@ $MyStack.Push("C")
 $MyStack.Push("D")
 $MyStack
 # on peut constater que on a quelque chose qui ressemble à un array
-# on peut constater également, que dans le stack, le dernier objet ajouté et le premier retourné.
+# on peut constater également, que dans le stack, le dernier objet ajouté et le premier retourné. 
 
 # la méthode "Push" alimente le stack en mode FILO (first In, last Out)
 $MyStack.pop()
@@ -18,15 +18,15 @@ $MyStack.count
 # la propriété count (c'est une propriété, pas une méthode), retourne le nombre d'objets dans la collection
 
 
-######## Les usages possibles :
+######## Les usages possibles : 
 # Affichage des éléments de $Mystack et vidange
 Write-Host 'Affichage des éléments de $Mystack et vidange' -ForegroundColor Cyan
-while ($mystack.count -gt 0)
-{
+while($mystack.count -gt 0)
+    {
     Write-Host "Returning Element -> $($mystack.Peek())" -ForegroundColor Green
     start-sleep -Seconds 3
     $mystack.Pop()
-}
+    }
 Write-Host "End of example" -ForegroundColor Cyan
 
 # Plus courant : se déplacer dans une arborescence vers une répertoire enfant et remonter
