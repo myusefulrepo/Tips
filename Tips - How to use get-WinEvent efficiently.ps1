@@ -123,7 +123,8 @@ $Keywords = ""
 
 #region query : ADJUST AS YOU WANT
 $Query = Get-WinEvent -ErrorAction SilentlyContinue -FilterHashtable @{logname=$LogName; 
-                                                                      StartTime=$StartDate;                                                                      Level = $Level}
+                                                                      StartTime=$StartDate
+                                                                      }                                                                      Level = $Level}
 #end region
 
 #region Export the result in a beautiful html page 

@@ -17,12 +17,12 @@ $Today = (Get-Date).tostring("yyyyMMdd");
 foreach ($Group in $Groups) {
 	
     # Get the most recent export of group members (may or may not be yesterday - just most recent)
-    $PreviousFileIbject = Get-ChildItem $FolderPath | 
+    $PreviousFileObject = Get-ChildItem $FolderPath | 
         Where-Object {$_.name -like ("*" + $group.name + "*")} | 
         Sort-Object lastwritetime -Descending | 
         Select-Object -first 1
 
-    $PreviousGroupMembers = Import-Csv -Path $PreviousFileIbject.fullname
+    $PreviousGroupMembers = Import-Csv -Path $PreviousFileObject.fullname
  
     # Get current group members from Active Directory
     $CurrentGroupMembers = $Group |
@@ -43,6 +43,6 @@ foreach ($Group in $Groups) {
  
  
     # Save current members to new file
-    $NewFilePath = $FolderPath + "\" + $Today + "_" + $Group.name + ".txt";
-    $CurrentGroupMembers | Export-Csv -Path $NewFilePath 
+    $NewFilePath = $FolderPath + "\" + $Today + "_" + $Group.name + ".csv"
+    $CurrentGroupMembers | Export-Csv -Path $NewFilePath  -Delimiter ";" -NoTypeInformation
 }
