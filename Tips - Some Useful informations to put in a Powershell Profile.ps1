@@ -1,10 +1,10 @@
 ﻿Write-Host "Loading profile" -ForegroundColor Yellow
 write-host "Profile Running-time : "  (Measure-Command {
-    Write-Verbose "Set up Location " 
+    Write-Verbose "Set up Location "
     $Profile_ScriptFolder = "C:\Temp"
-    if(Test-Path $Profile_ScriptFolder) 
+    if(Test-Path $Profile_ScriptFolder)
     {Set-Location -Path $Profile_ScriptFolder}
- 
+
     Write-Verbose "Setting somme default parameters"
     #$PSDefaultParameterValues["CmdletName:ParameterName"]="DefaultValue" ref : https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_parameters_default_values?view=powershell-5.1
     $PSDefaultParameterValues = @{
@@ -19,13 +19,13 @@ write-host "Profile Running-time : "  (Measure-Command {
                                     'Write-EZLog:Delimiter' = ';'                    # Only if you use EZLog Module in your scripts
                                     'Write-EZLog:ToScreen'  = $true                  # Only if you use EZLog Module in your scripts
                                     'Get-WinEvent:LogName'='System'                  # it is often the most common
-                                    '*-Module:Repository' = 'PSInternalRepository'# this entry is register in DNS, pointing to '\\Server\Share\PSInternalRepo'. Useful if different PSRepository are still existing
-
-}  
+                                    '*-Module:Repository' = 'PSInternalRepository'   # this entry is register in DNS, pointing to '\\Server\Share\PSInternalRepo'. Useful if different PSRepository are still existing
+                                    Receive-Job:Keep’ = $true                        # useful is you use receive-job and always forget -keep parameter to keep the data returned by the cmdlet.
+}
     Write-verbose "Setting prompt"
     Function Get-Time { return $(get-date | ForEach-Object { $_.ToLongTimeString() } ) }
     Function prompt {
-            # Write the time 
+            # Write the time
             write-host "[" -noNewLine
             write-host $(Get-Time) -foreground yellow -noNewLine
             write-host "] " -noNewLine
@@ -64,24 +64,24 @@ write-host "Profile Running-time : "  (Measure-Command {
     Write-Host "# + " -ForegroundColor Yellow -nonewline; Write-Host "++++++++++`tExecutionPolicy `t`t`t" -nonewline; Write-Host $(Get-ExecutionPolicy) -ForegroundColor Cyan
     Write-Host "# + " -ForegroundColor Yellow -nonewline; Write-Host "++++++++++"
     Write-Host "# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`n" -ForegroundColor Yellow
-    
+
     Write-verbose "Set-up Update Modules Help and Modules on Friday"
     $Date = Get-Date
-    if ($Date.DayOfWeek -eq "friday") 
+    if ($Date.DayOfWeek -eq "friday")
         {
         Write-Host "Update Help in a background job (Get-job to check)"
         Start-Job -Name "UpdateHelp" -ScriptBlock { Update-Help } | Out-null
         }
 
-    if ($Date.DayOfWeek -eq "friday") 
+    if ($Date.DayOfWeek -eq "friday")
         {
         Write-Host " Update module in a background job (Get-job to check)"
-        Start-Job -Name "UpdateModule" -ScriptBlock { 
-            Get-InstalledModule | 
-                foreach { 
-                        $New = (find-module $_.name).version 
-                        if ($New -ne $_.version) 
-                            { 
+        Start-Job -Name "UpdateModule" -ScriptBlock {
+            Get-InstalledModule |
+                foreach {
+                        $New = (find-module $_.name).version
+                        if ($New -ne $_.version)
+                            {
                             Write-Host "$($_.name) has an update from $($_.version) to $New" -ForegroundColor green
                             Update-Module -Name ($_.name) -force
                             Write-Host "$($_.name) a été mis à jour" -ForegroundColor Yellow
