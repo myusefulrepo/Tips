@@ -1,31 +1,37 @@
 ﻿# How to create an open file/folder dialog box with PowerShell
 
-# 1 - load the .NET System.Windows.Forms assembly
+## 1 - load the .NET System.Windows.Forms assembly
+````powershell
 Add-Type -AssemblyName System.Windows.Forms
-
-# 2 - Instantiate an OpenFileDialog object using New-Object.
+````
+## 2 - Instantiate an OpenFileDialog object using New-Object.
+````powershell
 $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{ InitialDirectory = [Environment]::GetFolderPath('Desktop') }
+````
 
-<#
 You can see above that the OpenFileDialog class constructor has an InitialDirectory argument.
 This tells the OpenFileDialog class which folder to display when the dialog box comes up.
 In this case, I have the dialog box to display the desktop.
 At this point, the dialog box will not display. We're just instantiating the object.
 To show the dialog box, we'll have to use the ShowDialog() method.
-#>
 
-# 3 - Show the dialog box
-$null = $FileBrowser.ShowDialog()
 
-# 4 -  limit the input by file type too using the Filter property.
+## 3 - Show the dialog box
+````powershell
+$Null = $FileBrowser.ShowDialog()
+````
+
+## 4 -  limit the input by file type too using the Filter property.
+````powershell
 $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{
     InitialDirectory = [Environment]::GetFolderPath('Desktop')
     Filter           = 'Documents (*.docx)|*.docx|SpreadSheet (*.xlsx)|*.xlsx'
 }
-$null = $FileBrowser.ShowDialog()
+$Null = $FileBrowser.ShowDialog()
+````
 
-
-# OpenFile Dialog bow in a function : Allow filter on one file extension
+## OpenFile Dialog bow in a function : Allow filter on one file extension
+````powershell
 function Get-FileName($InitialDirectory)
 {
     $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
@@ -34,8 +40,9 @@ function Get-FileName($InitialDirectory)
     $OpenFileDialog.ShowDialog() | Out-Null
     $OpenFileDialog.FileName
 }
-
-# OpenFile Dialog bow in a function : Allow multiple filters
+````
+## OpenFile Dialog bow in a function : Allow multiple filters
+````powershell
 function Get-FileName($InitialDirectory)
 {
     $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
@@ -44,12 +51,16 @@ function Get-FileName($InitialDirectory)
     $OpenFileDialog.ShowDialog() | Out-Null
     $OpenFileDialog.FileName
 }
-<#Nota : as we can see, the filter applies for one or the other of the selected extensions, not both at the same time#>
+````
+>[Nota] : As we can see, the filter applies for one or the other of the selected extensions, not both at the same time
 
 
-# FINALLY : OpenFile Dialog bow in a function : Allow multiple filters and multiple selections and manage errors
+## FINALLY : OpenFile Dialog bow in a function : Allow multiple filters and multiple selections and manage errors
+````powershell
+function Get-FileName
+{
 <#
-.Synopsis
+.SYNOPSIS
    Show an Open File Dialog and return the file selected by the user
 
 .DESCRIPTION
@@ -73,13 +84,13 @@ function Get-FileName($InitialDirectory)
 
  .EXAMPLE
    Get-FileName
-    applet de commande Get-FileName à la position 1 du pipeline de la commande
-    Fournissez des valeurs pour les paramètres suivants :
+    cmdlet Get-FileName at position 1 of the command pipeline
+    Provide values for the following parameters:
     WindowTitle: My Dialog Box
     InitialDirectory: c:\temp
     C:\Temp\42258.txt
 
-    No passthru paramater then function requires the mandatory parameters (WindowsTitle ans InitialDirectory)
+    No passthru paramater then function requires the mandatory parameters (WindowsTitle and InitialDirectory)
 
 .EXAMPLE
    Get-FileName -WindowTitle MyDialogBox -InitialDirectory c:\temp
@@ -113,7 +124,7 @@ function Get-FileName($InitialDirectory)
    C:\Temp\log.log
 
    Choose multiple file with different extensions
-   Nota :It's important to have no white space in the extensions name if you want to show them
+   Nota :It's important to have no white space in the extension name if you want to show them
 
 .EXAMPLE
  Get-Help Get-FileName -Full
@@ -129,57 +140,69 @@ function Get-FileName($InitialDirectory)
   Version         : 1.0
   Author          : O. FERRIERE
   Creation Date   : 11/09/2019
-  Purpose/Change  : Initial developpment
+  Purpose/Change  : Initial development
 
-  Based on differents page :
+  Based on different page :
    mainly based on https://blog.danskingdom.com/powershell-multi-line-input-box-dialog-open-file-dialog-folder-browser-dialog-input-box-and-message-box/
    https://code.adonline.id.au/folder-file-browser-dialogues-powershell/
    https://thomasrayner.ca/open-file-dialog-box-in-powershell/
-
 #>
-function Get-FileName
-{
     [CmdletBinding()]
     [OutputType([string])]
     Param
     (
         # WindowsTitle help description
-        [Parameter(Mandatory = $true,
+        [Parameter(
+            Mandatory = $true,
             ValueFromPipelineByPropertyName = $true,
             HelpMessage = "Message Box Title",
             Position = 0)]
-        [string]$WindowTitle,
+        [String]$WindowTitle,
 
         # InitialDirectory help description
-        [Parameter(Mandatory = $true,
+        [Parameter(
+            Mandatory = $true,
             ValueFromPipelineByPropertyName = $true,
             HelpMessage = "Initial Directory for browsing",
             Position = 1)]
-        [string]$InitialDirectory,
+        [String]$InitialDirectory,
 
         # Filter help description
-        [Parameter(Mandatory = $false,
+        [Parameter(
+            Mandatory = $false,
             ValueFromPipelineByPropertyName = $true,
             HelpMessage = "Filter to apply",
             Position = 2)]
-        [string]$Filter = "All files (*.*)|*.*",
+        [String]$Filter = "All files (*.*)|*.*",
 
         # AllowMultiSelect help description
-        [Parameter(Mandatory = $false,
+        [Parameter(
+            Mandatory = $false,
             ValueFromPipelineByPropertyName = $true,
             HelpMessage = "Allow multi files selection",
             Position = 3)]
-        [switch]$AllowMultiSelect
+        [Switch]$AllowMultiSelect
     )
 
+    # Load Assembly
     Add-Type -AssemblyName System.Windows.Forms
+
+    # Open Class
     $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
+
+    # Define Title
     $OpenFileDialog.Title = $WindowTitle
-    if (-not [string]::IsNullOrWhiteSpace($InitialDirectory))
+
+    # Define Initial Directory
+    if (-Not [String]::IsNullOrWhiteSpace($InitialDirectory))
     {
         $OpenFileDialog.InitialDirectory = $InitialDirectory
     }
+
+    # Define Filter
     $OpenFileDialog.Filter = $Filter
+
+    # Check If Multi-select if used
     if ($AllowMultiSelect)
     {
         $OpenFileDialog.MultiSelect = $true
@@ -195,3 +218,4 @@ function Get-FileName
         return $OpenFileDialog.Filename
     }
 }
+````
