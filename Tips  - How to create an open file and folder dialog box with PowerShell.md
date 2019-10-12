@@ -1,4 +1,4 @@
-﻿# How to create an open file/folder dialog box with PowerShell
+﻿# How to create an open file dialog box with PowerShell
 
 ## 1 - load the .NET System.Windows.Forms assembly
 ````powershell
@@ -15,7 +15,6 @@ In this case, I have the dialog box to display the desktop.
 At this point, the dialog box will not display. We're just instantiating the object.
 To show the dialog box, we'll have to use the ShowDialog() method.
 
-
 ## 3 - Show the dialog box
 ````powershell
 $Null = $FileBrowser.ShowDialog()
@@ -30,7 +29,7 @@ $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{
 $Null = $FileBrowser.ShowDialog()
 ````
 
-## OpenFile Dialog bow in a function : Allow filter on one file extension
+## 5 - OpenFile Dialog bow in a function : Allow filter on one file extension
 ````powershell
 function Get-FileName($InitialDirectory)
 {
@@ -41,7 +40,7 @@ function Get-FileName($InitialDirectory)
     $OpenFileDialog.FileName
 }
 ````
-## OpenFile Dialog bow in a function : Allow multiple filters
+## 6 - OpenFile Dialog bow in a function : Allow multiple filters
 ````powershell
 function Get-FileName($InitialDirectory)
 {
@@ -142,7 +141,7 @@ function Get-FileName
   Creation Date   : 11/09/2019
   Purpose/Change  : Initial development
 
-  Based on different page :
+  Based on different pages :
    mainly based on https://blog.danskingdom.com/powershell-multi-line-input-box-dialog-open-file-dialog-folder-browser-dialog-input-box-and-message-box/
    https://code.adonline.id.au/folder-file-browser-dialogues-powershell/
    https://thomasrayner.ca/open-file-dialog-box-in-powershell/
@@ -217,5 +216,151 @@ function Get-FileName
     {
         return $OpenFileDialog.Filename
     }
+}
+````
+# How to create an open folder dialog box with PowerShell
+## 1 - load the .NET System.Windows.Forms assembly
+````powershell
+Add-Type -AssemblyName System.Windows.Forms
+````
+## 2 - Instantiate an FolderBrowserDialog object using New-Object.
+````powershell
+$FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog
+````
+
+## 3 - Show the dialog box
+````powershell
+$Null = $FolderBrowser.ShowDialog()
+````
+
+## 4 -  limit the input by file type too using the Filter property.
+````powershell
+$FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog -Property @{
+    RootFolder            = "MyComputer"
+    Description           = "$Env:ComputerName - Select a folder"
+}
+$Null = $FolderBrowser.ShowDialog()
+````
+
+## FINALLY - Open Folder Browser as a function
+````powershell
+Function Get-FolderName
+{
+<#
+.SYNOPSIS
+   Show a Folder Browser Dialog and return the directory selected by the user
+
+.DESCRIPTION
+  Show a Folder Browser Dialog and return the directory selected by the user
+
+.PARAMETER SelectedPath
+   Initial Directory for browsing
+   Mandatory - [string]
+
+.PARAMETER Description
+   Message Box Title
+   Optional - [string] - Default : "Select a Folder"
+
+.PARAMETER  ShowNewFolderButton
+   Show New Folder Button when unused (default) or doesn't show New Folder when used with $false value
+   Optional - [Switch]
+
+ .EXAMPLE
+   Get-FolderName
+    cmdlet Get-FileFolder at position 1 of the command pipeline
+    Provide values for the following parameters:
+    SelectedPath: C:\temp
+    C:\Temp\
+
+   Choose only one Directory. It's possible to create a new folder (default)
+
+.EXAMPLE
+   Get-FolderName -SelectedPath c:\temp -Description "Select a folder" -ShowNewFolderButton
+   C:\Temp\Test
+
+   Choose only one Directory. It's possible to create a new folder
+
+.EXAMPLE
+   Get-FolderName -SelectedPath c:\temp -Description "Select a folder"
+   C:\Temp\Test
+   Choose only one Directory. It's not possible to create a new folder
+
+.EXAMPLE
+   Get-FolderName  -SelectedPath c:\temp
+   C:\Temp\Test
+
+   Choose only one Directory. It's possible to create a new folder (default)
+
+
+.EXAMPLE
+ Get-Help Get-FolderName -Full
+
+.INPUTS
+   System.String
+   System.Management.Automation.SwitchParameter
+
+.OUTPUTS
+   System.String
+
+
+.NOTES
+  Version         : 1.0
+  Author          : O. FERRIERE
+  Creation Date   : 12/10/2019
+  Purpose/Change  : Initial development
+
+  Based on different pages :
+   mainly based on https://blog.danskingdom.com/powershell-multi-line-input-box-dialog-open-file-dialog-folder-browser-dialog-input-box-and-message-box/
+   https://code.adonline.id.au/folder-file-browser-dialogues-powershell/
+   https://thomasrayner.ca/open-file-dialog-box-in-powershell/
+   https://code.adonline.id.au/folder-file-browser-dialogues-powershell/
+#>
+
+[CmdletBinding()]
+    [OutputType([string])]
+    Param
+    (
+        # InitialDirectory help description
+        [Parameter(
+            Mandatory = $true,
+            ValueFromPipelineByPropertyName = $true,
+            HelpMessage = "Initial Directory for browsing",
+            Position = 0)]
+        [String]$SelectedPath,
+
+        # Description help description
+        [Parameter(
+            Mandatory = $false,
+            ValueFromPipelineByPropertyName = $true,
+            HelpMessage = "Message Box Title")]
+        [String]$Description="Select a Folder",
+
+        # ShowNewFolderButton help description
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = "Show New Folder Button when used")]
+        [Switch]$ShowNewFolderButton
+    )
+
+    # Load Assembly
+    Add-Type -AssemblyName System.Windows.Forms
+
+    # Open Class
+    $FolderBrowser= New-Object System.Windows.Forms.FolderBrowserDialog
+
+   # Define Title
+    $FolderBrowser.Description = $Description
+
+    # Define Initial Directory
+    if (-Not [String]::IsNullOrWhiteSpace($SelectedPath))
+    {
+        $FolderBrowser.SelectedPath=$SelectedPath
+    }
+
+    if($folderBrowser.ShowDialog() -eq "OK")
+    {
+        $Folder += $FolderBrowser.SelectedPath
+    }
+    return $Folder
 }
 ````
