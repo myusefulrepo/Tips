@@ -164,7 +164,7 @@ Get-WinEvent -FilterHashtable @{
 ````
 
 
-# 9 - An example with HTML report
+# 10 - An example with HTML report
 ````powershell
 #region Define CSS style
 $css = @"
