@@ -31,4 +31,4 @@ $Computers = Get-ADComputer -filter * -Properties Name,DistinguishedName,LastLog
                       DistinguishedName,
                       LastLogonDate,
                       @{ Label = "dif"; Expression = {((Get-Date) - $_.lastlogondate).days }}, # calcul nbre de jours depuis la dernière connexion / aujourd'hui
-                      @{ Label = "OU" ; Expression = {($_.DistinguishedName -split ",",2)[1]} # OU dans laquelle se situe la machine
+                      @{ Label = "OU" ; Expression = {($_.DistinguishedName -split ",ou=",2)[1]}} # OU dans laquelle se situe la machine
