@@ -14,7 +14,7 @@ $f = Get-CimInstance -ClassName win32_logicaldisk |
                @{Label = "Percent_Free_Space"; Expression = {$_.FreeSpace / $_.Size} ; format = '0.00%'}
 ````
 We can use `f` instead `format`
->[Nota] : Blank space are insignifiant, i use them only th clarify the code
+>[Nota] : Blank space are insignifiant, i use them only to clarify the code
 
 # 2 - Use [Math]::round(Number,round)
 ````powershell
@@ -255,4 +255,3 @@ We have seen this :
 Moreover, we discovered that in the ***hashtable*** 'Label, Expression' we can add additional keys like `format` (`f`) or `Alignment` (`a`)
 
 Hope this will be useful (if it's not for you, it's for me, sure)
-
