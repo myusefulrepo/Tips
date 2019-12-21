@@ -1,10 +1,15 @@
-﻿# How to create an open file dialog box with PowerShell
+﻿# How to create an open file and folder dialog box with PowerShell
 
-## 1 - load the .NET System.Windows.Forms assembly
+## How to create an open file dialog box with PowerShell
+
+### 1 - load the .NET System.Windows.Forms assembly
+
 ````powershell
 Add-Type -AssemblyName System.Windows.Forms
 ````
-## 2 - Instantiate an OpenFileDialog object using New-Object.
+
+### 2 - Instantiate an OpenFileDialog object using New-Object
+
 ````powershell
 $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{ InitialDirectory = [Environment]::GetFolderPath('Desktop') }
 ````
@@ -15,12 +20,14 @@ In this case, I have the dialog box to display the desktop.
 At this point, the dialog box will not display. We're just instantiating the object.
 To show the dialog box, we'll have to use the ShowDialog() method.
 
-## 3 - Show the dialog box
+### 3 - Show the dialog box
+
 ````powershell
 $Null = $FileBrowser.ShowDialog()
 ````
 
-## 4 -  limit the input by file type too using the Filter property.
+### 4 -  limit the input by file type too using the Filter property
+
 ````powershell
 $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{
     InitialDirectory = [Environment]::GetFolderPath('Desktop')
@@ -29,7 +36,8 @@ $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{
 $Null = $FileBrowser.ShowDialog()
 ````
 
-## 5 - OpenFile Dialog bow in a function : Allow filter on one file extension
+### 5 - OpenFile Dialog bow in a function : Allow filter on one file extension
+
 ````powershell
 function Get-FileName($InitialDirectory)
 {
@@ -40,21 +48,24 @@ function Get-FileName($InitialDirectory)
     $OpenFileDialog.FileName
 }
 ````
-## 6 - OpenFile Dialog bow in a function : Allow multiple filters
+
+### 6 - OpenFile Dialog bow in a function : Allow multiple filters
+
 ````powershell
 function Get-FileName($InitialDirectory)
 {
     $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
     $OpenFileDialog.InitialDirectory = $InitialDirectory
-    $OpenFileDialog.filter = "Documents (*.docx)|*.docx|SpreadSheet (*.xlsx)|*.xlsx"
+    $OpenFileDialog.filter = "Documents (*.docx)|*.docx |SpreadSheet (*.xlsx)|*.xlsx"
     $OpenFileDialog.ShowDialog() | Out-Null
     $OpenFileDialog.FileName
 }
 ````
+
 >[Nota] : As we can see, the filter applies for one or the other of the selected extensions, not both at the same time
 
+### FINALLY : OpenFile Dialog bow in a function : Allow multiple filters and multiple selections and manage errors
 
-## FINALLY : OpenFile Dialog bow in a function : Allow multiple filters and multiple selections and manage errors
 ````powershell
 function Get-FileName
 {
@@ -218,22 +229,29 @@ function Get-FileName
     }
 }
 ````
-# How to create an open folder dialog box with PowerShell
-## 1 - load the .NET System.Windows.Forms assembly
+
+## How to create an open folder dialog box with PowerShell
+
+### 1 - load the .NET System.Windows.Forms assembly
+
 ````powershell
 Add-Type -AssemblyName System.Windows.Forms
 ````
-## 2 - Instantiate an FolderBrowserDialog object using New-Object.
+
+### 2 - Instantiate an FolderBrowserDialog object using New-Object
+
 ````powershell
 $FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog
 ````
 
-## 3 - Show the dialog box
+### 3 - Show the dialog box
+
 ````powershell
 $Null = $FolderBrowser.ShowDialog()
 ````
 
-## 4 -  limit the input by file type too using the Filter property.
+### 4 -  limit the input by file type too using the Filter property
+
 ````powershell
 $FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog -Property @{
     RootFolder            = "MyComputer"
@@ -242,7 +260,8 @@ $FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog -Property @
 $Null = $FolderBrowser.ShowDialog()
 ````
 
-## FINALLY - Open Folder Browser as a function
+### FINALLY - Open Folder Browser as a function
+
 ````powershell
 Function Get-FolderName
 {
