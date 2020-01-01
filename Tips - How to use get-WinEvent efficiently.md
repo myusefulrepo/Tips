@@ -40,6 +40,7 @@ Get-WinEvent -LogName 'System' -MaxEvents 20
 
 # 5 - Get a (or some) specific Event
 ## The Bad way : filtering with `Where-Object`
+
 ````powershell
 Measure-Command -Expression {
     Get-WinEvent -LogName system |
@@ -49,6 +50,7 @@ Measure-Command -Expression {
 About 10 second to run
 
 ## The best way : Filtering with a Hash Table
+
 ````powershell
 Measure-Command -Expression {
     Get-WinEvent -MaxEvents 10 -FilterHashtable @{
@@ -61,20 +63,24 @@ and now 44 ms to run
 >[Nota] : Using `-filterhashtable` is really powerful
 
 another use with multiple values for a parameter (i.e. ID)
+
 ````powershell
 Get-WinEvent -MaxEvents 10 -FilterHashTable @{
     LogName = 'System'
     ID      = '1', '42'
 }
 ````
+
 ID of event are `[System.String]` separate by **comma** if several
 
 # 6 - Get event with Specific information level
+
 - level LogAlways 0
 - Critical 1- Error 2
 - Warning 3
 - Informational 4
 - Verbose 5
+
 ````powershell
 Get-WinEvent -FilterHashTable @{
                 LogName = 'System'
@@ -104,7 +110,7 @@ Measure-Command -Expression {
 }
 ````
 28 ms, slower !
->[Tiqs] : Remember ***filter left, format right***, it will be always faster.
+>[Tips] : Remember ***filter left, format right***, it will be always faster.
 
 # 7 - Audit success or audit failure security events
 Filtering events from the Security log is a bit different from other logs because it does not provide the information level.
