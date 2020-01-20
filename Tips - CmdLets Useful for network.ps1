@@ -69,7 +69,10 @@ Set-NetIPInterface -InterfaceAlias Wireless -Dhcp Enabled
 # Créer un nouveau TEAM (lbfo Team ou Load-balancing with failover team)
 New-NetLbfoTeam -Name NICTeam -TeamMembers Ethernet1, Ethernet2 -TeamingMode Lacp -TeamNicName NICTEAM -LoadBalancingAlgorithm Dynamic
 
-
+# Obtenir la table ARP
+ Get-NetTCPConnection
+ # ou pour filtrer sur les connexions établies uniquement
+ Get-NetTCPConnection | Where-Object {$_.State -like "Established"}
 
 
 
