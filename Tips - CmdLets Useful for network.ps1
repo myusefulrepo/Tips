@@ -71,8 +71,13 @@ New-NetLbfoTeam -Name NICTeam -TeamMembers Ethernet1, Ethernet2 -TeamingMode Lac
 
 # Obtenir la table ARP
  Get-NetTCPConnection
- # ou pour filtrer sur les connexions établies uniquement
+# ou pour filtrer sur les connexions établies uniquement
  Get-NetTCPConnection | Where-Object {$_.State -like "Established"}
+
+# Obtenir la MACaddress
+Get-WmiObject win32_networkadapterconfiguration   | select description, macaddress
+Get-CimInstance win32_networkadapterconfiguration | select description, macaddress 
+
 
 
 
