@@ -321,3 +321,77 @@ Ref. :  <https://sid-500.com/2020/05/03/how-to-secure-passwords-in-powershell-sc
 - Biggest advantages : Easy to implement (multi files with different names for password from different accounts). 100% secure
 - Biggest drawback   : The file contain password. Only use on the same computer cause using self-SignedCertificate
 - Limitation         : Only use on the same computer
+
+### And now, full script to do this easily
+
+This is not my script. It's a script provided by sid-500.com (URL in the script)
+
+````powershell
+''
+Write-Host 'Provided by sid-500.com.'
+Write-Host 'This tool protects your file content with certificates.' -ForegroundColor Green
+''
+$cert=Read-Host -Prompt 'Do you already have a certificate for encipherment? (Y/N)?'
+
+If ($cert -eq 'Y')
+
+{
+''
+Write-Host 'Select Certificate.'
+
+$mycert=Get-Childitem Cert:\CurrentUser\My
+
+$choicec=$mycert | Where-Object hasprivatekey -eq 'true' | Select-Object -Property Issuer,Subject,HasPrivateKey | Out-GridView -Title 'Select Certificate' -PassThru
+''
+Write-Host 'Enter path to the file to encrypt (e.g. C:\temp\pw.txt)' -ForegroundColor Yellow
+''
+$path=Read-Host -Prompt 'File Path'
+''
+Write-Host 'Please wait. Encrypting content ... Once completed notepad will open your encrypted file.'
+''
+Get-Content $path | Protect-CmsMessage -To $choicec.Subject -OutFile $path
+
+notepad $path
+
+}
+
+If ($cert -eq 'n')
+
+{
+''
+Write-Host 'This section creates a new self signed certificate. Provide certificate name.'
+''
+$newcert=Read-Host 'Enter Certificate Name'
+
+New-SelfSignedCertificate -DnsName $newcert -CertStoreLocation "Cert:\CurrentUser\My" -KeyUsage KeyEncipherment,DataEncipherment,KeyAgreement -Type DocumentEncryptionCert
+
+$cert=Get-ChildItem -Path Cert:\CurrentUser\My\ | Where-Object subject -like "*$newcert*"
+$thumb=$cert.thumbprint
+''
+Write-Host 'Certificate created'
+''
+Write-Host 'Saving certificate to users profile' -ForegroundColor Green
+''
+$pwcert=ConvertTo-SecureString -String (Read-Host 'Enter Password for cert file') -Force -AsPlainText
+''
+Write-Host 'Certificate Export completed' -ForegroundColor Green
+Export-PfxCertificate -Cert Cert:\CurrentUser\My\$thumb -FilePath $home\"cert_"$env:username".pfx" -Password $pwcert
+
+Write-Host 'Enter path to the file to encrypt (e.g. C:\temp\pw.txt)' -ForegroundColor Yellow
+''
+$path=Read-Host -Prompt 'File Path'
+''
+Write-Host 'Please wait. Encrypting content ... Once completed notepad will open your encrypted file.'
+''
+Get-Content $path | Protect-CmsMessage -To $cert.Subject -OutFile $path
+
+notepad $path
+
+}
+````powershell
+
+This script work fine.
+- Biggest advantages : Easy to use.
+- Biggest drawback   : The file contain password. Only use on the same computer *and* same user cause using self-SignedCertificate located in personal certificate container
+- Limitation         : The computer limitation could be overpassed, if the backup certificate is installed in another computer. But always only the same user
+s
