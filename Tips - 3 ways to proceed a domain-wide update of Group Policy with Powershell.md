@@ -66,7 +66,7 @@ Invoke-Command -Session $Sessions -ScriptBlock { Get-WinEvent - MaxEvents 1 -fil
 We can also use the following
 
 ```powershell
-foreach ($Computer in $Computers
+foreach ($Computer in $Computers)
     {
     Get-WinEvent -ComputerName $computer.name -MaxEvents 1 -filterHashTable @{
                                                                                                     LogName = 'System'
