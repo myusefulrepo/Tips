@@ -51,6 +51,29 @@ Write-Host "Settings to use TLS1.2 for updating PS Modules on PowershellGallery 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 ````
 
+Another solution is to use registry entries forcing all .NET processes targetting .NET 4.5 to use strong crypto.
+
+````powershell
+
+$Newkeyparam1 =     @{
+              Path  = "HKLM:\SOFTWARE\Microsoft\.NetFramework\v4.0.30319"
+              Name  = "SchUseStrongCrypto"
+              Value = "1"
+              Type  = "DWord"
+              Force = $true
+}
+Set-ItemProperty @Newkeyparam1
+
+$Newkeyparam2 = @{
+    Path      = "HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NetFramework\v4.0.30319"
+    Name      = "SchUseStrongCrypto"
+    Value     = "1"
+    Type      = "DWord"
+    Force     = $true
+}
+Set-ItemProperty @Newkeyparam2
+````
+
 Other Ref :
 <https://docs.microsoft.com/en-us/mem/configmgr/core/plan-design/security/enable-tls-1-2-server>
 <https://support.microsoft.com/en-us/help/3140245/update-to-enable-tls-1-1-and-tls-1-2-as-default-secure-protocols-in-wi>
@@ -58,3 +81,4 @@ Other Ref :
 <https://docs.microsoft.com/en-us/officeonlineserver/enable-tls-1-1-and-tls-1-2-support-in-office-online-server>
 <https://support.microsoft.com/en-us/help/245030/how-to-restrict-the-use-of-certain-cryptographic-algorithms-and-protoc>
 <https://devblogs.microsoft.com/powershell/powershell-gallery-tls-support/>
+<https://docs.microsoft.com/en-us/dotnet/framework/network-programming/tls>
