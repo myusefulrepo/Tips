@@ -23,7 +23,7 @@
 .NOTES
    Author   : Olivier FERRIERE
    Date     : 25/08/2020
-   Version  : 1.0 - final version after somme comments on reddit.
+   Version  : 1.0 - final version after somme comments on reddi (Thanks To Tim Curwick aka MadwithPowershell)
 #>
 
 Param
