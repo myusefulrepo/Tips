@@ -40,7 +40,6 @@ Get-WinEvent -LogName 'System' -MaxEvents 20
 
 # 5 - Get a (or some) specific Event
 ## The Bad way : filtering with `Where-Object`
-
 ````powershell
 Measure-Command -Expression {
     Get-WinEvent -LogName system |
@@ -50,7 +49,6 @@ Measure-Command -Expression {
 About 10 second to run
 
 ## The best way : Filtering with a Hash Table
-
 ````powershell
 Measure-Command -Expression {
     Get-WinEvent -MaxEvents 10 -FilterHashtable @{
@@ -63,24 +61,20 @@ and now 44 ms to run
 >[Nota] : Using `-filterhashtable` is really powerful
 
 another use with multiple values for a parameter (i.e. ID)
-
 ````powershell
 Get-WinEvent -MaxEvents 10 -FilterHashTable @{
     LogName = 'System'
     ID      = '1', '42'
 }
 ````
-
 ID of event are `[System.String]` separate by **comma** if several
 
 # 6 - Get event with Specific information level
-
 - level LogAlways 0
 - Critical 1- Error 2
 - Warning 3
 - Informational 4
 - Verbose 5
-
 ````powershell
 Get-WinEvent -FilterHashTable @{
                 LogName = 'System'
@@ -110,7 +104,7 @@ Measure-Command -Expression {
 }
 ````
 28 ms, slower !
->[Tips] : Remember ***filter left, format right***, it will be always faster.
+>[Tiqs] : Remember ***filter left, format right***, it will be always faster.
 
 # 7 - Audit success or audit failure security events
 Filtering events from the Security log is a bit different from other logs because it does not provide the information level.
@@ -217,3 +211,125 @@ $Query |
 ````
 The result looks like this :
 ![Events as a HTML report](https://github.com/myusefulrepo/Tips/blob/master/Images/EventsAsHTMLReport.jpg)
+
+
+
+# 11 - Filter on specific info on NoteProperty
+
+````powershell
+$StartTime = Get-Date -Year 2020 -Month 10 -Day 7  -Hour 07 -Minute 36 -Second 02
+$EndTime = Get-Date -Year 2020 -Month 10 -Day 7  -Hour 07 -Minute 36 -Second 05
+$Query = Get-WinEvent -FilterHashtable @{
+                            LogName = 'Security'
+                            StartTime = $StartTime
+                            EndTime = $EndTime
+                            ID = "4624"
+                            }````
+This return the following
+
+````powershell
+TimeCreated                     Id LevelDisplayName Message
+-----------                     -- ---------------- -------
+07/10/2020 07:36:04           4624 Information      L'ouverture de session d'un compte s'est correctement déroulée...
+07/10/2020 07:36:03           4624 Information      L'ouverture de session d'un compte s'est correctement déroulée...
+07/10/2020 07:36:02           4624 Information      L'ouverture de session d'un compte s'est correctement déroulée....
+````
+
+3 Events, let's see them
+
+````powershell
+$query | Select-Object @{Label = "TimeCreated"      ; Expression = {$_.TimeCreated}},
+                       @{Label = "ID"               ; Expression = {$_.ID}},
+                       @{Label = "MachineName"      ; Expression = {$_.MachineName}},
+                       @{Label = "LevelDisplayName" ; Expression = {$_.LevelDisplayName}},
+                       @{Label = "TaskDisplayName"  ; Expression = {$_.TaskDisplayName}},
+                       @{Label = "SecurityId"       ; Expression = {$_.Properties[4].Value}},
+                       @{Label = "AccountName"      ; Expression = {$_.Properties[5].Value}},
+                       @{Label = "AccountDomain"    ; Expression = {$_.Properties[6].Value}},
+                       @{Label = "LogonId"          ; Expression = {$_.Properties[7].Value}},
+                       @{Label = "LogonType"        ; Expression = {$_.Properties[8].Value}},
+                       @{Label = "Workstation"      ; Expression = {$_.Properties[11].Value}},
+                       @{Label = "LogonGuid"        ; Expression = {$_.Properties[12].Value}}
+````
+and the result is
+
+````powershell
+TimeCreated      : 07/10/2020 07:36:04
+ID               : 4624
+MachineName      : W2K19-DC.LAB.LOCAL
+LevelDisplayName : Information
+TaskDisplayName  : Ouvrir la session
+SecurityId       : S-1-5-18
+AccountName      : W2K19-DC$
+AccountDomain    : LAB.LOCAL
+LogonId          : 222853
+LogonType        : 3
+Workstation      : -
+LogonGuid        : fe7d9233-b617-564d-ca3d-41c1d1011513
+
+TimeCreated      : 07/10/2020 07:36:03
+ID               : 4624
+MachineName      : W2K19-DC.LAB.LOCAL
+LevelDisplayName : Information
+TaskDisplayName  : Ouvrir la session
+SecurityId       : S-1-5-21-310437918-1906062273-1680514792-1130
+AccountName      : W2K19-DC2$
+AccountDomain    : LAB.LOCAL
+LogonId          : 221273
+LogonType        : 3
+Workstation      : -
+LogonGuid        : 010206e6-2f5e-1d8e-fc5e-64586b4dd45e
+
+TimeCreated      : 07/10/2020 07:36:02
+ID               : 4624
+MachineName      : W2K19-DC.LAB.LOCAL
+LevelDisplayName : Information
+TaskDisplayName  : Ouvrir la session
+SecurityId       : S-1-5-21-310437918-1906062273-1680514792-500
+AccountName      : Administrateur
+AccountDomain    : LAB
+LogonId          : 220861
+LogonType        : 10
+Workstation      : W2K19-DC
+LogonGuid        : d4f4ef05-feb0-b080-aef8-c5007d1ff1de
+````
+Not bad, butI have logon Event for computers. I would like to have only Users. Let's modify the initial query like this :
+
+````powershell $Query = Get-WinEvent -FilterHashtable @{
+                            LogName = 'Security'
+                            StartTime = $StartTime
+                            EndTime = $EndTime
+                            ID = "4624"
+                            } | Where-Object -FilterScript {$_.Properties[5].Value -notlike "*$"}
+
+# and select the appropriate properties again
+$query | Select-Object @{Label = "TimeCreated"      ; Expression = {$_.TimeCreated}},
+                       @{Label = "ID"               ; Expression = {$_.ID}},
+                       @{Label = "MachineName"      ; Expression = {$_.MachineName}},
+                       @{Label = "LevelDisplayName" ; Expression = {$_.LevelDisplayName}},
+                       @{Label = "TaskDisplayName"  ; Expression = {$_.TaskDisplayName}},
+                       @{Label = "SecurityId"       ; Expression = {$_.Properties[4].Value}},
+                       @{Label = "AccountName"      ; Expression = {$_.Properties[5].Value}},
+                       @{Label = "AccountDomain"    ; Expression = {$_.Properties[6].Value}},
+                       @{Label = "LogonId"          ; Expression = {$_.Properties[7].Value}},
+                       @{Label = "LogonType"        ; Expression = {$_.Properties[8].Value}},
+                       @{Label = "Workstation"      ; Expression = {$_.Properties[11].Value}},
+                       @{Label = "LogonGuid"        ; Expression = {$_.Properties[12].Value}}
+````
+And the result is :
+
+````powershell
+TimeCreated      : 07/10/2020 07:36:02
+ID               : 4624
+MachineName      : W2K19-DC.LAB.LOCAL
+LevelDisplayName : Information
+TaskDisplayName  : Ouvrir la session
+SecurityId       : S-1-5-21-310437918-1906062273-1680514792-500
+AccountName      : Administrateur
+AccountDomain    : LAB
+LogonId          : 220861
+LogonType        : 10
+Workstation      : W2K19-DC
+LogonGuid        : d4f4ef05-feb0-b080-aef8-c5007d1ff1de
+````
+Reach the goal ! Only users accounts.
