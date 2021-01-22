@@ -26,7 +26,8 @@ ProcessorType             : CentralProcessor
 Role                      : CPU
 Status                    : OK
 CpuStatus                 : Enabled
-Availability              : RunningOrFullPower````
+Availability              : RunningOrFullPower
+````
 
 and
 
@@ -50,7 +51,8 @@ ProcessorType             : CentralProcessor
 Role                      : CPU
 Status                    : OK
 CpuStatus                 : Enabled
-Availability              : RunningOrFullPower````
+Availability              : RunningOrFullPower
+````
 
 The first one expands the value and the second one does not. The curly braces on the second one means its an **array** and in this case it is an array of objects.
 
@@ -76,6 +78,7 @@ ProcessorType             : CentralProcessor
 Role                      : CPU
 Status                    : OK
 CpuStatus                 : Enabled
-Availability              : RunningOrFullPower````
+Availability              : RunningOrFullPower
+````
 
 Hope this help to understand how Powerwhell works.
