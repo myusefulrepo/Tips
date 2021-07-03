@@ -42,7 +42,7 @@ $NewADServiceAccountArgs = @{
 ## Deploy the GMSA on a remote computer (locally)
 ````powershell
 # To Deploy on a computer
-ADServiceAccount -AuthType=0 -Identity "GMSA-ScheduledTasks"
+Install-ADServiceAccount -AuthType=0 -Identity "GMSA-ScheduledTasks"
 # To check if GMSA is deployed on a computer
 Test-ADServiceAccount "GMSA-ScheduledTasks" # this return True if it's OK
 ````
@@ -52,7 +52,7 @@ $Servers = Get-ADGroupMember -Identity "SG-ScheduleTask" | Select-Object Name
 foreach ($server in $server)
     {
      Invoke-Command -ComputerName $server.Name -ScriptBlock {
-                                                             ADServiceAccount -AuthType=0 -Identity "GMSA-ScheduledTasks";
+                                                             Install-ADServiceAccount -AuthType=0 -Identity "GMSA-ScheduledTasks";
                                                              Test-ADServiceAccount "GMSA-ScheduledTasks"
                                                             }
     }
@@ -64,7 +64,7 @@ First you can enter in a PSSession
 Example in action :
 ````powershell
 Enter-PSSession -ComputerName "RemoteComputer"
-$Action = New-ScheduledTaskAction "c:\scripts\MyScript.ps1"
+$Action = New-ScheduledTaskAction "c:\scripts\MyScript.ps1" # this script contains the code seen in "Deploy the GMSA on a remote computer (locally)" section
 $Trigger = New-ScheduledTaskTrigger -At 23:00 -Daily
 $Principal = New-ScheduledTaskPrincipal -UserID MyDomain\GMSA-ScheduledTask$ -LogonType Password
     # nota 1 : the $ at the end of the GMSA Account, like a computer account
