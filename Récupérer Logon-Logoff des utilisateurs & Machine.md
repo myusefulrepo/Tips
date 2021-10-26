@@ -7,7 +7,9 @@ avec tous les logon/logoff des utilisateurs mais également le nom de la machine
 
 ## Les différentes voies possibles et leur limitation
 **Query AD-Users** : on peut obtenir la Date de last login, mais pas la machine. De plus, on ne peut obtenir que la date du lastLogin : cela ne répond donc pas au besoin
+
 **EventLog Securité** : possible d'avoir toutes les informations recherchées mais il faut interroger tous les DCs, et ensuite "parser" les informations afin de ne récupérer que ce qu'on veut. Possible donc, mais pas facile à mettre en oeuvre
+
 **LogonScript/LogoffScript** : On peut récupérer toutes les info dans un fichier type .csv facilement pour l'exploiter plus tard
 
 ## Les étapes
