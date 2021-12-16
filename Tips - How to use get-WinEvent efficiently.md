@@ -224,7 +224,9 @@ $Query = Get-WinEvent -FilterHashtable @{
                             StartTime = $StartTime
                             EndTime = $EndTime
                             ID = "4624"
-                            }````
+                            }
+````
+
 This return the following
 
 ````powershell
