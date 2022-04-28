@@ -1,9 +1,9 @@
 ﻿# Tester la connectivité (ping)
-Test-NetConnection -ComputerName RemoteComputer
-Test-NetConnection -ComputerName 10.8.10.80
+Test-Connection -ComputerName RemoteComputer
+Test-Connection -ComputerName 10.8.10.80
 
 # boucle de ping
-1..254 | ForEach-Object { Test-NetConnection 10.10.10.$_ } | Format-Table -AutoSize
+1..254 | ForEach-Object { Test-Connection 10.10.10.$_ } | Format-Table -AutoSize
 
 # Tester la connectivité basé sur le port ou le service
 Test-NetConnection -ComputerName RemoteComputer -CommonTCPPort RDP  # (RDP, HTTP, SMB, WINRM) 
