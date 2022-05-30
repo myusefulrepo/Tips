@@ -42,12 +42,14 @@ $DCs = Get-ADDomainController -filter *
 $InsecureLDAPBinds = @() # Init Array
 
 # Query EventLog (Directory Service) for All DCs
+$FilterHashTable = @{Logname='Directory Service'
+                    Id=2889
+                    StartTime=(Get-Date).AddHours("-$Hours")
+                    }
+
 ForEach ($DC in $DCs) 
     {
-    $Events = Get-WinEvent -ComputerName $DC.Hostname -FilterHashtable @{Logname='Directory Service'
-                                                               Id=2889
-                                                               StartTime=(Get-Date).AddHours("-$Hours")
-                                                               } | Out-null # Out-Null i only to avoid Console display
+    $Events = Get-WinEvent -ComputerName $DC.Hostname -FilterHashtable @FilterHashTable | Out-null # Out-Null is only to avoid Console display
     # Parsing Events
     ForEach ($Event in $Events) 
         {
