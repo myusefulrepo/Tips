@@ -27,7 +27,7 @@ Domain Controllers with default settings do not provide the information needed t
 Name : "16 LDAP Interface Events" 
 Value : 2 
 Type : DWORD
-- Avant validate
+- And validate
 - Link the New GPO to the Domain Controller OU
 
 At this step, All DCs will have the New settings. 
