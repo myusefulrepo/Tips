@@ -159,3 +159,5 @@ do
 ````
 
 > As you could see, in this second sample, I'm using the function with the default value for ````Background```` and ````Foreground```` Parameters.  
+
+Hope this is useful
