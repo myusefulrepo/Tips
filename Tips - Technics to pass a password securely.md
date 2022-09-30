@@ -388,10 +388,9 @@ Get-Content $path | Protect-CmsMessage -To $cert.Subject -OutFile $path
 notepad $path
 
 }
-````powershell
+````
 
 This script work fine.
 - Biggest advantages : Easy to use.
 - Biggest drawback   : The file contain password. Only use on the same computer *and* same user cause using self-SignedCertificate located in personal certificate container
 - Limitation         : The computer limitation could be overpassed, if the backup certificate is installed in another computer. But always only the same user
-s
