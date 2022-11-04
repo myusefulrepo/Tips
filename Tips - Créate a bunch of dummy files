@@ -45,4 +45,21 @@ for ($i = 1; $i -lt $NumberOf100MB; $i++)
 
 # In this sample to create 311 files, this take 291 ms. To create 2146 files, this takes 2,2 sec. 
 
+# We can also use another way to do the same thing
+$Path = "C:\temp2"
+$File = "MyFile.txt"
+$MyArray = New-Object -TypeName Byte[] -ArgumentList 10Kb
+$OBJ = New-Object -TypeName System.Random
+$OBJ.NextBytes($MyArray)
+Set-Content -Path $Path\$File -Value $MyArray -Encoding Byte
+# there is no real difference in execution time. However, you will notice that the files are not empty but filled with weird characters
+
+# we can also use the legacy DOS command fsutil
+fsutil file createnew C:\Temp2\test1.txt 10000
+# Nota : the size is in Bytes. It's not really obvious to play with this.
+
+
+
+
+
 Hope this will be useful
