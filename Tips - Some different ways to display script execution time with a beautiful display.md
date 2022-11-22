@@ -31,7 +31,7 @@ $StopWatch.Elapsed
 ```` Powershell
 if ($CheckTime.Days -gt ‘0’)
 {
-    Write-Host "$(“Script Completed in {0} days, {1} hours, {2} minutes {3} seconds `n" -f $CheckTime.Days, $CheckTime.Hours, $CheckTime.totalMinutes, $CheckTime.Milliseconds )" -ForegroundColor Green
+    Write-Host "$(“Script Completed in {0} days, {1} hours, {2} minutes {3} seconds `n" -f $CheckTime.Days, $CheckTime.Hours, $CheckTime.Minutes, $CheckTime.Milliseconds )" -ForegroundColor Green
 }
 elseif ($CheckTime.Hours -gt ‘0’)
 {
