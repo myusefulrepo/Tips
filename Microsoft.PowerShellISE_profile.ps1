@@ -76,7 +76,7 @@ Write-Host 'Profil Loading Time : ' (Measure-Command {
         #endregion Prompt Setting
 
         #region Custom Windows Setting
-        Write-Host 'Param�trage du titre de la fen�tre' -ForegroundColor 'DarkGray'
+        Write-Host 'Paramétrage du titre de la fenêtre' -ForegroundColor 'DarkGray'
         [System.Security.Principal.WindowsPrincipal]$CurrentUser = New-Object System.Security.Principal.WindowsPrincipal([System.Security.Principal.WindowsIdentity]::GetCurrent())
         if ( $CurrentUser.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator) ) # S-1-5-32-544 is the Well-Known SID for Administrators (builtin) group
         {
@@ -129,7 +129,7 @@ Write-Host 'Profil Loading Time : ' (Measure-Command {
             # Change : 09-Oct-2022, Using a function to update module
             # Source : https://github.com/HarmVeenstra/Powershellisfun/blob/main/Update%20all%20PowerShell%20Modules/Update-Modules.ps1
             # Previously using update-AllPSModules from update-AllPSModules module
-            # loading function
+            <# loading function
             function Update-Modules
             {
                 param (
@@ -236,9 +236,22 @@ Write-Host 'Profil Loading Time : ' (Measure-Command {
             }
         
             Update-Modules
-            # Start-Job -Name 'UpdateModules' -ScriptBlock { Update-Modules } # Using this failed, I'm not take the time to investigate further
+            #>
+            # Change : 25/01/2023, Using Update-PSResource cause, the previous function is down (PowershellGet is on v3.xx)
+            Write-Host "Update Modules All Users" -ForegroundColor Green
+            $UpdateModAllUsers = Start-Job -Name 'UpdateModAllUsers' -ScriptBlock {Get-PSResource -Scope AllUsers | Update-PSResource -Scope AllUsers -Force}
+            Write-Host "Update Modules Current User" -ForegroundColor  Green
+            $UpdateModCurrentUser = Start-Job -Name 'UpdateModCurrentUser' -ScriptBlock { Get-PSResource -Scope CurrentUser | Update-PSResource -Scope CurrentUser -Force}
         } # end if
         #endregion Update-Module every Friday
+
+        #region Update SysternalsSuite le 1er du mois
+        if ($Date.Day -eq "1")
+            {
+            $SysternalSuite = Start-Job -Name SysternalSuite -ScriptBlock {. C:\Scripts\Install-SysInternalsSuite.ps1 }
+            }
+        
+        #endregion Update SysternalsSuite le 1er du mois
 
         #region Learn something today (show help about a ramdom cmdlet)
         <# 
@@ -251,4 +264,15 @@ Write-Host 'Profil Loading Time : ' (Measure-Command {
 
 Get-Job
 Write-Host 'Fully loaded profile' -ForegroundColor Yellow
+
+#region receive jobs when they are finished
+ if ($Date.Day -eq "1")
+    {
+    Receive-Job -Name UpdateModCurrentUser -Wait
+    Receive-Job -Name UpdateModAllUsers -Wait
+    Receive-Job -Name SysternalSuite -Wait
+    }
+#endregion receive jobs when they are finished
+
+
 
