@@ -2,13 +2,13 @@
 Write-Host 'Profil Loading Time : ' (Measure-Command {
 
         #region Settings to use TLS1.2 to update modules from PowershellGallery since 01 May 2020
-        Write-Host 'Settings to use TLS1.2 to update modules from PowershellGallery since 01 May 2020' -ForegroundColor 'DarkGray'
+        Write-Host 'Setting :  Use TLS1.2 to update modules from PowershellGallery since 01 May 2020' -ForegroundColor 'DarkGray'
         # ref : https://devblogs.microsoft.com/powershell/powershell-gallery-tls-support/
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         #endregion Settings to use TLS1.2 to update modules from PowershellGallery since 01 May 2020
 
         #region Location Settings
-        Write-Host 'Location Settings' -ForegroundColor 'DarkGray'
+        Write-Host 'Setting : Location' -ForegroundColor 'DarkGray'
         $Profile_ScriptFolder = 'C:\Temp'
         if (Test-Path $Profile_ScriptFolder) 
         {
@@ -54,7 +54,7 @@ Write-Host 'Profil Loading Time : ' (Measure-Command {
         #endregion Settings to look/install modules from an Internal repository
 
         #region Prompt setting
-        Write-Host 'Prompt Setting' -ForegroundColor 'DarkGray'
+        Write-Host 'Setting : Prompt' -ForegroundColor 'DarkGray'
         Function Get-Time
         {
             return $(Get-Date | ForEach-Object { $_.ToLongTimeString() } ) 
@@ -76,7 +76,7 @@ Write-Host 'Profil Loading Time : ' (Measure-Command {
         #endregion Prompt Setting
 
         #region Custom Windows Setting
-        Write-Host 'Paramétrage du titre de la fenêtre' -ForegroundColor 'DarkGray'
+        Write-Host 'Setting : Windows Title' -ForegroundColor 'DarkGray'
         [System.Security.Principal.WindowsPrincipal]$CurrentUser = New-Object System.Security.Principal.WindowsPrincipal([System.Security.Principal.WindowsIdentity]::GetCurrent())
         if ( $CurrentUser.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator) ) # S-1-5-32-544 is the Well-Known SID for Administrators (builtin) group
         {
@@ -92,7 +92,7 @@ Write-Host 'Profil Loading Time : ' (Measure-Command {
         #endregion Custom Windows Setting
     
         #region Setting Alias for NP and NPP
-        Write-Host 'Setting Alias for NP and NPP' -ForegroundColor 'DarkGray'
+        Write-Host 'Setting : Alias for Notepad and Notepad++' -ForegroundColor 'DarkGray'
         Set-Alias -Name npp -Value 'C:\Program Files (x86)\Notepad++\notepad++.exe'
         Set-Alias -Name np -Value 'C:\Windows\system32\notepad.exe'
         #endregion Setting Alias for NP and NPP
@@ -248,6 +248,7 @@ Write-Host 'Profil Loading Time : ' (Measure-Command {
         #region Update SysternalsSuite le 1er du mois
         if ($Date.Day -eq "1")
             {
+            Write-Host "Update Systernal Suite" -ForegroundColor DarkGray
             $SysternalSuite = Start-Job -Name SysternalSuite -ScriptBlock {. C:\Scripts\Install-SysInternalsSuite.ps1 }
             }
         
