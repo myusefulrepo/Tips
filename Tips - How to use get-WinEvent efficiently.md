@@ -541,7 +541,7 @@ ParentProcessName  C:\Program Files\Mozilla Firefox\firefox.exe
 MandatoryLabel     S-1-16-4096
 ````
 
-Here I'm retreive a interessting info. 
+Here I'm retreive a interesting info. 
 ````powershell
 $NewProcessName   = ($xmldoc.event.eventdata.Data  | Where-Object name -EQ "NewProcessName").'#text'
 
@@ -578,7 +578,7 @@ foreach ($Item in  $Events)
 }
 $Output
 ````
-$Output is a object, then the structure is not broken if i want to export in a .csv file. 
+$Output is an object, then the structure is not broken if i want to export later in a .csv file. 
 
 ````powershell 
 $Output.GetType()
