@@ -19,13 +19,13 @@ quser
 >olivier               console             1  Actif       aucun   12/02/2023 07:11
 ````
 
-As you can see, the outuput id depending of the culture. Another drawback occurs when we want to parse the output. The length of the words is not the same also according to the languages. The best way is to get rid of all that.
+As you can see, the output is depending of the culture. Another drawback occurs when we want to parse the output. The length of the words is not the same also according to the languages. The best way is to get rid of all that.
 
 Example : 
 
 ````powershell
 $Computer = $env:COMPUTERNAME
-$SessionList = quser /Server:$Computer. 2>$null
+$SessionList = quser /Server:$Computer 2>$null
 $UserInfo = foreach ($Session in ($SessionList | select -Skip 1)) # Skip the headers line
     {
     # Trim $Session, replace multi blank spaces by only one, remove '>' if present
@@ -78,7 +78,7 @@ if ((Get-Culture).Name -eq "fr-Fr")
     {
     $SessionCulture = 'Actif'
     }   
-elseif ((Get-Culture).Name -eq "fr-Fr") 
+elseif ((Get-Culture).Name -eq "en-us") 
     {
     $SessionCulture = 'Active'
     }
@@ -171,7 +171,7 @@ Function Get-LoggedInUser
                         {
                             $SessionCulture = 'Actif'
                         }      
-                        elseif ((Get-Culture).Name -eq 'fr-Fr') 
+                        elseif ((Get-Culture).Name -eq 'en-us') 
                         {
                             $SessionCulture = 'Active'
                         }
@@ -225,7 +225,7 @@ Function Get-LoggedInUser
 }
 ````
 
-We the previous code, the output is like the expected for the en-us and fr-fr culture. 
+as the previous code, the output is like the expected for the en-us and fr-fr culture. 
 
 ## PsloggedOn.exe
 
@@ -417,5 +417,7 @@ This cmdlet is based on WinRM use.
 Depending what you're looking for, you have the choice for the tool to use. 
 - Only Connected users : Get-CimInstance or Get-Process are a good choice. PsLoggedOn.exe too, but this requires that that tool is on the computer (and its path known by Powershell)
 - Idle sessions : quser.exe is a good choice. Take care of the culture to avoid any issue. But if the remote computers are accessed only using WINRM (RemoteShell or RemoteManagement), Get-PSSession is the easiest way. 
+
+
 
 
