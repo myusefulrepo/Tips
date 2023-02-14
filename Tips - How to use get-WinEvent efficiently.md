@@ -337,7 +337,7 @@ LogonGuid        : d4f4ef05-feb0-b080-aef8-c5007d1ff1de
 Reach the goal ! Only users accounts.
 
 
-12 - Another Way to identify the interresting thing in an EventLog
+# 12 - Another Way to identify the interesting thing in an EventLog
 
 Upper I'm talking about Level and KeyWords as filters. 
 
