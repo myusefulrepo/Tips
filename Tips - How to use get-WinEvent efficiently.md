@@ -335,3 +335,297 @@ Workstation      : W2K19-DC
 LogonGuid        : d4f4ef05-feb0-b080-aef8-c5007d1ff1de
 ````
 Reach the goal ! Only users accounts.
+
+
+12 - Another Way to identify the interresting thing in an EventLog
+
+Upper I'm talking about Level and KeyWords as filters. 
+
+Below, I'm define 2 vars ````$Level```` and ````$EventKeyWords````
+
+````powershell 
+$Levels = @{LogAlways     = 0
+            Critical      = 1
+            Error         = 2
+            Warning       = 3
+            Informational = 4
+            Verbose       = 5
+        }
+
+$EventValues = @{} # Init
+
+$EventKeywords = @(
+            "AuditFailure",
+            "AuditSuccess",
+            "CorrelationHint2",
+            "EventLogClassic",
+            "Sqm",
+            "WdiDiagnostic",
+            "WdiContext",
+            "ResponseTime",
+            "None"
+        )
+
+foreach ($EventKeyword in $EventKeywords) 
+    {
+    [string]$Value = ([System.Diagnostics.Eventing.Reader.StandardEventKeywords]::$($EventKeyword)).value__
+    $EventValues.add("$EventKeyword", $Value)
+    }
+````
+
+Later, in a Events query, I'm using them as filter
+
+
+````powershell 
+$StartTime = (Get-Date).AddDays(-1)
+$EndTime = Get-Date
+$Events = Get-WinEvent -FilterHashtable @{ LogName = "Security"
+                                 StartTime = $StartTime
+                                 EndTime = $EndTime
+                                 ID = "4688"
+                                 Level =  $Levels['LogAlways']
+                                 KeyWords = $eventValues['AuditSuccess']
+                                 }
+````
+A Name is easier to remember than a number for KeyWords :-)
+
+Now take a look to a specific event in details
+
+````Powershell
+$Events[0] | select *
+
+
+Message              : Un nouveau processus a été créé.
+                       
+                       Objet créateur :
+                       	ID de sécurité :		S-1-5-21-349234613-936635038-205130404-1001
+                       	Nom du compte :		Olivier
+                       	Domaine du compte :		ASUS10
+                       	ID de connexion :		0xAE1AC
+                       
+                       Objet cible :
+                       	ID de sécurité :		S-1-0-0
+                       	Nom du compte :		-
+                       	Domaine du compte :		-
+                       	ID de connexion :		0x0
+                       
+                       Informations sur le processus :
+                       	ID du nouveau processus :		0x3d74
+                       	Nom du nouveau processus :	C:\Program Files\Mozilla Firefox\firefox.exe
+                       	Type d'élévation du jeton :	%%1938
+                       	Étiquette obligatoire :		S-1-16-4096
+                       	ID du processus créateur :	0x4fe0
+                       	Nom du processus créateur :	C:\Program Files\Mozilla Firefox\firefox.exe
+                       	Ligne de commande du processus :	"C:\Program Files\Mozilla Firefox\firefox.exe" -contentproc --channel="20448.37.571700948\1501264702" -childID 34 -isForBrowser 
+                       -prefsHandle 5528 -prefMapHandle 10232 -prefsLen 40066 -prefMapSize 238551 -jsInitHandle 1356 -jsInitLen 246772 -a11yResourceId 64 -parentBuildID 20230127170202 
+                       -win32kLockedDown -appDir "C:\Program Files\Mozilla Firefox\browser" - {b86a8ac9-5b9f-4130-b175-c9d50812c90a} 20448 "\\.\pipe\gecko-crash-server-pipe.20448" 9280 
+                       2b1b0cda558 tab
+                       
+                       Le type d'élévation du jeton indique le type de jeton qui a été attribué au nouveau processus conformément à la stratégie Contrôle de compte d'utilisateur.
+                       
+                       Le type 1 est un jeton complet sans aucun privilège supprimé ni groupe désactivé. Un jeton complet est uniquement utilisé si le Contrôle de compte d'utilisateur 
+                       est désactivé, ou que l'utilisateur est le compte d'administrateur intégré ou un compte de service.
+                       
+                       Le type 2 est un jeton avec élévation de privilèges sans aucun privilège supprimé ni groupe désactivé. Un jeton avec élévation de privilèges est utilisé lorsque 
+                       le Contrôle de compte d'utilisateur est activé et que l'utilisateur choisit de démarrer le programme en tant qu'administrateur. Un jeton avec élévation de 
+                       privilèges est également utilisé lorsqu'une application est configurée pour exiger systématiquement un privilège administratif ou le privilège maximal, et que 
+                       l'utilisateur est membre du groupe Administrateurs.
+                       
+                       Le type 3 est un jeton limité dont les privilèges administratifs sont supprimés et les groupes administratifs désactivés. Le jeton limité est utilisé lorsque le 
+                       Contrôle de compte d'utilisateur est activé, que l'application n'exige pas le privilège administratif et que l'utilisateur ne choisit pas de démarrer le 
+                       programme en tant qu'administrateur.
+Id                   : 4688
+Version              : 2
+Qualifiers           : 
+Level                : 0
+Task                 : 13312
+Opcode               : 0
+Keywords             : -9214364837600034816
+RecordId             : 7451704
+ProviderName         : Microsoft-Windows-Security-Auditing
+ProviderId           : 54849625-5478-4994-a5ba-3e3b0328c30d
+LogName              : Security
+ProcessId            : 4
+ThreadId             : 25248
+MachineName          : ASUS10
+UserId               : 
+TimeCreated          : 14/02/2023 06:55:58
+ActivityId           : 
+RelatedActivityId    : 
+ContainerLog         : Security
+MatchedQueryIds      : {}
+Bookmark             : System.Diagnostics.Eventing.Reader.EventBookmark
+LevelDisplayName     : Information
+OpcodeDisplayName    : Informations
+TaskDisplayName      : Process Creation
+KeywordsDisplayNames : {Succès de l’audit}
+Properties           : {System.Diagnostics.Eventing.Reader.EventProperty, System.Diagnostics.Eventing.Reader.EventProperty, System.Diagnostics.Eventing.Reader.EventProperty, 
+                       System.Diagnostics.Eventing.Reader.EventProperty...}
+````
+
+````powershell 
+$Events[0] | Get-Member
+
+   TypeName : System.Diagnostics.Eventing.Reader.EventLogRecord
+
+Name                 MemberType   Definition                                                                                                                                             
+----                 ----------   ----------                                                                                                                                             
+Dispose              Method       void Dispose(), void IDisposable.Dispose()                                                                                                             
+Equals               Method       bool Equals(System.Object obj)                                                                                                                         
+FormatDescription    Method       string FormatDescription(), string FormatDescription(System.Collections.Generic.IEnumerable[System.Object] values)                                     
+GetHashCode          Method       int GetHashCode()                                                                                                                                      
+GetPropertyValues    Method       System.Collections.Generic.IList[System.Object] GetPropertyValues(System.Diagnostics.Eventing.Reader.EventLogPropertySelector propertySelector)        
+GetType              Method       type GetType()                                                                                                                                         
+ToString             Method       string ToString()                                                                                                                                      
+ToXml                Method       string ToXml()                                                                                                                                         
+Message              NoteProperty string Message=Un nouveau processus a été créé....                                                                                                     
+ActivityId           Property     System.Nullable[guid] ActivityId {get;}                                                                                                                
+Bookmark             Property     System.Diagnostics.Eventing.Reader.EventBookmark Bookmark {get;}                                                                                       
+ContainerLog         Property     string ContainerLog {get;}                                                                                                                             
+Id                   Property     int Id {get;}                                                                                                                                          
+Keywords             Property     System.Nullable[long] Keywords {get;}                                                                                                                  
+KeywordsDisplayNames Property     System.Collections.Generic.IEnumerable[string] KeywordsDisplayNames {get;}                                                                             
+Level                Property     System.Nullable[byte] Level {get;}                                                                                                                     
+LevelDisplayName     Property     string LevelDisplayName {get;}                                                                                                                         
+LogName              Property     string LogName {get;}                                                                                                                                  
+MachineName          Property     string MachineName {get;}                                                                                                                              
+MatchedQueryIds      Property     System.Collections.Generic.IEnumerable[int] MatchedQueryIds {get;}                                                                                     
+Opcode               Property     System.Nullable[int16] Opcode {get;}                                                                                                                   
+OpcodeDisplayName    Property     string OpcodeDisplayName {get;}                                                                                                                        
+ProcessId            Property     System.Nullable[int] ProcessId {get;}                                                                                                                  
+Properties           Property     System.Collections.Generic.IList[System.Diagnostics.Eventing.Reader.EventProperty] Properties {get;}                                                   
+ProviderId           Property     System.Nullable[guid] ProviderId {get;}                                                                                                                
+ProviderName         Property     string ProviderName {get;}                                                                                                                             
+Qualifiers           Property     System.Nullable[int] Qualifiers {get;}                                                                                                                 
+RecordId             Property     System.Nullable[long] RecordId {get;}                                                                                                                  
+RelatedActivityId    Property     System.Nullable[guid] RelatedActivityId {get;}                                                                                                         
+Task                 Property     System.Nullable[int] Task {get;}                                                                                                                       
+TaskDisplayName      Property     string TaskDisplayName {get;}                                                                                                                          
+ThreadId             Property     System.Nullable[int] ThreadId {get;}                                                                                                                   
+TimeCreated          Property     System.Nullable[datetime] TimeCreated {get;}                                                                                                           
+UserId               Property     System.Security.Principal.SecurityIdentifier UserId {get;}                                                                                             
+Version              Property     System.Nullable[byte] Version {get;}   
+````
+
+As previously, some interesting things in different properties but also interessting things in the ````Message Note Property.````. How to retrieve that ? A way is to convert events to xml. 
+
+Take a look for a specific event. 
+
+````powershell 
+[xml]$Xmldoc = ($Events[0]).ToXml()
+$Xmldoc
+
+Event
+-----
+Event
+
+# and now
+$xmldoc.event.eventdata.Data
+
+Name               #text                                                                                                                                                                 
+----               -----                                                                                                                                                                 
+SubjectUserSid     S-1-5-21-349234613-936635038-205130404-1001                                                                                                                           
+SubjectUserName    Olivier                                                                                                                                                               
+SubjectDomainName  ASUS10                                                                                                                                                                
+SubjectLogonId     0xae1ac                                                                                                                                                               
+NewProcessId       0x3d74                                                                                                                                                                
+NewProcessName     C:\Program Files\Mozilla Firefox\firefox.exe                                                                                                                          
+TokenElevationType %%1938                                                                                                                                                                
+ProcessId          0x4fe0                                                                                                                                                                
+CommandLine        "C:\Program Files\Mozilla Firefox\firefox.exe" -contentproc --channel="20448.37.571700948\1501264702" -childID 34 -isForBrowser -prefsHandle 5528 -prefMapHandle 10...
+TargetUserSid      S-1-0-0                                                                                                                                                               
+TargetUserName     -                                                                                                                                                                     
+TargetDomainName   -                                                                                                                                                                     
+TargetLogonId      0x0                                                                                                                                                                   
+ParentProcessName  C:\Program Files\Mozilla Firefox\firefox.exe                                                                                                                          
+MandatoryLabel     S-1-16-4096
+````
+
+Here I'm retreive a interessting info. 
+````powershell
+$NewProcessName   = ($xmldoc.event.eventdata.Data  | Where-Object name -EQ "NewProcessName").'#text'
+
+[07:43:13] C:/Temp> $NewProcessName
+C:\Program Files\Mozilla Firefox\firefox.exe
+````
+
+At this step, I've identified the "Standards" properties I'm looking for and the other information retrieved from ````Message Note Properties````. 
+Now build our ````PSCustomObject````
+
+````powershell
+# initialization - I'm using A Generic list because, it's the more efficient way for performance 
+$Output = [System.Collections.Generic.List[PSObject]]::new()  
+foreach ($Item in  $Events)
+    {
+    [Xml]$Xml = $Item.toxml()
+    $Obj =  [PSCustomObject]@{
+            TimeCreated = $Item.TimeCreated
+            ID = $Item.ID
+            LogName  = $Item.LogName
+            ProviderName = $Item.ProviderName
+            MachineName = $Item.MachineName
+            LevelDisplayName = $Item.LevelDisplayName
+            TaskDisplayName  = $Item.TaskDisplayName
+            KeyWordsDisplayNames = $Item.KeyWordsDisplayNames
+            SubjectUserSid = ($xml.Event.EventData.Data | Where-Object name -EQ "SubjectUserSid").'#text'
+            SubjectUserName  = ($xml.Event.EventData.Data | Where-Object name -EQ "SubjectUserName").'#text'
+            SubjectDomainName = ($xml.Event.EventData.Data | Where-Object name -EQ "SubjectDomainName").'#text'
+            NewProcessName = ($xml.Event.EventData.Data | Where-Object name -EQ "NewProcessName").'#text'
+            CommandLine  = ($xml.Event.EventData.Data | Where-Object name -EQ "CommandLine").'#text'
+            ParentProcessName  = ($xml.Event.EventData.Data | Where-Object name -EQ "ParentProcessName").'#text'
+            }
+      $Output.add($Obj)
+}
+$Output
+````
+$Output is a object, then the structure is not broken if i want to export in a .csv file. 
+
+````powershell 
+$Output.GetType()
+
+IsPublic IsSerial Name                                     BaseType                                                                                                                      
+-------- -------- ----                                     --------                                                                                                                      
+True     True     List`1                                   System.Object
+````    
+
+Take a look in the output (just an extract)
+
+````powershell 
+TimeCreated          : 13/02/2023 07:01:10
+ID                   : 4688
+LogName              : Security
+ProviderName         : Microsoft-Windows-Security-Auditing
+MachineName          : ASUS10
+LevelDisplayName     : Information
+TaskDisplayName      : Process Creation
+KeyWordsDisplayNames : {Succès de l’audit}
+SubjectUserSid       : S-1-5-18
+SubjectUserName      : ASUS10$
+SubjectDomainName    : WORKGROUP
+NewProcessName       : C:\Windows\System32\dwm.exe
+CommandLine          : "dwm.exe"
+ParentProcessName    : C:\Windows\System32\winlogon.exe
+
+TimeCreated          : 13/02/2023 07:01:10
+ID                   : 4688
+LogName              : Security
+ProviderName         : Microsoft-Windows-Security-Auditing
+MachineName          : ASUS10
+LevelDisplayName     : Information
+TaskDisplayName      : Process Creation
+KeyWordsDisplayNames : {Succès de l’audit}
+SubjectUserSid       : S-1-5-18
+SubjectUserName      : ASUS10$
+SubjectDomainName    : WORKGROUP
+NewProcessName       : C:\Windows\System32\svchost.exe
+CommandLine          : C:\Windows\system32\svchost.exe -k DcomLaunch -p -s LSM
+ParentProcessName    : C:\Windows\System32\services.exe
+````
+
+# Synthesis
+
+ when we're looking in the eventslog
+- Gathering Data with filter (s) using FilterHashTable for more efficiencly. This operation could be long, then put the result in a var.
+- Identify the interesting properties to display or export with ````Get-Member```` but also with a transformation into a .xml for everything that is in the ````Note Properties Message````.
+
+Hope this help
