@@ -1,5 +1,5 @@
 ﻿Write-Host 'Loading Profil' -ForegroundColor Yellow
-Write-Host 'Profil Loading Time : ' (Measure-Command { 
+Write-Host 'Profil Loading Time : ' (Measure-Command {
 
         #region Settings to use TLS1.2 to update modules from PowershellGallery since 01 May 2020
         Write-Host 'Setting :  Use TLS1.2 to update modules from PowershellGallery since 01 May 2020' -ForegroundColor 'DarkGray'
@@ -269,9 +269,12 @@ Write-Host 'Fully loaded profile' -ForegroundColor Yellow
 #region receive jobs when they are finished
  if ($Date.Day -eq "1")
     {
+    Receive-Job -Name SysternalSuite -Wait
+    }
+ if ($Date.DayOfWeek -eq 'friday')
+    {
     Receive-Job -Name UpdateModCurrentUser -Wait
     Receive-Job -Name UpdateModAllUsers -Wait
-    Receive-Job -Name SysternalSuite -Wait
     }
 #endregion receive jobs when they are finished
 
