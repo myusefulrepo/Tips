@@ -4,6 +4,8 @@ Identify duplicate file using their names, is not a solution, because the conten
 
 The way is to use Powershell, calculate the file Hash of each files, and then choose the file to keep, and the files (duplicate) to remove. 
 
+When 2 hashes are identical, the contents of the files are identical. This is independent of the file type. Thus, 2 image files may appear to have identical content, but if only 1 pixel is different, their hash will be different. The hash is therefore an infallible means of file comparison
+
 ## Take a look on the cmdlet ````Get-FileHash````
 
 ````powershell 
@@ -13,7 +15,7 @@ Algorithm       Hash                                                            
 ---------       ----                                                                   ----
 SHA256          E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855       C:\temp\ABCD_CPD_koufsdiofu.txt
 ````
-> [ Nota ] : The cmdlete Get-FileHash has a parameter called Algorithm. The Default value for this parameter is ````SHA256````, but you can choose other algorithm (MD5, SHA1, SHA256, SHA384, Sha512, MACTripleDES, RIPEMD160)
+> [ Nota ] : The cmdlet Get-FileHash has a parameter called Algorithm. The Default value for this parameter is ````SHA256````, but you can choose other algorithm (MD5, SHA1, SHA256, SHA384, Sha512, MACTripleDES, RIPEMD160)
 
 
 ````powershell
