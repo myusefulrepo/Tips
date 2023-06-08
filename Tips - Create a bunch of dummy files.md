@@ -15,7 +15,7 @@ $File.Close()
 ````
 
 
-## Create a bunch of file with different sizes and in a diffrent quantity
+## Create a bunch of file with different sizes and in a different quantity
 
 ````powershell
 $PathForDummyFiles = "c:\temp"
