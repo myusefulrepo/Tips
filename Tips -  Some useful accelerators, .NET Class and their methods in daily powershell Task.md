@@ -17,6 +17,8 @@
     - [13. Using `[WMIClass]` Type to query WMI](#13-using-wmiclass-type-to-query-wmi)
     - [14. Test if Admin Privileges using `[Security.Principal.WindowsBuiltInRole]` and `[Security.Principal.WindowsIdentity]` .NET Class](#14-test-if-admin-privileges-using-securityprincipalwindowsbuiltinrole-and-securityprincipalwindowsidentity-net-class)
     - [15. Finding System Folders using the `[Environment+SpecialFolder]` accelerator](#15-finding-system-folders-using-the-environmentspecialfolder-accelerator)
+    - [16. Validate an IPAddress using `[IPAddress]` accelerator or `[System.Net.IPAddress]` .NET Class](#16-validate-an-ipaddress-using-ipaddress-accelerator-or-systemnetipaddress-net-class)
+    - [17. Get a list of all available accelerators](#17-get-a-list-of-all-available-accelerators)
   - [final Word](#final-word)
 
 
@@ -679,6 +681,203 @@ SystemX86              C:\WINDOWS\SysWOW64                                      
 Templates              C:\Users\Olivier\AppData\Roaming\Microsoft\Windows\Templates                                [Environment]::GetFolderPath("Templates")
 UserProfile            C:\Users\Olivier                                                                            [Environment]::GetFolderPath("UserProfile")
 Windows                C:\WINDOWS                                                                                  [Environment]::GetFolderPath("Windows")
+````
+
+### 16. Validate an IPAddress using `[IPAddress]` accelerator or `[System.Net.IPAddress]` .NET Class
+The `[IPAddress]` powershell accelerator is formally the `[System.Net.IPAddress]` .NET Class.
+
+Some people use a Regex to validate an IP (v4 or V6). The Regex is not always easy to develop. This is not always necessary to make this effort, the [IPAddress] accelerator can help you go faster.
+eg.
+
+````Powershell
+# in commandline
+$string ="192.168.0.20"
+$string -match [ipaddress]$string
+True
+
+$string ="2345:425:2ca1::567:5673:23b5"
+$string -match [ipaddress]$string
+True
+
+# in a advanced function
+        [ValidateScript({
+            If ($_ -match [IPAddress]$_) 
+                {
+                $true
+                }
+            else
+                {
+                Throw "Cannot convert value `"$_`" to type `"System.Net.IPAddress`". Error: `"An invalid IP address was specified.`""
+                }
+            })]
+        [String]$IpAddress
+
+# or a shorter version
+$_ -as [IPAddress] -as [bool]
+
+# with a IPv4 Address
+"192.168.0.20" -as [IPAddress]
+
+Address            : 335587520
+AddressFamily      : InterNetwork
+ScopeId            :
+IsIPv6Multicast    : False
+IsIPv6LinkLocal    : False
+IsIPv6SiteLocal    : False
+IsIPv6Teredo       : False
+IsIPv4MappedToIPv6 : False
+IPAddressToString  : 192.168.0.20
+
+# With a IPv6 address
+"2345:0425:2CA1:0000:0000:0567:5673:23b5" -as [IPAddress]
+
+Address            :
+AddressFamily      : InterNetworkV6
+ScopeId            : 0
+IsIPv6Multicast    : False
+IsIPv6LinkLocal    : False
+IsIPv6SiteLocal    : False
+IsIPv6Teredo       : False
+IsIPv4MappedToIPv6 : False
+IPAddressToString  : 2345:425:2ca1::567:5673:23b5
+````
+Have you seen the difference between IPv4 and IPv6 ? The value of the property `AddressFamilly` is not the same.
+Then, we could distinguish them easily. 
+
+````Powershell
+$string ="192.168.0.20"
+$string -match [ipaddress]$string -and ([ipaddress]$string).AddressFamily -eq "InterNetwork"
+True
+
+$string ="2345:425:2ca1::567:5673:23b5"
+$string -match [ipaddress]$string -and ([ipaddress]$string).AddressFamily -eq "InterNetworkv6"
+True
+````
+
+Another way is using the `TryParse()` method that can also validate a IP Address, like in the following code sample
+
+````Powershell
+[ipaddress]::TryParse
+OverloadDefinitions
+-------------------
+static bool TryParse(string ipString, [ref] ipaddress address)  
+
+# with a Valid IPAddress
+[ipaddress]::TryParse("192.168.1.145",[ref][ipaddress]::Loopback)
+True
+# with an Invalid IPAddress
+[ipaddress]::TryParse("192.168.1.300",[ref][ipaddress]::Loopback)
+False
+````
+
+>[**Attention Point**] : There is a limitation with `[IPAddress]::TryParse()` method, that is it verifies if a string could be converted to an IP address. So, if you pass a string “10”, it considered as “0.0.0.10” and $true would be returned.
+
+````powershell
+[ipaddress]::TryParse("10",[ref][ipaddress]::Loopback)
+True
+````
+
+### 17. Get a list of all available accelerators
+
+````powershell
+$acceleratorsType = [PSObject].Assembly.GetType("System.Management.Automation.TypeAccelerators")::Get
+$acceleratorsType
+Key                          Value
+---                          -----
+Alias                        System.Management.Automation.AliasAttribute
+AllowEmptyCollection         System.Management.Automation.AllowEmptyCollectionAttribute
+AllowEmptyString             System.Management.Automation.AllowEmptyStringAttribute
+AllowNull                    System.Management.Automation.AllowNullAttribute
+ArgumentCompleter            System.Management.Automation.ArgumentCompleterAttribute
+array                        System.Array
+bool                         System.Boolean
+byte                         System.Byte
+char                         System.Char
+CmdletBinding                System.Management.Automation.CmdletBindingAttribute
+datetime                     System.DateTime
+decimal                      System.Decimal
+double                       System.Double
+DscResource                  System.Management.Automation.DscResourceAttribute
+float                        System.Single
+single                       System.Single
+guid                         System.Guid
+hashtable                    System.Collections.Hashtable
+int                          System.Int32
+int32                        System.Int32
+int16                        System.Int16
+long                         System.Int64
+int64                        System.Int64
+ciminstance                  Microsoft.Management.Infrastructure.CimInstance
+cimclass                     Microsoft.Management.Infrastructure.CimClass
+cimtype                      Microsoft.Management.Infrastructure.CimType
+cimconverter                 Microsoft.Management.Infrastructure.CimConverter
+IPEndpoint                   System.Net.IPEndPoint
+NullString                   System.Management.Automation.Language.NullString
+OutputType                   System.Management.Automation.OutputTypeAttribute
+ObjectSecurity               System.Security.AccessControl.ObjectSecurity
+Parameter                    System.Management.Automation.ParameterAttribute
+PhysicalAddress              System.Net.NetworkInformation.PhysicalAddress
+pscredential                 System.Management.Automation.PSCredential
+PSDefaultValue               System.Management.Automation.PSDefaultValueAttribute
+pslistmodifier               System.Management.Automation.PSListModifier
+psobject                     System.Management.Automation.PSObject
+pscustomobject               System.Management.Automation.PSObject
+psprimitivedictionary        System.Management.Automation.PSPrimitiveDictionary
+ref                          System.Management.Automation.PSReference
+PSTypeNameAttribute          System.Management.Automation.PSTypeNameAttribute
+regex                        System.Text.RegularExpressions.Regex
+DscProperty                  System.Management.Automation.DscPropertyAttribute
+sbyte                        System.SByte
+string                       System.String
+SupportsWildcards            System.Management.Automation.SupportsWildcardsAttribute
+switch                       System.Management.Automation.SwitchParameter
+cultureinfo                  System.Globalization.CultureInfo
+bigint                       System.Numerics.BigInteger
+securestring                 System.Security.SecureString
+timespan                     System.TimeSpan
+uint16                       System.UInt16
+uint32                       System.UInt32
+uint64                       System.UInt64
+uri                          System.Uri
+ValidateCount                System.Management.Automation.ValidateCountAttribute
+ValidateDrive                System.Management.Automation.ValidateDriveAttribute
+ValidateLength               System.Management.Automation.ValidateLengthAttribute
+ValidateNotNull              System.Management.Automation.ValidateNotNullAttribute
+ValidateNotNullOrEmpty       System.Management.Automation.ValidateNotNullOrEmptyAttribute
+ValidatePattern              System.Management.Automation.ValidatePatternAttribute
+ValidateRange                System.Management.Automation.ValidateRangeAttribute
+ValidateScript               System.Management.Automation.ValidateScriptAttribute
+ValidateSet                  System.Management.Automation.ValidateSetAttribute
+ValidateTrustedData          System.Management.Automation.ValidateTrustedDataAttribute
+ValidateUserDrive            System.Management.Automation.ValidateUserDriveAttribute
+version                      System.Version
+void                         System.Void
+ipaddress                    System.Net.IPAddress
+DscLocalConfigurationManager System.Management.Automation.DscLocalConfigurationManagerAttribute
+WildcardPattern              System.Management.Automation.WildcardPattern
+X509Certificate              System.Security.Cryptography.X509Certificates.X509Certificate
+X500DistinguishedName        System.Security.Cryptography.X509Certificates.X500DistinguishedName
+xml                          System.Xml.XmlDocument
+CimSession                   Microsoft.Management.Infrastructure.CimSession
+adsi                         System.DirectoryServices.DirectoryEntry
+adsisearcher                 System.DirectoryServices.DirectorySearcher
+wmiclass                     System.Management.ManagementClass
+wmi                          System.Management.ManagementObject
+wmisearcher                  System.Management.ManagementObjectSearcher
+mailaddress                  System.Net.Mail.MailAddress
+scriptblock                  System.Management.Automation.ScriptBlock
+psvariable                   System.Management.Automation.PSVariable
+type                         System.Type
+psmoduleinfo                 System.Management.Automation.PSModuleInfo
+powershell                   System.Management.Automation.PowerShell
+runspacefactory              System.Management.Automation.Runspaces.RunspaceFactory
+runspace                     System.Management.Automation.Runspaces.Runspace
+initialsessionstate          System.Management.Automation.Runspaces.InitialSessionState
+psscriptmethod               System.Management.Automation.PSScriptMethod
+psscriptproperty             System.Management.Automation.PSScriptProperty
+psnoteproperty               System.Management.Automation.PSNoteProperty
+psaliasproperty              System.Management.Automation.PSAliasProperty
+psvariableproperty           System.Management.Automation.PSVariableProperty
 ````
 
 ## final Word
