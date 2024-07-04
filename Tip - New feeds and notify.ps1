@@ -5,7 +5,7 @@
 
 .DESCRIPTION
     Search for new Feeds on one or more site,
-    Ddisplay in the console (default) and in Windows Notifications with clickable button if the parameter Notify is used
+    Ddisplay in the console (default) and/or in Windows Notifications with clickable button dependaing of the method choosen.
 
 .PARAMETER NumberofItems
     Number of New feeds to retrieve
@@ -14,9 +14,9 @@
 .PARAMETER URIs
     Array of URL strings to query for new feeds
 
-.PARAMETER Notify
-    If passed there is also a Windows Notification, else none.
-    Advice : if you use it, decrease the NumberOfItems otherwise you will have a lot of notifications.
+.PARAMETER method
+    Posible values : Console, Toast, Both
+    Advice : if you use Toast, decrease the NumberOfItems otherwise you will have a lot of notifications.
 
 .INPUTS
     None
@@ -66,12 +66,13 @@ Sun, 23 Jun 2024 21:22:25 +0000 PSConfEU 2024                                   
     DON'T USE IT, The site links are doubled just to serve as an example.
 
 .NOTES
-Version         : 1.0
+Version         : 1.1
 Date            : 04/07/2024
 Author          : O. FERRIERE
 Change          : v1.0 - 04/07/2024 - Initial Version
                   Based on https://powershellisfun.com/2022/05/30/reading-rss-feeds-in-powershell/
                   Adding Windows Notifications using BurnToast Module
+                  v1.1 - Change [Switch] Notify by a [String] Way with a validateSet
 #>
 
 [CmdletBinding()]
@@ -84,9 +85,10 @@ param (
     [string[]]
     $URIs = @('http://powershellisfun.com/feed', 'http://powershellisfun.com/feed'),
 
-    [Parameter(HelpMessage = 'If passed, Windows notifications will be used too')]
-    [switch]
-    $Notify
+    [Parameter(HelpMessage = 'The Way the output will be displayed')]
+    [ValidateSet('Console', 'Toast', 'Both')]
+    [string]
+    $Method
 )
 
 #region import necessary Modules
@@ -116,10 +118,17 @@ function Test-Module
 Test-Module -ModuleName BurntToast
 #endregion import necessary Modules
 
+#region verbose mode
+if ($PSBoundParameters.Containskey('Verbose') )
+{
+    $PSBoundParameters
+}
+#endregion verbose mode
+
+#region Gathering Data
 foreach ($link in $URIs)
 {
-    Write-Output "New feeds for : [$link]"
-    $total = foreach ($item in Invoke-RestMethod -Uri $link )
+    $Total = foreach ($item in Invoke-RestMethod -Uri $link )
     {
         [PSCustomObject]@{
             'Publication date' = $item.pubDate
@@ -128,28 +137,35 @@ foreach ($link in $URIs)
             #Description        = $item.description
         }
     }
+}
+#endregion Gathering Data
+
+#region display
+if ($PSBoundParameters.ContainsKey('Console') )
+{
     Write-Verbose -Message 'Display on the console'
     $Total |
         Sort-Object { $_.'Publication Date' -as [datetime] } |
         Select-Object -Last $NumberOfItems |
         Format-Table -AutoSize -Wrap
     Write-Output ' '
+}
 
+elseif ($PSBoundParameters.ContainsKey('Toast') )
+{
     Write-Verbose -Message 'Launch BurnToast notifications'
-    if ($Notify)
+    $RSSLinks = ($Total |
+            Sort-Object { $_.'Publication Date' -as [datetime] } |
+            Select-Object -Last $NumberOfItems).Link
+    foreach ($item in $RSSLinks)
     {
-        $RSSLinks = ($Total |
-                Sort-Object { $_.'Publication Date' -as [datetime] } |
-                Select-Object -Last $NumberOfItems).Link
-        foreach ($item in $RSSLinks)
-        {
-            $Button = New-BTButton -Content 'Go to the site' -Arguments "$Item"
-            $Splat = @{
-                Text   = "New feed for [$Link]!"
-                Sound  = 'IM'
-                Button = $Button
-            }
-            New-BurntToastNotification @Splat
+        $Button = New-BTButton -Content 'Go to the site' -Arguments "$link"
+        $Splat = @{
+            Text   = "New feed for $Link", " ==> $Item"
+            Sound  = 'IM'
+            Button = $Button
         }
+        New-BurntToastNotification @Splat
     }
 }
+#endregion display
