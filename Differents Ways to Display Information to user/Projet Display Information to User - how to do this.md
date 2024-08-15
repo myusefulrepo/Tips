@@ -156,8 +156,39 @@ and the result is like the following :
 [<img src=".\Images\Windows Notification.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/Windows%20Notification.png)
 
 
-
 ### Using the Windows notification system using the BurntToast powershell module
+
+I have commented the code below to make it easier to understand.
+
+````Powershell 
+# Import Module BurntToast
+Import-Module -Name BurntToast
+# gathering WAN IP and Country info.
+$URL = 'http://ifconfig.me/ip'
+$IP = (Invoke-WebRequest -Uri $URL).Content
+
+# Info message for BurtnToast Notification
+$IPInfo = Invoke-RestMethod -Method Get -Uri "http://ip-api.com/json/$IP"
+$Text = @"
+WAN IP Address : $IP
+Country : $($IPInfo.country)
+"@
+$Title = 'WAN Info'
+# BurtToast notification and parameters
+New-BurntToastNotification -Text $Title, $Text -Silent -SnoozeAndDismiss
+````
+and the result is like the following :
+
+
+[<img src=".\Images\BurntToast Notification.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/BurntToast Notification.png)
+
+
+
+[<img src=".\Images\BurntToast Notification-Schedule.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/BurntToast Notification-Schedule.png)
+
+
+
+
 
 ### Using a WPF (Windows Presentation Framework) Windows
 
