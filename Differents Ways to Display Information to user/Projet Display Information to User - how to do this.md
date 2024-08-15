@@ -14,8 +14,7 @@
     - [Using the Windows notification system using the BurntToast powershell module](#using-the-windows-notification-system-using-the-burnttoast-powershell-module)
     - [Using a WPF (Windows Presentation Framework) Windows](#using-a-wpf-windows-presentation-framework-windows)
     - [Using the PowerBGInfo powershell module](#using-the-powerbginfo-powershell-module)
-  - [What type of display will I choose ?](#what-type-of-display-will-i-choose-)
-  - [advantages vs disavantages](#advantages-vs-disavantages)
+  - [What type of display will I choose ? Advantages vs disavantages](#what-type-of-display-will-i-choose--advantages-vs-disavantages)
   - [final word](#final-word)
 
 ## Preface
@@ -167,7 +166,7 @@ Import-Module -Name BurntToast
 $URL = 'http://ifconfig.me/ip'
 $IP = (Invoke-WebRequest -Uri $URL).Content
 
-# Info message for BurtnToast Notification
+# Info message for BurntToast Notification
 $IPInfo = Invoke-RestMethod -Method Get -Uri "http://ip-api.com/json/$IP"
 $Text = @"
 WAN IP Address : $IP
@@ -187,16 +186,129 @@ The reminder scheduling can be configured with different values :
 
 [<img src=".\Images\BurntToast-Notification-Schedule.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/BurntToast-Notification-Schedule.png)
 
-
-
-
+There are also many possible display settings such as adding icons to the notification window, repetitive messages with variable content, etc. We will refer to the [BurntToast module](https://github.com/Windos/BurntToast) documentation and more precisely to the examples that are provided.
 
 ### Using a WPF (Windows Presentation Framework) Windows
 
+I have commented the code below to make it easier to understand.
+
+
+````powershell
+# gathering WAN IP and Country info.
+$URL = 'http://ifconfig.me/ip'
+$IP = (Invoke-WebRequest -Uri $URL).Content
+$IPInfo = Invoke-RestMethod -Method Get -Uri "http://ip-api.com/json/$IP"
+# Info message for the Windows
+$Text = @"
+WAN IP Address : $IP
+Country : $($IPInfo.country)
+"@
+
+Add-Type -AssemblyName PresentationFramework
+
+# Creating the window
+$Window = [System.Windows.Window]::new()
+$Window.AllowsTransparency    #borderless window
+$Window.WindowStyle = 'none' # non-movable window. Here I'm choosing a non-movable window
+$Window.SizeToContent = 'WidthAndHeight'
+$Window.WindowStartupLocation = 'manual' # or 0 for 'manual', 1 for 'CenterScreen' or 2 for 'centerowner', If Manual is selected, $Window.Left, and $Window.Right or $Window.Top could be defined
+$Window.left = 3450 # adjust to your resolution. Here I'm choosing the top right corner. The value is high, but I have a big screen with high resolution (3840 x 1080)
+$Window.Top = 0
+$Window.Background = [System.Windows.Media.Brushes]::Azure
+
+# Creating a StackPanel to hold the elements
+$StackPanel = [System.Windows.Controls.StackPanel]::new()
+$StackPanel.Margin = '10'
+
+# Creating label
+$Label = [System.Windows.Controls.Label]::new()
+$Label.Content = "$Text"
+$Label.FontSize = 20
+$Label.FontWeight = 'bold'
+# there is a property called $Label.FontFamily.Source but it's a read-only property. Otherwise, I'll set to = "seguiemj" to have emoji available
+$Label.Foreground = [System.Windows.Media.Brushes]::DarkBlue
+$StackPanel.AddChild($Label) | Out-Null
+
+# Creating button
+$Button = [System.Windows.Controls.Button]::new()
+$Button.Content = 'OK'
+$Button.Padding = '10,5'
+$Button.Background = [System.Windows.Media.Brushes]::AliceBlue
+$Button.Foreground = [System.Windows.Media.Brushes]::DarkBlue
+$Button.FontWeight = 'Bold'
+$StackPanel.AddChild($Button) | Out-Null
+
+# Adding StackPanel to window
+$Window.Content = $StackPanel
+
+# Event for the button
+$Button.Add_Click({
+        $Window.Close()
+    })
+
+# Display Window
+$Window.ShowDialog() | Out-Null
+````
+
+and the result is like the following :
+
+[<img src=".\Images\WTF-Window.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/WTF-Window.png)
+
+
+>[**Nota**] : it is also possible to use a `[Windows.Forms]` .Net class to show a windows, but this way is deprecated.
+
 ### Using the PowerBGInfo powershell module
 
+I have commented the code below to make it easier to understand.
 
-## What type of display will I choose ?
-## advantages vs disavantages
+
+````powershell
+# Import PowerBGInfo module
+Import-Module -Name PowerBGInfo
+
+# gathering WAN IP and Country info
+$URL = 'http://ifconfig.me/ip'
+$IP = (Invoke-WebRequest -Uri $URL).Content
+$IPInfo = Invoke-RestMethod -Method Get -Uri "http://ip-api.com/json/$IP"
+$Country = $IPInfo.Country
+
+New-BGInfo -MonitorIndex 0 -BGInfoContent {
+    # Lets add computer name, but lets use builtin values for that
+    New-BGInfoValue -BuiltinValue HostName -Color Red -FontFamilyName 'Calibri' -FontSize 48
+    # Lets add user name, but lets use builtin values for that
+    New-BGInfoValue -BuiltinValue FullUserName -Name 'FullUserName' -Color White -FontSize 48
+    # Lets add Labels
+    New-BGInfoValue -Name 'WAN IP' -Value $IP -Color white -FontSize 48
+    New-BGInfoValue -Name 'Country' -Value $Country -Color white -FontSize 48
+} -FilePath C:\temp2\wp2058636-3840x1080-wallpapers.jpg -ConfigurationDirectory c:\temp2\Output -PositionX 2500 -PositionY 500 -WallpaperFit Stretch
+````
+Here, I'm using a wallpaper located in my "C:\temp2 folder" as a ref wallpaper and the output will be created in "C:\temp\output".
+
+and the result is like the following :
+
+[<img src=".\Images\PowerBGInfo.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/PowerBGInfo.png)
+
+## What type of display will I choose ? Advantages vs disavantages
+
+The information sought may change over time, to refresh it I would have to restart the script.
+
+| Method                                | advantage | disavantage                                                                                                                                                                                                                              |
+|:--------------------------------------|:----------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Using the Windows notification system |           | you need to know all the subtleties of the .NET class `[System.Windows.Forms.NotifyIcon]` to take full advantage of it. Non-persistent notification : If the notification appears when the user is not behind his screen, he may miss it |
+|Using the Windows notification system using the BurntToast powershell module|Simplicity vs ***Windows Notification***. No need to know the subtleties of the .NET class `[System.Windows.Forms.NotifyIcon]` to take full advantage of it.| Non-persistent notification : If the notification appears when the user is not behind his screen, he may miss it, but it's easier to have a Notification with a reminder| |
+|Using a WPF (Windows Presentation Framework) Windows |Elegant way - Possibility to place the window in a non-obtrusive location on the screen - Persistent window (the user cannot miss it)||
+|Using the PowerBGInfo powershell module |Elegant Way - Ability to place information in a non-obtrusive location on the background image - Persistent information (user cannot miss it)||
+
 ## final word
 
+I hope this little overview has given you an overview of different possibilities, although it is certainly not exhaustive.
+
+I like the use of the **BurntToast** module for the ease of mastering the different possibilities of the module, much easier than having to master the subtleties of the .NET `[System.Windows.Forms.NotifyIcon]` class.
+
+I also like the elegance of windows in **WPF**, despite the relative complexity to obtain a result that is pleasing to the eye.
+
+The **PowerGBInfo** module advantageously replaces the **BGInfo.exe** executable and has interesting possibilities.
+
+Afterwards, depending on the use cases, such a solution may be more suitable than another, or each person may prefer one method over another by personal choice.
+
+Everyone will have their own opinion but I hope this will be useful to you.
