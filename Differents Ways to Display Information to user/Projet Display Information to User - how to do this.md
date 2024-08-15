@@ -153,8 +153,7 @@ $TrayIcon.Dispose() # Releases all resources used
 ````
 and the result is like the following :
 
-!('https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/Windows%20Notification.png)' "Windows Notification")
-
+[<img src=".\Images\Windows Notification.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/Windows%20Notification.png)
 
 
 
