@@ -1,4 +1,4 @@
-﻿# Display Information to User : how to do this ? 
+﻿# Display Information to User : how to do this ?
 
 ## Table of contents
 
