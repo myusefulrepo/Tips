@@ -185,7 +185,7 @@ and the result is like the following :
 The reminder scheduling can be configured with different values :
 
 
-[<img src=".\Images\BurntToast-Notification-Schedule.png.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/BurntToast-Notification-Schedule.png.png)
+[<img src=".\Images\BurntToast-Notification-Schedule.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/BurntToast-Notification-Schedule.png)
 
 
 
