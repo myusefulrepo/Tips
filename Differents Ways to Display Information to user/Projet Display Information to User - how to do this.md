@@ -153,7 +153,7 @@ $TrayIcon.Dispose() # Releases all resources used
 ````
 and the result is like the following :
 
-[<img src=".\Images\Windows Notification.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/Windows%20Notification.png)
+[<img src=".\Images\WindowsNotification.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/WindowsNotification.png)
 
 
 ### Using the Windows notification system using the BurntToast powershell module
@@ -177,9 +177,10 @@ $Title = 'WAN Info'
 # BurtToast notification and parameters
 New-BurntToastNotification -Text $Title, $Text -Silent -SnoozeAndDismiss
 ````
+
 and the result is like the following :
 
-[<img src=".\Images\BurntToast Notification.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/BurntToast Notification.png)
+[<img src=".\Images\BurntToast-Notification.png">](https://github.com/myusefulrepo/Tips/blob/master/Differents%20Ways%20to%20Display%20Information%20to%20user/Images/BurntToast-Notification.png)
 
 The reminder scheduling can be configured with different values
 
