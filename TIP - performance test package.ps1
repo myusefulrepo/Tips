@@ -1,18 +1,18 @@
 ﻿Measure-MyScript -Name "100-Foreach Loop" -Unit ms -Repeat 100 -ScriptBlock {
-$data = @(0..100)
-foreach ( $node in $data )
-{
-    "Item: [$node]"
-}
+    $data = @(0..100)
+    foreach ( $node in $data )
+        {
+        "Item: [$node]"
+        }
 }
 Measure-MyScript -Name "100-Foreach Method" -Unit ms -Repeat 100 -ScriptBlock {
-$data.foreach({"Item [$PSItem]"})
+    $data.foreach({"Item [$PSItem]"})
 }
 Measure-MyScript -Name "100-For loop" -Unit ms -Repeat 100 -ScriptBlock {
-for ( $index = 0; $index -lt $data.count; $index++)
-{
+    for ( $index = 0; $index -lt $data.count; $index++)
+    {
     "Item: [{0}]" -f $data[$index]
-}
+    }
 }
 
 
@@ -87,6 +87,7 @@ name                Avg                 Min                 Max
 100000-For loop     142,1927 Millise... 131,229 Millisec... 207,6459 Millise...
 #>
 
+###########################################################################################
 
 $ProcessList = Get-Process
 Measure-MyScript -Name "Pipeline to Foreach-Object" -Unit ms -Repeat 100 -ScriptBlock {
@@ -106,7 +107,7 @@ Pipeline to Select-Object  3,9765 Milliseconds 3,5232 Milliseconds 11,9467 Milli
 Property                   0,1388 Milliseconds 0,0714 Milliseconds 5,837 Milliseconds  
 #>
 
-
+###########################################################################################
 $data = @(
     [pscustomobject]@{FirstName='Kevin';LastName='Marquette'}
     [pscustomobject]@{FirstName='John'; LastName='Doe'}
@@ -152,6 +153,9 @@ name      Avg                 Min                 Max
 -Match    0,1515 Milliseconds 0,0434 Milliseconds 7,7597 Milliseconds
 #>
 
+###########################################################################################
+
+
 $array = @('one',$null,'three')
 if ( $array -eq $null)
 {
@@ -196,6 +200,8 @@ name                       Avg                 Min                 Max
 Pipeline to Foreach-Object 0,3921 Milliseconds 0,2488 Milliseconds 7,8594 Milliseconds
 Foreach Loop               0,0948 Milliseconds 0,0257 Milliseconds 6,2399 Milliseconds
 #>
+###########################################################################################
+
 
 Measure-MyScript -Name "100-Pipeline to Foreach-Object" -Unit ms -Repeat 100 -ScriptBlock {
 $array = 1..100 | ForEach-Object {
@@ -235,6 +241,8 @@ name                            Avg                  Min                 Max
 1000-Foreach Loop               0,4551 Milliseconds  0,3072 Milliseconds 7,5033 Milliseconds  
 ==> Using Pipeline increase execution Time
 #>
+###########################################################################################
+
 
 
 Measure-MyScript -Name "ArrayList" -Unit ms -Repeat 100 -ScriptBlock {
@@ -255,6 +263,7 @@ GenericList PsObject 0,0359 Milliseconds 0,0215 Milliseconds 0,9199 Milliseconds
 
 ==> Creating ArrayList or GenericList consumme same time
 #>
+###########################################################################################
 
 # Gathering files. We limit to 100 000 (Nota $cgi contains 379938 files)
 $FileCount = 100000
@@ -364,9 +373,8 @@ With Powershell 7.x (here 7.4.3) we can see that all performances have been impr
 We can note a very notable improvement in pipeline performance.
 
 #>
+###########################################################################################
 
-
-####################################
 Measure-MyScript -Name 'Test1 - Assign to $null' -Unit ms -Repeat 10 -ScriptBlock {
 $arrayList = [System.Collections.ArrayList]::new()
 foreach ($i in 0..1000) {$null = $arraylist.Add($i) }
@@ -403,7 +411,93 @@ Test4 - Pipe to Out-Null  8,769 Milliseconds 3,1511 Milliseconds 32,9489 Millise
 "Cast to [Void]" remains the most efficient method than this with Windows Powershell 5.1 or Powershell 7.4.3
 
 #>
+###########################################################################################
+$ArrayList = New-Object -TypeName 'System.Collections.ArrayList' # [System.collections.ArrayList]::new()
+$Array1 =$array2 = @()
+
+Measure-MyScript "ArrayList and Add method - 100" -Unit ms -Repeat 100 -ScriptBlock {
+for($i = 0; $i -lt 100; $i++)
+    {
+    $null = $ArrayList.Add("Adding item $i")
+    }
+}
+Measure-MyScript "ArrayList and Add method - 1000" -Unit ms -Repeat 100 -ScriptBlock {
+for($i = 0; $i -lt 1000; $i++)
+    {
+    $null = $ArrayList.Add("Adding item $i")
+    }
+}
+Measure-MyScript "ArrayList and Add method - 10000" -Unit ms -Repeat 100 -ScriptBlock {
+for($i = 0; $i -lt 10000; $i++)
+    {
+    $null = $ArrayList.Add("Adding item $i")
+    }
+}
+Measure-MyScript "Array and += - 100" -Unit ms -Repeat 100 -ScriptBlock {
+    for($i = 0; $i -lt 100; $i++)
+    {
+    $Array1 += "Adding item $i"
+    }
+}
+Measure-MyScript "Array and += -1000" -Unit ms -Repeat 100 -ScriptBlock {
+    for($i = 0; $i -lt 1000; $i++)
+    {
+    $Array1 += "Adding item $i"
+    }
+}
+
+Measure-MyScript "Array and += - 10000" -Unit ms -Repeat 100 -ScriptBlock {
+    for($i = 0; $i -lt 10000; $i++)
+    {
+    $Array1 += "Adding item $i"
+    }
+}
+
+Measure-MyScript "Array defined outside the loop -100" -Unit ms -Repeat 100 -ScriptBlock {
+    $Array2 = for($i = 0; $i -lt 100; $i++)
+    {
+    "Adding item $i"
+    }
+}
+Measure-MyScript "Array defined outside the loop -1000" -Unit ms -Repeat 100 -ScriptBlock {
+    $Array2 = for($i = 0; $i -lt 1000; $i++)
+    {
+    "Adding item $i"
+    }
+}
+Measure-MyScript "Array defined outside the loop -10000" -Unit ms -Repeat 100 -ScriptBlock {
+    $Array2 = for($i = 0; $i -lt 10000; $i++)
+    {
+    "Adding item $i"
+    }
+}
+<#
+
+# With Windows Powershell 5.1
+name                             Avg                  Min                 Max                 
+----                             ---                  ---                 ---                 
+ArrayList and Add method - 100   0,1484 Milliseconds  0,1017 Milliseconds 2,2533 Milliseconds 
+ArrayList and Add method - 1000  1,0784 Milliseconds  0,7537 Milliseconds 7,6636 Milliseconds 
+ArrayList and Add method - 10000 10,2381 Milliseconds 7,4374 Milliseconds 19,3553 Milliseconds
+Array and += - 100               0,2594 Milliseconds  0,0681 Milliseconds 11,9551 Milliseconds
+Array and += -1000               4,7317 Milliseconds  3,5133 Milliseconds 14,4443 Milliseconds
+Array and += - 10000             587,0202 Millisec... 332,7263 Millise... 786,9872 Millisec...
+Array defined outside the loo... 0,1846 Milliseconds  0,06 Milliseconds   8,28 Milliseconds   
+Array defined outside the loo... 0,4788 Milliseconds  0,3315 Milliseconds 8,0638 Milliseconds 
+Array defined outside the loo... 3,858 Milliseconds   3,0499 Milliseconds 12,8379 Milliseconds
 
 
+# With Powershell 7.4.5
+name                                 Avg     Min     Max
+----                                 ---     ---     ---
+ArrayList and Add method - 100        0,5544 Milliseconds   0,3645 Milliseconds    11,87   Milliseconds
+ArrayList and Add method - 1000       4,4143 Milliseconds   3,3841 Milliseconds    23,2399 Milliseconds
+ArrayList and Add method - 10000     40,0162 Milliseconds   36,158 Milliseconds    52,9612 Milliseconds
+Array and += - 100                    0,1629 Milliseconds   0,0249 Milliseconds     8,1127 Milliseconds
+Array and += -1000                    1,1915 Milliseconds   0,7408 Milliseconds     9,7938 Milliseconds
+Array and += - 10000                848,055  Milliseconds 814,7219 Milliseconds   951,7195 Milliseconds
+Array defined outside the loop -100   0,1234 Milliseconds   0,0156 Milliseconds     9,9741 Milliseconds
+Array defined outside the loop -1000  0,2051 Milliseconds   0,0965 Milliseconds     8,7074 Milliseconds
+Array defined outside the loop -10000 1,2289 Milliseconds   0,838  Milliseconds     9,2339 Milliseconds
 
-
+#>
