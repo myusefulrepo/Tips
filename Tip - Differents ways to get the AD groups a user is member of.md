@@ -139,3 +139,89 @@ Thanks to [u/raip](https://new.reddit.com/user/raip/) for this precision. Here's
 
 Nested groups should indeed be taken into account. In the tests I had conducted, I did not have nested groups.
 In real organization, it's indeed very common for a user to be a member of a group, itself a member of a larger group.
+
+I have a function in my toolbox
+````powershell
+Function Get-ADUserNestedGroups
+{
+    Param
+    (
+        [string]$DistinguishedName,
+        [array]$Groups = @()
+    )
+
+    #Get the AD object, and get group membership.
+    $ADObject = Get-ADObject -Filter "DistinguishedName -eq '$DistinguishedName'" -Properties memberOf, DistinguishedName
+    
+    #If object exists.
+    If($ADObject)
+    {
+        #Enumerate through each of the groups.
+        Foreach($GroupDistinguishedName in $ADObject.memberOf)
+        {
+            #Get member of groups from the enummerated group.
+            $CurrentGroup = Get-ADObject -Filter "DistinguishedName -eq '$GroupDistinguishedName'" -Properties memberOf, DistinguishedName
+       
+            #Check if the group is already in the array.
+            If (($Groups | Where-Object {$_.DistinguishedName -eq $GroupDistinguishedName}).Count -eq 0)
+            {
+                #Add group to array.
+                $Groups +=  $CurrentGroup
+
+                #Get recursive groups.      
+                $Groups = Get-ADUserNestedGroups -DistinguishedName $GroupDistinguishedName -Groups $Groups
+            }
+        }
+    }
+
+    #Return groups.
+    Return $Groups
+}
+````
+this return something like the following : 
+````powershell
+Get-ADUserNestedGroups -DistinguishedName (Get-ADUser -Identity $User).DistinguishedName
+
+DistinguishedName                                       Name             ObjectClass ObjectGUID                          
+-----------------                                       ----             ----------- ----------                          
+CN=NotnestedGroup,OU=Groups,OU=LABUsers,DC=LAB,DC=LAN   NotnestedGroup   group       9a725f59-bcc1-4f08-96a3-5bb8599ad60a
+CN=Interdisciplines,OU=Groups,OU=LABUsers,DC=LAB,DC=LAN Interdisciplines group       6a6d1196-663d-43fd-add5-bda08d863467
+CN=Physique,OU=Groups,OU=LABUsers,DC=LAB,DC=LAN         Physique         group       0b695ea4-92b0-41a2-84e2-b55563b8e1ba
+CN=Professeurs,OU=Groups,OU=LABUsers,DC=LAB,DC=LAN      Professeurs      group       1e21a337-0848-4c9b-9921-a87819e84d6c
+CN=Math,OU=Groups,OU=LABUsers,DC=LAB,DC=LAN             Math             group       8f0facd0-d838-4f22-b78a-54165a6f621
+````
+
+But about the performance ? 
+
+````Powershell
+Measure-MyScript -Name "function" -Unit ms -Repeat 10 -ScriptBlock {
+Get-ADUserNestedGroups -DistinguishedName (Get-ADUser -Identity $User).DistinguishedName
+}
+
+Measure-MyScript -Name "TokenGroups" -Unit ms -Repeat 100 -ScriptBlock {
+Get-ADUser $User |
+    Get-ADUser -Properties TokenGroups | 
+    Select-Object -ExpandProperty tokenGroups | 
+    ForEach-Object { $_.Translate([System.Security.Principal.NTAccount]).Value }
+}
+
+name        Avg                 Min                 Max                 
+----        ---                 ---                 ---                 
+TokenGroups 6,9536  Milliseconds  5,2513 Milliseconds 12,4522 Milliseconds
+function    25,6329 Milliseconds 21,045  Milliseconds 31,2382 Milliseconds
+````
+
+There is no doubt that using `TokenGroups` is faster than the function.
+
+<span style="color:green;font-weight:700;font-size:20px">[Nota]</span>  : I've noticed a difference point between the function and the "complex way". This one returns an additional group `BUILTIN\Users` not returned by the function or the other ways.
+
+## Final Word
+
+Keep in mind that if the "complex way" seems to be complex at the first look, it's the more efficient way to find all groups a user is member of including nested groups. This will be even more obvious as the number of nested groups increases.
+
+````Powershell
+Get-ADUser $User |
+    Get-ADUser -Properties TokenGroups | 
+    Select-Object -ExpandProperty tokenGroups | 
+    ForEach-Object { $_.Translate([System.Security.Principal.NTAccount]).Value }
+    ````
