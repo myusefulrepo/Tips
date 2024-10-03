@@ -137,3 +137,5 @@ Using the `TokenGroups` way takes more time but `Get-ADGroupMembership` is defin
 <span style="color:green;font-weight:700;font-size:20px">[Nota]</span>  : TokenGroups retrieves all transitive groups a user is a member of. MemberOf retrieves groups a user is a direct member of.
 Thanks to [u/raip](https://new.reddit.com/user/raip/) for this precision. Here's an example: https://imgur.com/aXxhvlO - for user account in its organization, `Get-ADUser memberOf` is missing 34 groups that `tokenGroups` collects (we have a fair amount of group nesting).
 
+Nested groups should indeed be taken into account. In the tests I had conducted, I did not have nested groups.
+In real organization, it's indeed very common for a user to be a member of a group, itself a member of a larger group.
