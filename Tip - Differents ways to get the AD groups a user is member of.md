@@ -134,3 +134,6 @@ Using `-ExpandProperty` or `.MemberOf` way give similar and fastest results.
 Using the `TokenGroups` way takes more time but `Get-ADGroupMembership` is definitely the slowest way.
 
 
+<span style="color:green;font-weight:700;font-size:20px">[Nota]</span>  : TokenGroups retrieves all transitive groups a user is a member of. MemberOf retrieves groups a user is a direct member of.
+Thanks to [u/raip](https://new.reddit.com/user/raip/) for this precision. Here's an example: https://imgur.com/aXxhvlO - for user account in its organization, `Get-ADUser memberOf` is missing 34 groups that `tokenGroups` collects (we have a fair amount of group nesting).
+
