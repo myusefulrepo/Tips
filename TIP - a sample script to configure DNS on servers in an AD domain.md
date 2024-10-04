@@ -6,6 +6,10 @@ The domain's DNS servers have been modified (decommissioning for example) or rem
 
 We want to ensure that in the IP configuration of the domain servers and domain controllers, the Best Practices are respected with regard to the configured DNS.
 
+I can cite several good practices:
+
+- The DNS server configured in DNS1 in the IP settings must not be the local DNS server of the computer to be configured (*in the case where the computer is a DC/DNS server. In the same case, we shouldn't set the loopback IP address either as DNS1*).
+- It's preferable, as much as possible, to configure DNS servers located on the same AD site as the computer to be configured in order to limit network traffic.
 
 ## The script
 
