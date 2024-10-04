@@ -60,10 +60,55 @@ else
 This code is provided as is as an example and can be improved or modified to adapt it to different needs such as:
 - Execution of the script remotely, against all servers in the AD domain
 
-We can imagine using the provided script
+We can also imagine using the provided script
 - via a GPO
 - via a GPO that creates a scheduled task that can be executed locally or remotely, individually or in bulk, on demand.
 
+## Warning
+Take some precautions before using this code.
+- **Preparation** :
+  - Make sure you have the necessary administrative permissions on the server.
+  - Verify that the required PowerShell modules (ActiveDirectory and NetTCPIP) are installed.
+- **Backup** :
+  - Backup the current DNS configuration so that you can restore it if needed. You can use the following command to backup the current DNS addresses :
+
+````Powershell
+Get-DnsClientServerAddress -InterfaceAlias $InterfaceAlias | Export-Csv -Path 'C:\Backup\DnsBackup.csv'
+````
+
+- **Running the script** :
+  - Copy the enhanced script to a .ps1 file on your server, for example ConfigureDNS.ps1.
+  - Log in to PowerShell as an administrator.
+  - Run the script using the following command:
+
+````Powershell
+.\ConfigureDNS.ps1 -InterfaceAlias 'Production' -DefaultSite 'Headquarter'
+````
+
+- **Verification** :
+  - Verify that the DNS addresses have been configured correctly using the following command :
+
+````Powershell
+Get-DnsClientServerAddress -InterfaceAlias 'Production'
+````
+
+- **Additional tests** :
+  - Test DNS resolution to ensure that the configured DNS servers are working properly. For example:
+
+````Powershell 
+Resolve-DnsName google.com
+````
+
+- **Restore (if needed)** :
+  - If you encounter any problems, you can restore the previous DNS configuration using the backup file :
+
+````Powershell 
+$Backup = Import-Csv -Path 'C:\Backup\DnsBackup.csv'
+Set-DnsClientServerAddress -InterfaceAlias ​​'Production' -ServerAddresses $Backup.ServerAddresses
+````
+By following these steps, you should be able to safely test and validate the script on your server. 
+
+Always remember ***"we hope for the best, but we must prepare for the worst"***
 
 Hope this help
 Regards
