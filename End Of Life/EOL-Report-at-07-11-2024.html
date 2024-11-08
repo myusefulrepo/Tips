@@ -1,0 +1,899 @@
+﻿<!DOCTYPE html>
+ <html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1" name="viewport"><meta content="2024-11-07 10:33:37" name="revised"><title>End Of Life Product Report</title><link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" as="style" type="text/css" rel="stylesheet preload prefetch"/><script comment="jquery" type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script><link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><link href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><script type="text/javascript" src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script><script type="text/javascript" src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script><script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.13.5/sorting/datetime-moment.js"></script><link href="https://cdn.datatables.net/buttons/2.4.0/css/buttons.dataTables.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.0/js/dataTables.buttons.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script><script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.0/js/buttons.html5.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script><link href="https://cdn.datatables.net/datetime/1.5.0/css/dataTables.dateTime.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><script type="text/javascript" src="https://cdn.datatables.net/datetime/1.5.0/js/dataTables.dateTime.min.js"></script><link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><script type="text/javascript" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script><link href="https://cdn.datatables.net/searchbuilder/1.5.0/css/searchBuilder.dataTables.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><script type="text/javascript" src="https://cdn.datatables.net/searchbuilder/1.5.0/js/dataTables.searchBuilder.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/gh/evotecit/cdn@0.0.27/JS/hideSection.min.js"></script><style type="text/css">body {    font-family: 'Roboto Condensed', sans-serif;    font-size: 8pt;    margin: 0px;}input {    font-size: 8pt;}.main-section {    margin-top: 0px;}</style><style type="text/css">td:first-child {    white-space: nowrap;}thead input {    width: 100%;    box-sizing: border-box;    padding: -3px;}td::before, td.sorting_1::before {    color: #007bff !important;}tfoot input {    width: 100%;    box-sizing: border-box;    padding: -3px;}div.dataTables_wrapper {    margin: 5px;}</style><noscript><style type="text/css">table {
+    border-collapse: collapse;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+table td {
+    border-width: 1px;
+    padding: 4px;
+    text-align: left;
+    border-top: 1px solid #ddd;
+}
+
+table thead th {
+    text-align: center;
+    font-weight: bold;
+    padding: 4px 17px;
+    border-bottom: 1px solid #111;
+    background-color: white;
+    color: black;
+}
+
+table tfoot th {
+    text-align: center;
+    font-weight: bold;
+    padding: 4px 17px;
+    border-top: 1px solid #111;
+    background-color: white;
+    color: black;
+}
+
+table tr:nth-of-type(odd) {
+    background-color: #F6F6F5;
+}
+
+table tr:nth-of-type(even) {
+    background-color: white;
+}
+
+table td, table th {
+    border: 1px solid black;
+}</style></noscript><style type="text/css">div.dt-button-collection {    position: relative;    margin-top: 10px !important;    width: auto !important;    margin-bottom: 10px !important;}</style><style type="text/css">.defaultSection {    flex-direction: column;    border: 1px solid #bbbbbb;    padding-bottom: 0px;    margin: 5px;    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);    transition: 0.3s;    border-radius: 5px;}.defaultSectionHead {    display: flex;    justify-content: center;    padding: 5px;    margin: 0px 0px 0px 0px;    font-weight: bold;    background-color: #00bfff;    color: #ffffff;}</style><style type="text/css">.defaultText {    margin: 5px;}</style><style type="text/css">.sectionHide {    min-width: 1.4rem;    width: auto;}.sectionShow {    width: 100%;}</style><style type="text/css">.overflowHidden {    overflow: hidden;    overflow-x: hidden;    overflow-y: hidden;}.flexParent {    display: flex;    justify-content: space-between;}.flexParentInvisible {    display: flex;    justify-content: space-between;}.flexElement {    flex-basis: 100%;    max-width: 100%;}.flexPanel {    flex-basis: 100%;    max-width: 100%;}.flex-grid {    display: flex;}</style><style type="text/css">.tabsWrapper {    text-align: center;    font-family: 'Roboto', sans-serif !important;    text-transform: uppercase;}[data-tabs] {    display: flex;    margin: 5px 5px 5px 5px;    padding: 0px;    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);    border-radius: 5px;    justify-content: center;    flex-wrap: wrap;}[data-tabs]>* {    cursor: pointer;    padding: 10px 20px;    flex-grow: 1;    flex-shrink: 1;    flex-basis: auto;}[data-tabs] .active {    background: #1e90ff;    color: #fff;    border-radius: 5px;}[data-panes]>* {    display: none;}[data-panes]>.active {    display: block;}</style></head><body><div class="main-section"><div class="tabsWrapper"><div class="tabsSlimmer"><div data-tabs="true"><div id="Tab-s52neapl" class="active"><span>WINDOWS</span></div><div id="Tab-zt9un04p"><span>WINDOWS-SERVER</span></div><div id="Tab-epugn06s"><span>WINDOWS-SERVER-CORE</span></div></div></div></div><div data-panes="true"><div id="Tab-s52neapl-Content" class="active"><div class="defaultSection overflowHidden " style="border-radius:15px;flex-basis:100%"><div class="defaultSectionHead" style="background-color:#008000"><div class="defaultSectionText"><a name="WINDOWS" style="color:#f5f5f5">WINDOWS </a>&nbsp;<a id="show_anchor-rsi26c8" href="javascript:void(0)" onclick="show('anchor-rsi26c8'); " style="display:none;color:#f5f5f5">(Show)</a><a id="hide_anchor-rsi26c8" href="javascript:void(0)" onclick="hide('anchor-rsi26c8'); " style="color:#f5f5f5">(Hide)</a></div></div><div name="anchor-rsi26c8" id="anchor-rsi26c8" class="flexParent flexElement overflowHidden defaultSectionContent"><div id="anchor-rsi26c8" class="flexParent flexElement overflowHidden defaultSectionContent collapsable"><script>                $(document).ready(function() {
+                    $.fn.dataTable.moment( 'L' );
+                    
+                    
+                    
+                    //  Table code
+                    var table = $('#DT-hfKHgsbm').DataTable(
+                        {
+    "dom":  "Bfrtip",
+    "searchFade":  false,
+    "scrollCollapse":  false,
+    "ordering":  true,
+    "order":  [
+
+              ],
+    "rowGroup":  "",
+    "info":  true,
+    "procesing":  true,
+    "select":  true,
+    "searching":  true,
+    "stateSave":  true,
+    "paging":  true,
+    "pagingType":  [
+                       "full_numbers"
+                   ],
+    "lengthMenu":  [
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           -1
+                       ],
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           "All"
+                       ]
+                   ],
+    "language":  {
+
+                 },
+    "buttons":  [
+                    {
+                        "extend":  "copyHtml5"
+                    },
+                    {
+                        "extend":  "excelHtml5",
+                        "exportOptions":  {
+                                              "format":      {
+        body: function (data, row, column, node) {
+            data = $('<p>' + data + '</p>').text(); return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+        }
+    }
+                                          }
+                    },
+                    {
+                        "extend":  "csvHtml5",
+                        "text":  "CSV",
+                        "charset":  "utf-8",
+                        "extension":  ".csv",
+                        "fieldSeparator":  ";",
+                        "bom":  true
+                    },
+                    {
+                        "extend":  "pdfHtml5",
+                        "pageSize":  "A3",
+                        "orientation":  "landscape"
+                    },
+                    {
+                        "extend":  "pageLength"
+                    },
+                    {
+                        "extend":  "searchBuilder"
+                    }
+                ],
+    "responsive":  {
+                       "details":  {
+                                       "type":  "inline"
+                                   }
+                   },
+    "rowCallback": function (row, data) {     var css = {
+    "color":  "#ffffff",
+    "background-color":  "#32cd32",
+    "text-align":  "Center"
+};     var failCss = undefined;     var conditionsContainer = [{
+"logic":"AND",
+"conditions":[{
+"columnName":"lts",
+"columnId":3,
+"operator":"eq",
+"type":"bool",
+"value":"True",
+"valueDate":"",
+"dataStore":"HTML",
+"caseSensitive":false,
+"dateTimeFormat":"",
+"reverseCondition":false}]}];     dataTablesConditionalFormatting(row, data, conditionsContainer, [3], css, failCss);     var css = {
+    "color":  "#ffffff",
+    "background-color":  "#ffa500",
+    "text-align":  "Center"
+};     var failCss = undefined;     var conditionsContainer = [{
+"logic":"AND",
+"conditions":[{
+"columnName":"eol",
+"columnId":4,
+"operator":"lt",
+"type":"date",
+"value":"2025-05-07 10:33:37",
+"valueDate":{
+"miliseconds":877,
+"minutes":33,
+"year":2025,
+"seconds":37,
+"hours":10,
+"month":5,
+"day":7},
+"dataStore":"HTML",
+"caseSensitive":false,
+"dateTimeFormat":"",
+"reverseCondition":false}]}];     dataTablesConditionalFormatting(row, data, conditionsContainer, [4], css, failCss);     var css = {
+    "color":  "#ffffff",
+    "background-color":  "#ff0000",
+    "text-align":  "Center"
+};     var failCss = undefined;     var conditionsContainer = [{
+"logic":"AND",
+"conditions":[{
+"columnName":"eol",
+"columnId":4,
+"operator":"lt",
+"type":"date",
+"value":"2024-11-07 10:33:37",
+"valueDate":{
+"miliseconds":885,
+"minutes":33,
+"year":2024,
+"seconds":37,
+"hours":10,
+"month":11,
+"day":7},
+"dataStore":"HTML",
+"caseSensitive":false,
+"dateTimeFormat":"",
+"reverseCondition":false}]}];     dataTablesConditionalFormatting(row, data, conditionsContainer, [4], css, failCss); }
+}
+                    );
+                    
+                    
+                    
+                });</script><div class="flexElement overflowHidden"><table width="100%" id="DT-hfKHgsbm" class="dataTables cell-border"><thead><tr><th>cycle</th><th>releaseLabel</th><th>releaseDate</th><th>lts</th><th>eol</th><th>latest</th><th>link</th><th>support</th></tr></thead><tbody><tr><td style="text-align:Center">11-24h2-iot-lts</td><td>11 24H2 IoT</td><td style="text-align:Center">2024-10-01</td><td style="text-align:Center">True</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2034-10-10</td><td style="text-align:Center">10.0.26100</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows11-release-information#enterprise-and-iot-enterprise-ltsc-editions</td><td style="text-align:Center">2029-10-09</td></tr><tr><td style="text-align:Center">11-24h2-e-lts</td><td>11 24H2 (E)</td><td style="text-align:Center">2024-10-01</td><td style="text-align:Center">True</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2029-10-09</td><td style="text-align:Center">10.0.26100</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows11-release-information#enterprise-and-iot-enterprise-ltsc-editions</td><td style="text-align:Center">2029-10-09</td></tr><tr><td style="text-align:Center">11-24h2-e</td><td>11 24H2 (E)</td><td style="text-align:Center">2024-10-01</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2027-10-12</td><td style="text-align:Center">10.0.26100</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows11-release-information</td><td style="text-align:Center">2027-10-12</td></tr><tr><td style="text-align:Center">11-24h2-w</td><td>11 24H2 (W)</td><td style="text-align:Center">2024-10-01</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2026-10-13</td><td style="text-align:Center">10.0.26100</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows11-release-information</td><td style="text-align:Center">2026-10-13</td></tr><tr><td style="text-align:Center">11-23h2-e</td><td>11 23H2 (E)</td><td style="text-align:Center">2023-10-31</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2026-11-10</td><td style="text-align:Center">10.0.22631</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows11-release-information</td><td style="text-align:Center">2026-11-10</td></tr><tr><td style="text-align:Center">11-23h2-w</td><td>11 23H2 (W)</td><td style="text-align:Center">2023-10-31</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2025-11-11</td><td style="text-align:Center">10.0.22631</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows11-release-information</td><td style="text-align:Center">2025-11-11</td></tr><tr><td style="text-align:Center">10-22h2</td><td>10 22H2</td><td style="text-align:Center">2022-10-18</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2025-10-14</td><td style="text-align:Center">10.0.19045</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/release-information</td><td style="text-align:Center">2025-10-14</td></tr><tr><td style="text-align:Center">11-22h2-e</td><td>11 22H2 (E)</td><td style="text-align:Center">2022-09-20</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2025-10-14</td><td style="text-align:Center">10.0.22621</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows11-release-information</td><td style="text-align:Center">2025-10-14</td></tr><tr><td style="text-align:Center">11-22h2-w</td><td>11 22H2 (W)</td><td style="text-align:Center">2022-09-20</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2024-10-08</td><td style="text-align:Center">10.0.22621</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows11-release-information</td><td style="text-align:Center">2024-10-08</td></tr><tr><td style="text-align:Center">10-21h2-iot-lts</td><td>10 21H2 IoT</td><td style="text-align:Center">2021-11-16</td><td style="text-align:Center">True</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2032-01-13</td><td style="text-align:Center">10.0.19044</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/release-information#enterprise-and-iot-enterprise-ltsbltsc-editions</td><td style="text-align:Center">2027-01-12</td></tr><tr><td style="text-align:Center">10-21h2-e-lts</td><td>10 21H2 (E)</td><td style="text-align:Center">2021-11-16</td><td style="text-align:Center">True</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2027-01-12</td><td style="text-align:Center">10.0.19044</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/release-information#enterprise-and-iot-enterprise-ltsbltsc-editions</td><td style="text-align:Center">2027-01-12</td></tr><tr><td style="text-align:Center">10-21h2-e</td><td>10 21H2 (E)</td><td style="text-align:Center">2021-11-16</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2024-06-11</td><td style="text-align:Center">10.0.19044</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-10-enterprise-and-education</td><td style="text-align:Center">2024-06-11</td></tr><tr><td style="text-align:Center">10-21h2-w</td><td>10 21H2 (W)</td><td style="text-align:Center">2021-11-16</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2023-06-13</td><td style="text-align:Center">10.0.19044</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/release-information</td><td style="text-align:Center">2023-06-13</td></tr><tr><td style="text-align:Center">11-21h2-e</td><td>11 21H2 (E)</td><td style="text-align:Center">2021-10-04</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2024-10-08</td><td style="text-align:Center">10.0.22000</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows11-release-information</td><td style="text-align:Center">2024-10-08</td></tr><tr><td style="text-align:Center">11-21h2-w</td><td>11 21H2 (W)</td><td style="text-align:Center">2021-10-04</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2023-10-10</td><td style="text-align:Center">10.0.22000</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows11-release-information</td><td style="text-align:Center">2023-10-10</td></tr><tr><td style="text-align:Center">10-21h1</td><td>10 21H1</td><td style="text-align:Center">2021-05-18</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2022-12-13</td><td style="text-align:Center">10.0.19043</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/status-windows-10-21h1</td><td style="text-align:Center">2022-12-13</td></tr><tr><td style="text-align:Center">10-20h2-e</td><td>10 20H2 (E)</td><td style="text-align:Center">2020-10-20</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2023-05-09</td><td style="text-align:Center">10.0.19042</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/status-windows-10-20h2</td><td style="text-align:Center">2023-05-09</td></tr><tr><td style="text-align:Center">10-20h2-w</td><td>10 20H2 (W)</td><td style="text-align:Center">2020-10-20</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2022-05-10</td><td style="text-align:Center">10.0.19042</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/status-windows-10-20h2</td><td style="text-align:Center">2022-05-10</td></tr><tr><td style="text-align:Center">10-2004</td><td>10 2004</td><td style="text-align:Center">2020-05-27</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2021-12-14</td><td style="text-align:Center">10.0.19041</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-version-2004-end-of-servicing</td><td style="text-align:Center">2021-12-14</td></tr><tr><td style="text-align:Center">10-1909-e</td><td>10 1909 (E)</td><td style="text-align:Center">2019-11-12</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2022-05-10</td><td style="text-align:Center">10.0.18363</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1909-enterprise-education-eos</td><td style="text-align:Center">2022-05-10</td></tr><tr><td style="text-align:Center">10-1909-w</td><td>10 1909 (W)</td><td style="text-align:Center">2019-11-12</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2021-05-11</td><td style="text-align:Center">10.0.18363</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1909-end-of-servicing</td><td style="text-align:Center">2021-05-11</td></tr><tr><td style="text-align:Center">10-1903</td><td>10 1903</td><td style="text-align:Center">2019-05-21</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-12-08</td><td style="text-align:Center">10.0.18362</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1903-end-of-servicing</td><td style="text-align:Center">2020-12-08</td></tr><tr><td style="text-align:Center">10-1809-e-lts</td><td>10 1809 (E)</td><td style="text-align:Center">2018-11-13</td><td style="text-align:Center">True</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2029-01-09</td><td style="text-align:Center">10.0.17763</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/supported-versions-windows-client#enterprise-and-iot-enterprise-ltsbltsc-editions</td><td style="text-align:Center">2024-01-09</td></tr><tr><td style="text-align:Center">10-1809-e</td><td>10 1809 (E)</td><td style="text-align:Center">2018-11-13</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2021-05-11</td><td style="text-align:Center">10.0.17763</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1803-1809-end-of-servicing</td><td style="text-align:Center">2021-05-11</td></tr><tr><td style="text-align:Center">10-1809-w</td><td>10 1809 (W)</td><td style="text-align:Center">2018-11-13</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-11-10</td><td style="text-align:Center">10.0.17763</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1809-end-of-servicing</td><td style="text-align:Center">2020-11-10</td></tr><tr><td style="text-align:Center">10-1803-e</td><td>10 1803 (E)</td><td style="text-align:Center">2018-04-30</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2021-05-11</td><td style="text-align:Center">10.0.17134</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1803-1809-end-of-servicing</td><td style="text-align:Center">2020-05-11</td></tr><tr><td style="text-align:Center">10-1803-w</td><td>10 1803 (W)</td><td style="text-align:Center">2018-04-30</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2019-11-12</td><td style="text-align:Center">10.0.17134</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1803-end-of-servicing</td><td style="text-align:Center">2019-11-12</td></tr><tr><td style="text-align:Center">10-1709-e</td><td>10 1709 (E)</td><td style="text-align:Center">2017-10-17</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-10-13</td><td style="text-align:Center">10.0.16299</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1709-end-of-servicing</td><td style="text-align:Center">2020-10-13</td></tr><tr><td style="text-align:Center">10-1709-w</td><td>10 1709 (W)</td><td style="text-align:Center">2017-10-17</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2019-04-09</td><td style="text-align:Center">10.0.16299</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1709-end-of-servicing</td><td style="text-align:Center">2019-04-09</td></tr><tr><td style="text-align:Center">10-1703-e</td><td>10 1703 (E)</td><td style="text-align:Center">2017-04-11</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2019-10-08</td><td style="text-align:Center">10.0.15063</td><td style="text-align:Center">https://techcommunity.microsoft.com/t5/windows-it-pro-blog/end-of-service-reminders-for-windows-10-versions-1703-and-1803/ba-p/903715</td><td style="text-align:Center">2019-10-08</td></tr><tr><td style="text-align:Center">10-1703-w</td><td>10 1703 (W)</td><td style="text-align:Center">2017-04-11</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2018-10-09</td><td style="text-align:Center">10.0.15063</td><td style="text-align:Center">https://techcommunity.microsoft.com/t5/windows-it-pro-blog/end-of-service-reminders-for-windows-10-versions-1703-and-1803/ba-p/903715</td><td style="text-align:Center">2018-10-09</td></tr><tr><td style="text-align:Center">10-1607-e-lts</td><td>10 1607 (E)</td><td style="text-align:Center">2016-08-02</td><td style="text-align:Center">True</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2026-10-13</td><td style="text-align:Center">10.0.14393</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/supported-versions-windows-client#enterprise-and-iot-enterprise-ltsbltsc-editions</td><td style="text-align:Center">2021-10-12</td></tr><tr><td style="text-align:Center">10-1607-e</td><td>10 1607 (E)</td><td style="text-align:Center">2016-08-02</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2019-04-09</td><td style="text-align:Center">10.0.14393</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1607-end-of-servicing</td><td style="text-align:Center">2019-04-09</td></tr><tr><td style="text-align:Center">10-1607-w</td><td>10 1607 (W)</td><td style="text-align:Center">2016-08-02</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2018-04-10</td><td style="text-align:Center">10.0.14393</td><td style="text-align:Center"></td><td style="text-align:Center">2018-04-10</td></tr><tr><td style="text-align:Center">10-1511</td><td>10 1511</td><td style="text-align:Center">2015-11-10</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2017-10-10</td><td style="text-align:Center">10.0.10586</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1511-end-of-servicing</td><td style="text-align:Center">2017-10-10</td></tr><tr><td style="text-align:Center">10-1507-e-lts</td><td>10 1507 (E)</td><td style="text-align:Center">2015-07-29</td><td style="text-align:Center">True</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2025-10-14</td><td style="text-align:Center">10.0.10240</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/supported-versions-windows-client#enterprise-and-iot-enterprise-ltsbltsc-editions</td><td style="text-align:Center">2020-10-13</td></tr><tr><td style="text-align:Center">10-1507</td><td>10 1507</td><td style="text-align:Center">2015-07-29</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2017-05-09</td><td style="text-align:Center">10.0.10240</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-10-1507-cb-cbb-end-of-servicing</td><td style="text-align:Center">2017-05-09</td></tr><tr><td style="text-align:Center">10-1507-iot</td><td>10 1507 IOT</td><td style="text-align:Center">2015-04-29</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-11-10</td><td style="text-align:Center">10.0.10240</td><td style="text-align:Center">https://learn.microsoft.com/en-us/lifecycle/products/windows-10-iot-core</td><td style="text-align:Center">2020-11-10</td></tr><tr><td style="text-align:Center">8.1</td><td>8.1</td><td style="text-align:Center">2013-11-13</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2023-01-10</td><td style="text-align:Center">6.3.9600</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-81</td><td style="text-align:Center">2018-01-09</td></tr><tr><td style="text-align:Center">8</td><td>8</td><td style="text-align:Center">2012-10-30</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2016-01-12</td><td style="text-align:Center">6.2.9200</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-8</td><td style="text-align:Center">2016-01-12</td></tr><tr><td style="text-align:Center">7-sp1</td><td>7 SP1</td><td style="text-align:Center">2011-02-22</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-01-14</td><td style="text-align:Center">6.1.7601</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-7</td><td style="text-align:Center">2015-01-13</td></tr><tr><td style="text-align:Center">6-sp2</td><td>Vista SP2</td><td style="text-align:Center">2009-04-29</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2017-04-11</td><td style="text-align:Center">6.0.6200</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-vista</td><td style="text-align:Center">2012-04-10</td></tr><tr><td style="text-align:Center">5-sp3</td><td>XP SP3</td><td style="text-align:Center">2008-04-21</td><td style="text-align:Center">False</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2014-04-08</td><td style="text-align:Center">5.1.2600</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-xp</td><td style="text-align:Center">2009-04-14</td></tr></tbody><tfoot><tr><th>cycle</th><th>releaseLabel</th><th>releaseDate</th><th>lts</th><th>eol</th><th>latest</th><th>link</th><th>support</th></tr></tfoot></table></div></div></div></div></div><div id="Tab-zt9un04p-Content"><div class="defaultSection overflowHidden " style="border-radius:15px;flex-basis:100%"><div class="defaultSectionHead" style="background-color:#008000"><div class="defaultSectionText"><a name="WINDOWS-SERVER" style="color:#f5f5f5">WINDOWS-SERVER </a>&nbsp;<a id="show_anchor-iv316pa" href="javascript:void(0)" onclick="show('anchor-iv316pa'); " style="display:none;color:#f5f5f5">(Show)</a><a id="hide_anchor-iv316pa" href="javascript:void(0)" onclick="hide('anchor-iv316pa'); " style="color:#f5f5f5">(Hide)</a></div></div><div name="anchor-iv316pa" id="anchor-iv316pa" class="flexParent flexElement overflowHidden defaultSectionContent"><div id="anchor-iv316pa" class="flexParent flexElement overflowHidden defaultSectionContent collapsable"><script>                $(document).ready(function() {
+                    $.fn.dataTable.moment( 'L' );
+                    
+                    
+                    
+                    //  Table code
+                    var table = $('#DT-JyxDJuXy').DataTable(
+                        {
+    "dom":  "Bfrtip",
+    "searchFade":  false,
+    "scrollCollapse":  false,
+    "ordering":  true,
+    "order":  [
+
+              ],
+    "rowGroup":  "",
+    "info":  true,
+    "procesing":  true,
+    "select":  true,
+    "searching":  true,
+    "stateSave":  true,
+    "paging":  true,
+    "pagingType":  [
+                       "full_numbers"
+                   ],
+    "lengthMenu":  [
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           -1
+                       ],
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           "All"
+                       ]
+                   ],
+    "language":  {
+
+                 },
+    "buttons":  [
+                    {
+                        "extend":  "copyHtml5"
+                    },
+                    {
+                        "extend":  "excelHtml5",
+                        "exportOptions":  {
+                                              "format":      {
+        body: function (data, row, column, node) {
+            data = $('<p>' + data + '</p>').text(); return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+        }
+    }
+                                          }
+                    },
+                    {
+                        "extend":  "csvHtml5",
+                        "text":  "CSV",
+                        "charset":  "utf-8",
+                        "extension":  ".csv",
+                        "fieldSeparator":  ";",
+                        "bom":  true
+                    },
+                    {
+                        "extend":  "pdfHtml5",
+                        "pageSize":  "A3",
+                        "orientation":  "landscape"
+                    },
+                    {
+                        "extend":  "pageLength"
+                    },
+                    {
+                        "extend":  "searchBuilder"
+                    }
+                ],
+    "responsive":  {
+                       "details":  {
+                                       "type":  "inline"
+                                   }
+                   },
+    "rowCallback": function (row, data) {     var css = {
+    "color":  "#ffffff",
+    "background-color":  "#32cd32",
+    "text-align":  "Center"
+};     var failCss = undefined;     var conditionsContainer = [{
+"logic":"AND",
+"conditions":[{
+"columnName":"lts",
+"columnId":4,
+"operator":"eq",
+"type":"bool",
+"value":"True",
+"valueDate":"",
+"dataStore":"HTML",
+"caseSensitive":false,
+"dateTimeFormat":"",
+"reverseCondition":false}]}];     dataTablesConditionalFormatting(row, data, conditionsContainer, [4], css, failCss);     var css = {
+    "color":  "#ffffff",
+    "background-color":  "#ffa500",
+    "text-align":  "Center"
+};     var failCss = undefined;     var conditionsContainer = [{
+"logic":"AND",
+"conditions":[{
+"columnName":"eol",
+"columnId":2,
+"operator":"lt",
+"type":"date",
+"value":"2025-05-07 10:33:38",
+"valueDate":{
+"miliseconds":304,
+"minutes":33,
+"year":2025,
+"seconds":38,
+"hours":10,
+"month":5,
+"day":7},
+"dataStore":"HTML",
+"caseSensitive":false,
+"dateTimeFormat":"",
+"reverseCondition":false}]}];     dataTablesConditionalFormatting(row, data, conditionsContainer, [2], css, failCss);     var css = {
+    "color":  "#ffffff",
+    "background-color":  "#ff0000",
+    "text-align":  "Center"
+};     var failCss = undefined;     var conditionsContainer = [{
+"logic":"AND",
+"conditions":[{
+"columnName":"eol",
+"columnId":2,
+"operator":"lt",
+"type":"date",
+"value":"2024-11-07 10:33:38",
+"valueDate":{
+"miliseconds":310,
+"minutes":33,
+"year":2024,
+"seconds":38,
+"hours":10,
+"month":11,
+"day":7},
+"dataStore":"HTML",
+"caseSensitive":false,
+"dateTimeFormat":"",
+"reverseCondition":false}]}];     dataTablesConditionalFormatting(row, data, conditionsContainer, [2], css, failCss); }
+}
+                    );
+                    
+                    
+                    
+                });</script><div class="flexElement overflowHidden"><table width="100%" id="DT-JyxDJuXy" class="dataTables cell-border"><thead><tr><th>cycle</th><th>releaseDate</th><th>eol</th><th>latest</th><th>lts</th><th>link</th><th>support</th><th>extendedSupport</th></tr></thead><tbody><tr><td style="text-align:Center">2025</td><td style="text-align:Center">2024-11-01</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2034-10-10</td><td style="text-align:Center">10.0.26100</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows-server-release-info</td><td style="text-align:Center">2029-10-09</td><td>False</td></tr><tr><td style="text-align:Center">23H2</td><td style="text-align:Center">2023-10-24</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2025-10-24</td><td style="text-align:Center">10.0.25398</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-server-annual-channel</td><td style="text-align:Center">2025-04-24</td><td>False</td></tr><tr><td style="text-align:Center">2022</td><td style="text-align:Center">2021-08-18</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2031-10-14</td><td style="text-align:Center">10.0.20348</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows-server-release-info</td><td style="text-align:Center">2026-10-13</td><td>False</td></tr><tr><td style="text-align:Center">20H2</td><td style="text-align:Center">2020-10-20</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2022-08-09</td><td style="text-align:Center">10.0.19042</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-server-20h2-retiring</td><td style="text-align:Center">2022-08-09</td><td>False</td></tr><tr><td style="text-align:Center">2004</td><td style="text-align:Center">2020-05-27</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2021-12-14</td><td style="text-align:Center">10.0.19041</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-server-version-2004-end-of-servicing</td><td style="text-align:Center">2021-12-14</td><td>False</td></tr><tr><td style="text-align:Center">1909</td><td style="text-align:Center">2019-11-12</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2021-05-11</td><td style="text-align:Center">10.0.18363</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-server-1909-end-of-servicing</td><td style="text-align:Center">2021-05-11</td><td>False</td></tr><tr><td style="text-align:Center">1903</td><td style="text-align:Center">2019-05-21</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-12-08</td><td style="text-align:Center">10.0.18362</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-server-semiannual-channel</td><td style="text-align:Center">2020-12-08</td><td>False</td></tr><tr><td style="text-align:Center">1809</td><td style="text-align:Center">2018-11-13</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-11-10</td><td style="text-align:Center">10.0.17763</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-server-1809-end-of-servicing</td><td style="text-align:Center">2020-11-10</td><td>False</td></tr><tr><td style="text-align:Center">2019</td><td style="text-align:Center">2018-11-13</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2029-01-09</td><td style="text-align:Center">10.0.17763</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows-server-release-info</td><td style="text-align:Center">2024-01-09</td><td>False</td></tr><tr><td style="text-align:Center">1803</td><td style="text-align:Center">2018-04-30</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2019-11-12</td><td style="text-align:Center">10.0.17134</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-server-1803-end-of-servicing</td><td style="text-align:Center">2019-11-12</td><td>False</td></tr><tr><td style="text-align:Center">1709</td><td style="text-align:Center">2017-10-17</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2019-04-09</td><td style="text-align:Center">10.0.16299</td><td style="text-align:Center">False</td><td style="text-align:Center">https://techcommunity.microsoft.com/t5/windows-server-for-developers/windows-server-version-1709-lifecycle-announcement/m-p/379766</td><td style="text-align:Center">2019-04-09</td><td>False</td></tr><tr><td style="text-align:Center">2016</td><td style="text-align:Center">2016-10-15</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2027-01-12</td><td style="text-align:Center">10.0.14393</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows-server-release-info</td><td style="text-align:Center">2022-01-11</td><td>False</td></tr><tr><td style="text-align:Center">2012-R2</td><td style="text-align:Center">2013-11-25</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2023-10-10</td><td style="text-align:Center">6.3.9600</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-server-2012-r2</td><td style="text-align:Center">2018-10-09</td><td>2026-10-13</td></tr><tr><td style="text-align:Center">2012</td><td style="text-align:Center">2012-10-30</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2023-10-10</td><td style="text-align:Center">6.2.9200</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-server-2012</td><td style="text-align:Center">2018-10-09</td><td>2026-10-13</td></tr><tr><td style="text-align:Center">2008-R2-SP1</td><td style="text-align:Center">2011-02-22</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-01-14</td><td style="text-align:Center">6.1.7601</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-server-2008-r2</td><td style="text-align:Center">2015-01-13</td><td>2023-01-10</td></tr><tr><td style="text-align:Center">2008-SP2</td><td style="text-align:Center">2009-04-29</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-01-14</td><td style="text-align:Center">6.0.6003</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-server-2008</td><td style="text-align:Center">2015-01-13</td><td>2023-01-10</td></tr><tr><td style="text-align:Center">2003-SP2</td><td style="text-align:Center">2003-04-24</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2015-07-14</td><td style="text-align:Center">5.2.3790</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-server-2003-</td><td style="text-align:Center">2010-07-13</td><td>False</td></tr><tr><td style="text-align:Center">2000</td><td style="text-align:Center">2000-02-17</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2010-07-13</td><td style="text-align:Center">5.0.2195</td><td style="text-align:Center">True</td><td style="text-align:Center"></td><td style="text-align:Center">2005-06-30</td><td>False</td></tr></tbody><tfoot><tr><th>cycle</th><th>releaseDate</th><th>eol</th><th>latest</th><th>lts</th><th>link</th><th>support</th><th>extendedSupport</th></tr></tfoot></table></div></div></div></div></div><div id="Tab-epugn06s-Content"><div class="defaultSection overflowHidden " style="border-radius:15px;flex-basis:100%"><div class="defaultSectionHead" style="background-color:#008000"><div class="defaultSectionText"><a name="WINDOWS-SERVER-CORE" style="color:#f5f5f5">WINDOWS-SERVER-CORE </a>&nbsp;<a id="show_anchor-qr42f8v" href="javascript:void(0)" onclick="show('anchor-qr42f8v'); " style="display:none;color:#f5f5f5">(Show)</a><a id="hide_anchor-qr42f8v" href="javascript:void(0)" onclick="hide('anchor-qr42f8v'); " style="color:#f5f5f5">(Hide)</a></div></div><div name="anchor-qr42f8v" id="anchor-qr42f8v" class="flexParent flexElement overflowHidden defaultSectionContent"><div id="anchor-qr42f8v" class="flexParent flexElement overflowHidden defaultSectionContent collapsable"><script>                $(document).ready(function() {
+                    $.fn.dataTable.moment( 'L' );
+                    
+                    
+                    
+                    //  Table code
+                    var table = $('#DT-yOaAHyeq').DataTable(
+                        {
+    "dom":  "Bfrtip",
+    "searchFade":  false,
+    "scrollCollapse":  false,
+    "ordering":  true,
+    "order":  [
+
+              ],
+    "rowGroup":  "",
+    "info":  true,
+    "procesing":  true,
+    "select":  true,
+    "searching":  true,
+    "stateSave":  true,
+    "paging":  true,
+    "pagingType":  [
+                       "full_numbers"
+                   ],
+    "lengthMenu":  [
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           -1
+                       ],
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           "All"
+                       ]
+                   ],
+    "language":  {
+
+                 },
+    "buttons":  [
+                    {
+                        "extend":  "copyHtml5"
+                    },
+                    {
+                        "extend":  "excelHtml5",
+                        "exportOptions":  {
+                                              "format":      {
+        body: function (data, row, column, node) {
+            data = $('<p>' + data + '</p>').text(); return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+        }
+    }
+                                          }
+                    },
+                    {
+                        "extend":  "csvHtml5",
+                        "text":  "CSV",
+                        "charset":  "utf-8",
+                        "extension":  ".csv",
+                        "fieldSeparator":  ";",
+                        "bom":  true
+                    },
+                    {
+                        "extend":  "pdfHtml5",
+                        "pageSize":  "A3",
+                        "orientation":  "landscape"
+                    },
+                    {
+                        "extend":  "pageLength"
+                    },
+                    {
+                        "extend":  "searchBuilder"
+                    }
+                ],
+    "responsive":  {
+                       "details":  {
+                                       "type":  "inline"
+                                   }
+                   },
+    "rowCallback": function (row, data) {     var css = {
+    "color":  "#ffffff",
+    "background-color":  "#32cd32",
+    "text-align":  "Center"
+};     var failCss = undefined;     var conditionsContainer = [{
+"logic":"AND",
+"conditions":[{
+"columnName":"lts",
+"columnId":4,
+"operator":"eq",
+"type":"bool",
+"value":"True",
+"valueDate":"",
+"dataStore":"HTML",
+"caseSensitive":false,
+"dateTimeFormat":"",
+"reverseCondition":false}]}];     dataTablesConditionalFormatting(row, data, conditionsContainer, [4], css, failCss);     var css = {
+    "color":  "#ffffff",
+    "background-color":  "#ffa500",
+    "text-align":  "Center"
+};     var failCss = undefined;     var conditionsContainer = [{
+"logic":"AND",
+"conditions":[{
+"columnName":"eol",
+"columnId":2,
+"operator":"lt",
+"type":"date",
+"value":"2025-05-07 10:33:38",
+"valueDate":{
+"miliseconds":534,
+"minutes":33,
+"year":2025,
+"seconds":38,
+"hours":10,
+"month":5,
+"day":7},
+"dataStore":"HTML",
+"caseSensitive":false,
+"dateTimeFormat":"",
+"reverseCondition":false}]}];     dataTablesConditionalFormatting(row, data, conditionsContainer, [2], css, failCss);     var css = {
+    "color":  "#ffffff",
+    "background-color":  "#ff0000",
+    "text-align":  "Center"
+};     var failCss = undefined;     var conditionsContainer = [{
+"logic":"AND",
+"conditions":[{
+"columnName":"eol",
+"columnId":2,
+"operator":"lt",
+"type":"date",
+"value":"2024-11-07 10:33:38",
+"valueDate":{
+"miliseconds":541,
+"minutes":33,
+"year":2024,
+"seconds":38,
+"hours":10,
+"month":11,
+"day":7},
+"dataStore":"HTML",
+"caseSensitive":false,
+"dateTimeFormat":"",
+"reverseCondition":false}]}];     dataTablesConditionalFormatting(row, data, conditionsContainer, [2], css, failCss); }
+}
+                    );
+                    
+                    
+                    
+                });</script><div class="flexElement overflowHidden"><table width="100%" id="DT-yOaAHyeq" class="dataTables cell-border"><thead><tr><th>cycle</th><th>releaseDate</th><th>eol</th><th>latest</th><th>lts</th><th>link</th><th>support</th></tr></thead><tbody><tr><td style="text-align:Center">2025</td><td style="text-align:Center">2024-11-01</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2034-10-10</td><td style="text-align:Center">10.0.26100</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows-server-release-info</td><td style="text-align:Center">2029-10-09</td></tr><tr><td style="text-align:Center">2022</td><td style="text-align:Center">2021-08-18</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2031-10-14</td><td style="text-align:Center">10.0.20348</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows-server-release-info</td><td style="text-align:Center">2026-10-13</td></tr><tr><td style="text-align:Center">20H2</td><td style="text-align:Center">2020-10-20</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2022-08-09</td><td style="text-align:Center">10.0.19042</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-server-20h2-retiring</td><td style="text-align:Center">2022-08-09</td></tr><tr><td style="text-align:Center">2004</td><td style="text-align:Center">2020-05-27</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2021-12-14</td><td style="text-align:Center">10.0.19041</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-server-version-2004-end-of-servicing</td><td style="text-align:Center">2021-12-14</td></tr><tr><td style="text-align:Center">1909</td><td style="text-align:Center">2019-11-12</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2021-05-11</td><td style="text-align:Center">10.0.18363</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-server-1909-end-of-servicing</td><td style="text-align:Center">2021-05-11</td></tr><tr><td style="text-align:Center">1903</td><td style="text-align:Center">2019-05-21</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-12-08</td><td style="text-align:Center">10.0.18362</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/virtualization/windowscontainers/deploy-containers/base-image-lifecycle</td><td style="text-align:Center">2020-12-08</td></tr><tr><td style="text-align:Center">1809</td><td style="text-align:Center">2018-11-13</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-11-10</td><td style="text-align:Center">10.0.17763</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-server-1809-end-of-servicing</td><td style="text-align:Center">2020-11-10</td></tr><tr><td style="text-align:Center">2019</td><td style="text-align:Center">2018-11-13</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2029-01-09</td><td style="text-align:Center">10.0.17763</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/windows/release-health/windows-server-release-info</td><td style="text-align:Center">2024-01-09</td></tr><tr><td style="text-align:Center">1803</td><td style="text-align:Center">2018-04-30</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2019-11-12</td><td style="text-align:Center">10.0.17134</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/announcements/windows-server-1803-end-of-servicing</td><td style="text-align:Center">2019-11-12</td></tr><tr><td style="text-align:Center">1709</td><td style="text-align:Center">2017-10-17</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2019-04-09</td><td style="text-align:Center">10.0.16299</td><td style="text-align:Center">False</td><td style="text-align:Center">https://techcommunity.microsoft.com/t5/windows-server-for-developers/windows-server-version-1709-lifecycle-announcement/m-p/379766</td><td style="text-align:Center">2019-04-09</td></tr><tr><td style="text-align:Center">1607</td><td style="text-align:Center">2016-10-15</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2022-01-11</td><td style="text-align:Center">10.0.14393</td><td style="text-align:Center">False</td><td style="text-align:Center">https://learn.microsoft.com/virtualization/windowscontainers/deploy-containers/base-image-lifecycle</td><td style="text-align:Center">2022-01-11</td></tr><tr><td style="text-align:Center">2016</td><td style="text-align:Center">2016-10-15</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2027-01-12</td><td style="text-align:Center">10.0.14393</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/virtualization/windowscontainers/deploy-containers/base-image-lifecycle</td><td style="text-align:Center">2022-01-11</td></tr><tr><td style="text-align:Center">2012-R2</td><td style="text-align:Center">2013-11-25</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2023-10-10</td><td style="text-align:Center">6.3.9600</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-server-2012-r2</td><td style="text-align:Center">2018-10-09</td></tr><tr><td style="text-align:Center">2012</td><td style="text-align:Center">2012-10-30</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2023-10-10</td><td style="text-align:Center">6.2.9200</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-server-2012</td><td style="text-align:Center">2018-10-09</td></tr><tr><td style="text-align:Center">2008-R2-SP1</td><td style="text-align:Center">2011-02-22</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-01-14</td><td style="text-align:Center">6.1.7601</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-server-2008-r2</td><td style="text-align:Center">2015-01-13</td></tr><tr><td style="text-align:Center">2008-SP2</td><td style="text-align:Center">2009-04-29</td><td style="color:#ffffff;background-color:#32cd32;text-align:Center">2020-01-14</td><td style="text-align:Center">6.0.6003</td><td style="text-align:Center">True</td><td style="text-align:Center">https://learn.microsoft.com/lifecycle/products/windows-server-2008</td><td style="text-align:Center">2015-01-13</td></tr></tbody><tfoot><tr><th>cycle</th><th>releaseDate</th><th>eol</th><th>latest</th><th>lts</th><th>link</th><th>support</th></tr></tfoot></table></div></div></div></div></div></div></div><footer><div class="defaultText"><div Align="right"><span style="text-align:right;color:#0000ff">Date of this report 11/07/2024 10:33:38</span></div></div> <script type="text/javascript">function isEmptyOrSpaces(str) {
+    return !str || str.trim() === '';
+}
+function dataTablesCheckCondition(condition, data) {
+    var columnName = condition['columnName'];
+    var reverseCondition = condition['reverseCondition'];
+    var columnId = condition['columnId'];
+    var operator = condition['operator'].toLowerCase();
+    if (condition['dataStore'].toLowerCase() != 'html') {
+        var columnExists = false;
+        // we need to find whether the column name exists or not, and to make sure we know the column name exact case (it's case sensitive) just in case user provided it wrong
+        Object.getOwnPropertyNames(data).forEach(
+            function (val) {
+                if (val.toLowerCase() == columnName.toLowerCase()) {
+                    columnName = val;
+                    columnExists = true;
+                    return
+                }
+            }
+        );
+        if (!columnExists) {
+            return false;
+        }
+        var columnValue = data[columnName];
+    } else {
+        // check if columnid is set - if it's not set it means the column doesn't exists so we dont' proceed
+        if (columnId == -1) {
+            return false;
+        }
+        var columnValue = data[columnId];
+    }
+    var conditionValue = condition['value'];
+
+    //console.log('before: ' + conditionValue + ' || ' + columnValue + ' type: ' + condition['type']);
+    if (condition['type'] == 'bool') {
+        columnValue = columnValue.toString().toLowerCase();
+        conditionValue = conditionValue.toString().toLowerCase();
+    } else if (condition['type'] == 'string') {
+        if (!condition['caseSensitive']) {
+            columnValue = columnValue.toString().toLowerCase();
+            conditionValue = conditionValue.toString().toLowerCase();
+        }
+    } else if (condition['type'] == 'number') {
+        if (Array.isArray(conditionValue)) {
+            // this will be used for between, betweenInclusive
+            // if its an array we need to make sure to convert conditionValue within an array
+            var conditionValueTemporary = [];
+
+            for (var i = 0; i < conditionValue.length; i++) {
+                //for (let value of conditionValue) {
+                if (!isEmptyOrSpaces(conditionValue[i].toString())) {
+                    conditionValueTemporary.push(Number(conditionValue[i]));
+                } else {
+                    conditionValueTemporary.push(undefined);
+                }
+            }
+            conditionValue = conditionValueTemporary;
+            if (!isEmptyOrSpaces(columnValue.toString())) {
+                columnValue = Number(columnValue);
+            } else {
+                columnValue = undefined;
+            }
+        } else {
+            // This logic is to get rid of empty string which is normally treated as 0
+            if (!isEmptyOrSpaces(conditionValue.toString())) {
+                conditionValue = Number(conditionValue);
+            } else {
+                conditionValue = undefined;
+            }
+            if (!isEmptyOrSpaces(columnValue.toString())) {
+                columnValue = Number(columnValue);
+            } else {
+                columnValue = undefined;
+            }
+        }
+    } else if (condition['type'] == 'date') {
+        if (Array.isArray(condition['valueDate'])) {
+            var conditionValueTemporary = [];
+            for (var i = 0; i < condition['valueDate'].length; i++) {
+                //for (let value of condition['valueDate']) {
+                var valueDate = condition['valueDate'][i];
+                conditionValueTemporary.push(new Date(valueDate.year, valueDate.month - 1, valueDate.day, valueDate.hours, valueDate.minutes, valueDate.seconds));
+            }
+            conditionValue = conditionValueTemporary;
+        } else {
+            // bring conditionValue to proper date
+            var valueDate = condition['valueDate'];
+            conditionValue = new Date(valueDate.year, valueDate.month - 1, valueDate.day, valueDate.hours, valueDate.minutes, valueDate.seconds);
+        }
+        // bring columnValue based on dateTimeFormat provided
+        var momentConversion = moment(columnValue, condition['dateTimeFormat']);
+        columnValue = new Date(momentConversion);
+    }
+
+    if (reverseCondition) {
+        var sideLeft = conditionValue;
+        var sideRight = columnValue;
+    } else {
+        var sideLeft = columnValue;
+        var sideRight = conditionValue;
+    }
+    //console.log('after: ' + conditionValue + ' || ' + columnValue);
+    if (operator == 'eq') {
+        if (sideLeft == sideRight) {
+            return true;
+        }
+    } else if (operator == 'ne') {
+        if (sideLeft != sideRight) {
+            return true;
+        }
+    } else if (operator == 'gt') {
+        if (sideLeft > sideRight) {
+            return true;
+        }
+    } else if (operator == 'lt') {
+        if (sideLeft < sideRight) {
+            return true;
+        }
+    } else if (operator == 'le') {
+        if (sideLeft <= sideRight) {
+            return true;
+        }
+    } else if (operator == 'ge') {
+        if (sideLeft >= sideRight) {
+            return true;
+        }
+    } else if (operator == 'in') {
+        if (sideRight.indexOf(sideLeft) != -1) {
+            return true;
+        }
+    } else if (operator == 'notin') {
+        if (sideRight.indexOf(sideLeft) == -1) {
+            return true;
+        }
+    } else if (operator == 'contains' || operator == 'like') {
+        //var compareValue = conditionValue.replace('*', '.*')
+        var regex = new RegExp(sideRight);
+        if (regex.test(sideLeft)) {
+            return true;
+        }
+    } else if (operator == 'notcontains' || operator == 'notlike') {
+        //var compareValue = conditionValue.replace('*', '.*')
+        var regex = new RegExp(sideRight)
+        if (!regex.test(sideLeft)) {
+            return true;
+        }
+    } else if (operator == 'betweeninclusive') {
+        if (Array.isArray(sideRight) && sideLeft >= sideRight[0] && sideLeft <= sideRight[1]) {
+            return true;
+        }
+    } else if (operator == 'between') {
+        if (Array.isArray(sideRight) && sideLeft > sideRight[0] && sideLeft < sideRight[1]) {
+            return true;
+        }
+    }
+    return false;
+}
+function dataTablesConditionalFormatting(row, data, conditionsContainer, highlightColumn, css, failCss) {
+    var conditionsMatch = [];
+    var found = false;
+    for (var i = 0; i < conditionsContainer.length; i++) {
+        var container = conditionsContainer[i];
+        for (var k = 0; k < container['conditions'].length; k++) {
+            var condition = container['conditions'][k];
+            conditionsMatch.push(
+                dataTablesCheckCondition(condition, data)
+            );
+        }
+        if (container['logic'] == 'AND') {
+            // if (conditionsMatch.every(value => value === true)) {
+            //     found = true;
+            // }
+
+            for (var a = 0; a < conditionsMatch.length; a++) {
+                if (conditionsMatch[a] !== true) {
+                    found = false;
+                    break;
+                } else {
+                    found = true;
+                }
+            }
+
+
+        } else if (container['logic'] == 'OR') {
+            //if (conditionsMatch.some(value => value === true)) {
+            //    found = true;
+            //}
+
+            for (var a = 0; a < conditionsMatch.length; a++) {
+                if (conditionsMatch[a] === true) {
+                    found = true;
+                    break;
+                }
+            }
+
+        } else if (container['logic'] == 'NONE') {
+            // if (conditionsMatch.every(value => value != true)) {
+            //    found = true;
+            //}
+
+            for (var a = 0; a < conditionsMatch.length; a++) {
+                if (conditionsMatch[a] !== false) {
+                    found = false;
+                    break;
+                } else {
+                    found = true;
+                }
+            }
+        }
+    }
+    if (found) {
+        if (highlightColumn == null) {
+            $('td', row).css(css);
+        } else {
+            for (var a = 0; a < highlightColumn.length; a++) {
+                var column = highlightColumn[a];
+                //for (let column of highlightColumn) {
+                $("td:eq(" + column + ")", row).css(css);
+
+                //if (data.Type == "group") {
+                //    $('td:eq(6)', row).html('<b>A</b>');
+                //}
+            }
+        }
+    } else {
+        if (failCss) {
+            if (highlightColumn == null) {
+                $('td', row).css(failCss);
+            } else {
+                for (var a = 0; a < highlightColumn.length; a++) {
+                    var column = highlightColumn[a];
+                    //for (let column of highlightColumn) {
+                    $("td:eq(" + column + ")", row).css(failCss);
+                }
+            }
+        }
+    }
+}</script> <script type="text/javascript">var tabbis = (function () {
+    var fn = {};
+
+    var data;
+    var types = ['tab', 'pane'];
+    var type;
+    var groups = [];
+    var activeGroups = [];
+    var activeChildren = [];
+    var activeItems = [];
+    var indexGroup;
+    var indexItem;
+    var memory = [];
+
+    fn.init = function (options) {
+        data = options;
+        fn.setDefaults();
+        fn.setMemory();
+
+        groups['tab'] = document.querySelectorAll(data.tabGroup);
+        groups['pane'] = document.querySelectorAll(data.paneGroup);
+
+        for (var groupIndex = 0; groupIndex < groups['tab'].length; groupIndex++) {
+            var tabItems = groups['tab'][groupIndex].children;
+
+            for (var itemIndex = 0; itemIndex < tabItems.length; itemIndex++) {
+                tabItems[itemIndex].addEventListener('click', fn.onClick.bind(this, groupIndex, itemIndex), false);
+
+                indexGroup = groupIndex;
+                indexItem = itemIndex;
+
+                if (!fn.hasMemory()) continue;
+                fn.setNodes(groupIndex, itemIndex);
+            }
+        }
+    };
+
+    fn.onClick = function (groupIndex, itemIndex) {
+        fn.setNodes(groupIndex, itemIndex);
+        fn.setCallback(indexGroup, indexItem);
+    };
+
+    fn.setNodes = function (groupIndex, itemIndex) {
+        indexGroup = groupIndex;
+        indexItem = itemIndex;
+
+        for (var i = 0; i < types.length; i++) {
+            type = types[i];
+
+            fn.setActiveGroup();
+            fn.setActiveChildren();
+            fn.setActiveItems();
+            fn.putActiveClass();
+        }
+
+        memory[groupIndex] = [];
+        memory[groupIndex][itemIndex] = true;
+
+        try {
+            localStorage.setItem('tabbis', JSON.stringify(memory));
+        } catch (e) {
+            console.log('Tabs local storage failed. Most likely IE in use.')
+        }
+    };
+
+    //fn.hasMemory = function () {
+    //    if (typeof memory === 'undefined') return;
+    //    if (typeof memory[indexGroup] === 'undefined') return;
+    //    if (typeof memory[indexGroup][indexItem] === 'undefined') return;
+    //    if (memory[indexGroup][indexItem] !== true) return;
+    //    return true;
+    //};
+
+    fn.hasMemory = function () {
+        // https://stackoverflow.com/questions/41902495/javascript-multidimensional-array-is-valid
+
+        if (typeof memory === 'undefined') return;
+        if (typeof memory[indexGroup] === 'undefined') return;
+        if (memory[indexGroup] === null) return;
+        if (typeof memory[indexGroup][indexItem] === 'undefined') return;
+        if (memory[indexGroup][indexItem] === null) return;
+        if (memory[indexGroup][indexItem] !== true) return;
+        return true;
+    };
+
+    fn.setMemory = function () {
+        try {
+            if (localStorage.getItem('tabbis') === null) return;
+            if (localStorage.getItem('tabbis').length == 0) return;
+
+            memory = Object.values(JSON.parse(localStorage.getItem('tabbis')));
+        } catch (e) {
+            console.log('Tabs local storage failed. Most likely IE in use.')
+        }
+    };
+
+    fn.putActiveClass = function () {
+        for (var i = 0; i < activeChildren[type].length; i++) {
+            activeChildren[type][i].classList.remove(data[type + 'Active']);
+        }
+
+        activeItems[type].classList.add(data[type + 'Active']);
+    };
+
+    fn.setDefaults = function () {
+        for (var i = 0; i < types.length; i++) {
+            type = types[i];
+
+            fn.setOption(type + 'Group', '[data-' + type + 's]');
+            fn.setOption(type + 'Active', 'active');
+        }
+    };
+
+    fn.setOption = function (key, value) {
+        data = data || [];
+        data[key] = data[key] || value;
+    };
+
+    fn.setActiveGroup = function () {
+        activeGroups[type] = groups[type][indexGroup];
+    };
+
+    fn.setActiveChildren = function () {
+        activeChildren[type] = activeGroups[type].children;
+    };
+
+    fn.setActiveItems = function () {
+        activeItems[type] = activeChildren[type][indexItem];
+    };
+
+    fn.setCallback = function () {
+        if (typeof data.callback === "function") {
+            data.callback(activeItems.tab, activeItems.pane);
+        }
+    };
+
+    fn.reset = function () {
+        for (var groupIndex = 0; groupIndex < groups['tab'].length; groupIndex++) {
+            tabItems = groups['tab'][groupIndex].children;
+            paneItems = groups['pane'][groupIndex].children;
+
+            for (var itemIndex = 0; itemIndex < tabItems.length; itemIndex++) {
+                tabItems[itemIndex].classList.remove(data['tabActive']);
+                paneItems[itemIndex].classList.remove(data['paneActive']);
+            }
+        }
+        localStorage.removeItem('tabbis');
+    };
+
+    return fn;
+})();</script> <script type="text/javascript">var tabs = tabbis.init({
+    tabGroup: "[data-tabs]",
+    paneGroup: "[data-panes]",
+    tabActive: "active",
+    paneActive: "active",
+    callback: function (tab, pane) {
+        // console.log("TAB id:" + tab.id + pane.id + tableid);
+        // this makes sure to refresh tables on given tab change to make sure they have buttons and everything
+        // which tab has which table
+        findObjectsToRedraw(tab.id + "-Content");
+    }
+});
+
+// in theory should take care of removing local storage for tabbis
+// some errors occurs if the local storage is not cleaned after a while
+window.addEventListener("unload", tabbis.remove, false);
+</script> <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/evotecit/cdn@0.0.27/JS/redrawObjects.min.js"></script></footer></body></html>
