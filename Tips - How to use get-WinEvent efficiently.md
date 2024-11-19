@@ -106,6 +106,41 @@ Measure-Command -Expression {
 28 ms, slower !
 >[Tiqs] : Remember ***filter left, format right***, it will be always faster.
 
+You can filter on many elements : 
+ - **LogName** : Specifies the name of the event log (e.g., "Security", "Application", "System").
+ - **ProviderName** : Specifies the name of the event provider.
+- **Path** : Specifies the path to the event log.
+- **Id** : Specifies the ID of the event.
+- **Keywords** : Filters events based on specific keywords.
+- **Level** : Specifies the level of the event (e.g., 0 for Verbose, 1 for Critical, 2 for Error, 3 for Warning, 4 for Information).
+- **StartTime** : Specifies the start time of the search.
+- **EndTime** : Specifies the end time of the search.
+- **UserID** : Filters events based on user ID.
+- **Data** : Filters events based on specific data.
+- **XPath** : Uses an XPath expression to filter events.
+
+eg. : 
+````powershell
+$TargetUser = "Olivier"
+$LogonType = "2"
+$ID = 4624
+$LogName = "Security" 
+$EndTime = Get-Date
+$StartTime = $EndTime.adddays(-1)
+
+$Query =  Get-WinEvent -FilterHashtable @{ 
+            LogName = $LogName
+            Id = $ID
+            StartTime = $StartTime
+            EndTime = $EndTime
+            Data = $TargetUser
+            }  # + Optional -MaxEvents
+````
+This query is very fast
+
+
+
+
 # 7 - Audit success or audit failure security events
 Filtering events from the Security log is a bit different from other logs because it does not provide the information level.
 Instead you can search for audit failure or audit success events.
