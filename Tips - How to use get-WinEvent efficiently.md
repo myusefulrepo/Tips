@@ -111,15 +111,16 @@ You can filter on many elements :
  - **ProviderName** : Specifies the name of the event provider.
 - **Path** : Specifies the path to the event log.
 - **Id** : Specifies the ID of the event.
-- **Keywords** : Filters events based on specific keywords.
-- **Level** : Specifies the level of the event (e.g., 0 for Verbose, 1 for Critical, 2 for Error, 3 for Warning, 4 for Information).
-- **StartTime** : Specifies the start time of the search.
-- **EndTime** : Specifies the end time of the search.
+- **Keywords** : Filters events based on specific keywords. See Chap 7.
+- **Level** : Specifies the level of the event (e.g., 0 for Verbose, 1 for Critical, 2 for Error, 3 for Warning, 4 for Information). See a sample in chap. 9.
+- **StartTime** : Specifies the start time of the search. See many samples in this doc
+- **EndTime** : Specifies the end time of the search. See many samples in this doc
 - **UserID** : Filters events based on user ID.
-- **Data** : Filters events based on specific data.
+- **Data** : Filters events based on specific data. See an example below.
 - **XPath** : Uses an XPath expression to filter events.
 
-eg. : 
+**Example of Filtering on User and LogonType**
+
 ````powershell
 $TargetUser = "Olivier"
 $LogonType = "2"
@@ -136,8 +137,67 @@ $Query =  Get-WinEvent -FilterHashtable @{
             Data = $TargetUser
             }  # + Optional -MaxEvents
 ````
-This query is very fast
+This query is very fast (see below)
 
+This is the main task in terms of execution time, but this time is reduced to a minimum by **efficient filtering**. At this step, we have alteady filtered on the User, but not yet on **LogonType**. The problem is all interesting info like **LogonType** are in the Property called **"Properties"**. Sometines, il can be difficult to identify the searched properties. I suggest to use a different approach : using a Xml. 
+
+````Powershell
+[xml]$Xmldoc = ($Query[0]).ToXml()
+# and now examine this
+$xmldoc.event.eventdata.Data
+Name                      #text                                      
+----                      -----                                      
+SubjectUserSid            S-1-5-18                                   
+SubjectUserName           xxxx                                   
+SubjectDomainName         WORKGROUP                                  
+SubjectLogonId            0x3e7                                      
+TargetUserSid             S-1-5-21-349234613-936635038-205130404-1001
+TargetUserName            xxxx                                    
+TargetDomainName          ASUS11                                     
+TargetLogonId             0x6ceddf                                   
+LogonType                 2                                          
+....
+````
+ Now, let's do this in a loop
+
+````Powershell 
+# initialization - I'm using A Generic list because, it's the more efficient way for performance 
+$Data = [System.Collections.Generic.List[PSObject]]::new()  
+foreach ($Item in  $Query)
+    {
+    [Xml]$Xml = $Item.toxml()
+    # building a PSCustomObject with needed informations
+    $Obj =  [PSCustomObject]@{
+            TimeCreated = $Item.TimeCreated
+            ID = $Item.ID
+            LogName  = $Item.LogName
+            MachineName = $Item.MachineName
+            LogonType = ($xml.Event.EventData.Data | Where-Object -Property Name -EQ "LogonType").'#text'
+            TargetUserName  = ($xml.Event.EventData.Data | Where-Object -Property Name -EQ "TargetUserName").'#text'
+            }
+    # Adding $Obj to $Data
+    $Data.add($Obj)
+    }
+$Data
+# and now ultimate filtering
+$FilteringData = $Data | Where-Object -FilterScript {$_.LogonType -eq $LogonType}
+````
+
+>[Nota] : adjust the properties in `$Obj` to your needs of course. 
+
+**Performance considerations**
+In my computer there are 205 871 events in the security log (200 000 Kb) and the Query time is :
+
+- 6.68 seconds based on a filtering on ID only (545 events returned)
+
+- 1.30 seconds based on filtering on ID and Data (12 events returned)
+
+- 1.25 seconds based on filtering on ID, Data, StartTime and EndTime (4 events returned)
+
+- And the ultimate filtering takes only 10 ms.
+
+
+>[Attention Point] : To query Security Event Log, you must be an Administrator (RunAsAdmin). 
 
 
 
