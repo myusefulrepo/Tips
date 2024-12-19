@@ -501,3 +501,114 @@ Array defined outside the loop -1000  0,2051 Milliseconds   0,0965 Milliseconds 
 Array defined outside the loop -10000 1,2289 Milliseconds   0,838  Milliseconds     9,2339 Milliseconds
 
 #>
+
+
+
+# Measurinng performance using HashTable, Add-Member and PSCUstomObject
+$n = 1000
+
+1..$n |
+    Measure-Command {
+        $TestHashtable = @{}
+        foreach ($i in 1..10) {
+            $TestHashtable[$i] = $true
+        }
+    } | 
+    Measure-Object -Property TotalMilliseconds -Average | 
+    Select-Object @{Name = 'Method'; Expression = { 'Hastable' } } , @{Name = 'ms'; Expression = { $_.Average } }
+
+1..$n |
+    Measure-Command {
+        $TestPsCustomObject = [PSCustomObject]::new()
+        foreach ($i in 1..10) {
+            $TestPsCustomObject | Add-Member -Name $i -Value $true -MemberType NoteProperty
+        }
+    } | 
+    Measure-Object -Property TotalMilliseconds -Average | 
+    Select-Object @{Name = 'Method'; Expression = { 'Add-Member' } } , @{Name = 'ms'; Expression = { $_.Average } }
+
+
+    
+1..$n |
+    Measure-Command {
+        $TestPsCustomObject = [PSCustomObject]@{
+            1  = $true
+            2  = $true
+            3  = $true
+            4  = $true
+            5  = $true
+            6  = $true
+            7  = $true
+            8  = $true
+            9  = $true
+            10 = $true
+        }
+    } | 
+    Measure-Object -Property TotalMilliseconds -Average | 
+    Select-Object @{Name = 'Method'; Expression = { 'PsObject' } } , @{Name = 'ms'; Expression = { $_.Average } }
+
+<#
+# With Windows Powershell 5.1.22621.4391
+Method           ms
+------           --
+Hastable     12,8743
+Add-Member 2306,6822
+PsObject     22,5122
+
+# With Powershell 7.4.6
+Method      ms
+------      --
+Hastable 7.57
+Add-Member 18,46
+PsObject 7.80
+#>
+
+$HashTable = Measure-MyScript -Name "HashTable" -Unit ms -Repeat 1000 -ScriptBlock {
+        $TestHashtable = @{}
+        foreach ($i in 1..10) {
+            $TestHashtable[$i] = $true
+        }
+}
+
+$AddMember = Measure-MyScript -Name "Add-Member" -Unit ms -Repeat 1000 -ScriptBlock {
+        $TestPsCustomObject = [PSCustomObject]::new()
+        foreach ($i in 1..10) {
+            $TestPsCustomObject | Add-Member -Name $i -Value $true -MemberType NoteProperty
+        }
+}
+
+    
+$PSCustomObject = Measure-MyScript -Name "PSCustomObject" -Unit ms -Repeat 1000 -ScriptBlock {
+        $TestPsCustomObject = [PSCustomObject]@{
+            1  = $true
+            2  = $true
+            3  = $true
+            4  = $true
+            5  = $true
+            6  = $true
+            7  = $true
+            8  = $true
+            9  = $true
+            10 = $true
+        }
+}
+ <#
+# With Windows Powershell 5.1.22621.4391
+ $HashTable
+ $AddMember
+ $PSCustomObject
+
+name           Avg                 Min                 Max                 
+----           ---                 ---                 ---                 
+HashTable      0,0345 Milliseconds 0,0202 Milliseconds 0,8126 Milliseconds 
+Add-Member     2,6593 Milliseconds 2,0625 Milliseconds 17,5611 Milliseconds
+PSCustomObject 0,0559 Milliseconds 0,0406 Milliseconds 0,645 Milliseconds  
+
+# With Powershell 7.4.6
+
+name             Avg                 Min                 Max
+----             ---                 ---                 ---
+HashTable      0,0241 Milliseconds 0,0072 Milliseconds 0,6502 Milliseconds
+Add-Member     0,3603 Milliseconds 0,2469 Milliseconds 2,3204 Milliseconds
+PSCustomObject 0,0236 Milliseconds 0,0136 Milliseconds 0,5177 Milliseconds
+~#>
