@@ -72,6 +72,7 @@ $Choix = $Host.UI.PromptForChoice($Titre, $Message, $Options, $DefaultChoice)
 Write-Host "Vous avez choisi : $($options[$choix])"
 ````
 L'exécution du code ci-dessous dans PowerShell ISE produira le résultat suivant :
+
 ![Events as a HTML report](https://github.com/myusefulrepo/Tips/blob/master/Images/DialogInput.jpg)
 
 L'exécution de la même chose à partir de la console PowerShell ne sera cependant pas aussi sophistiquée et produira un résultat similaire à celui-ci :
