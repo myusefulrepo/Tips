@@ -207,4 +207,4 @@ tableau avantages vs inconvénients
 | `Get-Content` | Lecture de fichiers, traitement par lot | Nécessite un fichier d'entrée, pas d'interaction directe |
 
 
-En esp&rant que cela pourra être utile à certains d'entre vous.
+En espérant que cela pourra être utile à certains d'entre vous.
