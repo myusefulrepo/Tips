@@ -114,7 +114,7 @@ $choix = $Host.UI.PromptForChoice($Titre, $Message, $options, $valeurParDéfaut)
 - `$choix` : La variable qui stocke le choix de l'utilisateur.
 - `$options[$choix]` : Utilisé pour afficher le choix de l'utilisateur.
 
-On peut noter que ``Option` est un tableau (Array) contenant les options de choix, et que l'index de l'option par défaut est spécifié par la variable `$valeurParDéfaut`, cependant on peut également utiliser un objet de type `[System.Management.Automation.Host.ChoiceDescription]::new("Choix1", "Aide sur choix1)` pour créer un objet de choix qui peut être utilisé dans le tableau d'options.
+On peut noter que `Option` est un tableau (Array) contenant les options de choix, et que l'index de l'option par défaut est spécifié par la variable `$valeurParDéfaut`, cependant on peut également utiliser un objet de type `[System.Management.Automation.Host.ChoiceDescription]::new("Choix1", "Aide sur choix1)` pour créer un objet de choix qui peut être utilisé dans le tableau d'options.
 
 ````POwershell
 [System.Management.Automation.Host.ChoiceDescription]::new("Choix &1", "Ceci est un bon choix") 
