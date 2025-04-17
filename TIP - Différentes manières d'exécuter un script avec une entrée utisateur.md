@@ -114,7 +114,7 @@ $choix = $Host.UI.PromptForChoice($Titre, $Message, $options, $valeurParDéfaut)
 - `$choix` : La variable qui stocke le choix de l'utilisateur.
 - `$options[$choix]` : Utilisé pour afficher le choix de l'utilisateur.
 
-On peut noter que `Option` est un tableau (Array) contenant les options de choix, et que l'index de l'option par défaut est spécifié par la variable `$valeurParDéfaut`, cependant on peut également utiliser un objet de type `[System.Management.Automation.Host.ChoiceDescription]::new("Choix1", "Aide sur choix1)` pour créer un objet de choix qui peut être utilisé dans le tableau d'options.
+On peut noter que `Option` est un tableau (Array) contenant les options de choix, et que l'index de l'option par défaut est spécifié par la variable `$valeurParDéfaut`, cependant on peut également utiliser un objet de type `[System.Management.Automation.Host.ChoiceDescription]::new("Choix1", "Aide sur choix1")` pour créer un objet de choix qui peut être utilisé dans le tableau d'options.
 
 ````POwershell
 [System.Management.Automation.Host.ChoiceDescription]::new("Choix &1", "Ceci est un bon choix") 
@@ -148,6 +148,7 @@ $Options+=$Option3
 $Option4 = [System.Management.Automation.Host.ChoiceDescription]::new("Choix &4", "Ceci est un choix terrible")
 $Options+=$Option4
 # Choix par défaut (0 pour la première option)
+
 $DefaultChoice = 0
 # Demander à l'utilisateur de choisir une option
 $Choix = $Host.UI.PromptForChoice($Titre, $Message, $Options, $DefaultChoice)
@@ -203,5 +204,7 @@ tableau avantages vs inconvénients
 | `Read-Host` | Simple à utiliser, fonctionne dans la console et ISE | Limité à une seule ligne d'entrée, pas de validation intégrée |
 | `$Host.UI.PromptForChoice` | Interface utilisateur graphique, choix multiples | Pas disponible dans la console PowerShell standard |
 | `Out-GridView` | Interface graphique, choix multiples | Nécessite une interface graphique, pas disponible sur tous les systèmes |
-| `Get-Content` | Lecture de fichiers, traitement par lot | Nécessite un fichier d'entrée, pas d'interaction directe      |
+| `Get-Content` | Lecture de fichiers, traitement par lot | Nécessite un fichier d'entrée, pas d'interaction directe |
 
+
+En esp&rant que cela pourra être utile à certains d'entre vous.
