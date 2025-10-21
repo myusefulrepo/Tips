@@ -1,0 +1,41 @@
+﻿[
+  {
+    "Name": "Domain",
+    "Enabled": 1,
+    "DefaultInboundAction": 4,
+    "DefaultOutboundAction": 0,
+    "AllowLocalFirewallRules": 2,
+    "AllowLocalIPsecRules": 2,
+    "NotificationSettings": null,
+    "LogFileName": "C:\\Windows\\System32\\LogFiles\\Firewall\\pfirewall.log",
+    "LogFileMaxSizeKilobytes": null,
+    "LogAllowed": 1,
+    "LogBlocked": 0
+  },
+  {
+    "Name": "Private",
+    "Enabled": 1,
+    "DefaultInboundAction": 4,
+    "DefaultOutboundAction": 0,
+    "AllowLocalFirewallRules": 2,
+    "AllowLocalIPsecRules": 2,
+    "NotificationSettings": null,
+    "LogFileName": "C:\\Windows\\System32\\LogFiles\\Firewall\\pfirewall.log",
+    "LogFileMaxSizeKilobytes": null,
+    "LogAllowed": 1,
+    "LogBlocked": 0
+  },
+  {
+    "Name": "Public",
+    "Enabled": 1,
+    "DefaultInboundAction": 4,
+    "DefaultOutboundAction": 0,
+    "AllowLocalFirewallRules": 2,
+    "AllowLocalIPsecRules": 2,
+    "NotificationSettings": null,
+    "LogFileName": "C:\\Windows\\System32\\LogFiles\\Firewall\\pfirewall.log",
+    "LogFileMaxSizeKilobytes": null,
+    "LogAllowed": 1,
+    "LogBlocked": 0
+  }
+]
