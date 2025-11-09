@@ -1,0 +1,806 @@
+﻿<!DOCTYPE html>
+ <html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1" name="viewport"><meta content="2025-11-09 13:22:43" name="revised"><title>System Information Report - 09-11-2025</title><link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" as="style" type="text/css" rel="stylesheet preload prefetch"/><script comment="jquery" type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script><link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><link href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><script type="text/javascript" src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script><script type="text/javascript" src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script><script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.13.5/sorting/datetime-moment.js"></script><link href="https://cdn.datatables.net/buttons/2.4.0/css/buttons.dataTables.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.0/js/dataTables.buttons.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script><script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.0/js/buttons.html5.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script><link href="https://cdn.datatables.net/datetime/1.5.0/css/dataTables.dateTime.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><script type="text/javascript" src="https://cdn.datatables.net/datetime/1.5.0/js/dataTables.dateTime.min.js"></script><link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><script type="text/javascript" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script><link href="https://cdn.datatables.net/searchbuilder/1.5.0/css/searchBuilder.dataTables.min.css" as="style" type="text/css" rel="stylesheet preload prefetch"/><script type="text/javascript" src="https://cdn.datatables.net/searchbuilder/1.5.0/js/dataTables.searchBuilder.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/gh/evotecit/cdn@0.0.31/JS/dataTables.buttons.toggleView.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/gh/evotecit/cdn@0.0.31/JS/hideSection.min.js"></script><style type="text/css">body {    font-family: 'Roboto Condensed', sans-serif;    font-size: 8pt;    margin: 0px;}input {    font-size: 8pt;}.main-section {    margin-top: 0px;}</style><style type="text/css">td:first-child {    white-space: nowrap;}thead input {    width: 100%;    box-sizing: border-box;    padding: -3px;}td::before, td.sorting_1::before {    color: #007bff !important;}tfoot input {    width: 100%;    box-sizing: border-box;    padding: -3px;}div.dataTables_wrapper {    margin: 5px;}</style><noscript><style type="text/css">table {
+    border-collapse: collapse;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+table td {
+    border-width: 1px;
+    padding: 4px;
+    text-align: left;
+    border-top: 1px solid #ddd;
+}
+
+table thead th {
+    text-align: center;
+    font-weight: bold;
+    padding: 4px 17px;
+    border-bottom: 1px solid #111;
+    background-color: white;
+    color: black;
+}
+
+table tfoot th {
+    text-align: center;
+    font-weight: bold;
+    padding: 4px 17px;
+    border-top: 1px solid #111;
+    background-color: white;
+    color: black;
+}
+
+table tr:nth-of-type(odd) {
+    background-color: #F6F6F5;
+}
+
+table tr:nth-of-type(even) {
+    background-color: white;
+}
+
+table td, table th {
+    border: 1px solid black;
+}</style></noscript><style type="text/css">div.dt-button-collection {    position: relative;    margin-top: 10px !important;    width: auto !important;    margin-bottom: 10px !important;}</style><style type="text/css">.defaultSection {    flex-direction: column;    border: 1px solid #bbbbbb;    padding-bottom: 0px;    margin: 5px;    transition: 0.3s;    border-radius: 0px;}.defaultSectionHead {    display: flex;    justify-content: center;    padding: 5px;    margin: 0px 0px 0px 0px;    font-weight: bold;    background-color: #808080;    color: #ffffff;    border-radius: 0px;}</style><style type="text/css">.defaultText {    margin: 5px;}</style><style type="text/css">.sectionHide {    min-width: 1.4rem;    width: auto;}.sectionShow {    width: 100%;}</style><style type="text/css">.overflowHidden {    overflow: hidden;    overflow-x: hidden;    overflow-y: hidden;}.flexParent {    display: flex;    justify-content: space-between;}.flexParentInvisible {    display: flex;    justify-content: space-between;}.flexElement {    flex-basis: 100%;    max-width: 100%;}.flexPanel {    flex-basis: 100%;    max-width: 100%;}.flex-grid {    display: flex;}</style><style type="text/css">.tabsWrapper {    text-align: center;    font-family: 'Roboto', sans-serif !important;    text-transform: uppercase;}[data-tabs] {    display: flex;    margin: 5px 5px 5px 5px;    padding: 0px;    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);    border-radius: 5px;    justify-content: center;    flex-wrap: wrap;}[data-tabs]>* {    cursor: pointer;    padding: 10px 20px;    flex-grow: 1;    flex-shrink: 1;    flex-basis: auto;}[data-tabs] .active {    background: #1e90ff;    color: #fff;    border-radius: 5px;}[data-panes]>* {    display: none;}[data-panes]>.active {    display: block;}</style></head><body><div class="main-section"><div class="tabsWrapper"><div class="tabsSlimmer"><div data-tabs="true"><div id="Tab-qzj6dyt7" class="active"><span style="font-size:Medium">Hardware Information</span></div><div id="Tab-67u8sbnz"><span style="font-size:Medium">System Information</span></div><div id="Tab-k41g3j2y"><span style="font-size:Medium">Network Adapter Information</span></div><div id="Tab-4n3yaki9"><span style="font-size:Medium">Operating System & System Information</span></div></div></div></div><div data-panes="true"><div id="Tab-qzj6dyt7-Content" class="active"><div class="defaultSection overflowHidden " style="flex-basis:100%"><div class="defaultSectionHead" style="background-color:#008000"><div class="defaultSectionText"><a name="CPU Information">CPU Information </a>&nbsp;<a id="show_anchor-g8x6wly" href="javascript:void(0)" onclick="show('anchor-g8x6wly'); " style="display:none">(Show)</a><a id="hide_anchor-g8x6wly" href="javascript:void(0)" onclick="hide('anchor-g8x6wly'); ">(Hide)</a></div></div><div name="anchor-g8x6wly" id="anchor-g8x6wly" class="flexParent flexElement overflowHidden defaultSectionContent"><div style="flex-basis:100%" id="anchor-g8x6wly" class="flexParent flexElement overflowHidden defaultSectionContent collapsable"><script>                $(document).ready(function() {
+                    $.fn.dataTable.moment( 'L' );
+                    
+                    
+                    
+                    //  Table code
+                    var table = $('#DT-hcjsBfSy').DataTable(
+                        {
+    "dom":  "Bfrtip",
+    "searchFade":  false,
+    "scrollCollapse":  false,
+    "ordering":  true,
+    "order":  [
+
+              ],
+    "rowGroup":  "",
+    "info":  true,
+    "procesing":  true,
+    "select":  true,
+    "searching":  true,
+    "stateSave":  true,
+    "paging":  true,
+    "pagingType":  [
+                       "full_numbers"
+                   ],
+    "lengthMenu":  [
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           -1
+                       ],
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           "All"
+                       ]
+                   ],
+    "language":  {
+
+                 },
+    "buttons":  [
+                    {
+                        "extend":  "copyHtml5"
+                    },
+                    {
+                        "extend":  "excelHtml5",
+                        "exportOptions":  {
+                                              "format":      {
+        body: function (data, row, column, node) {
+            data = $('<p>' + data + '</p>').text(); return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+        }
+    }
+                                          }
+                    },
+                    {
+                        "extend":  "csvHtml5",
+                        "text":  "CSV",
+                        "charset":  "utf-8",
+                        "extension":  ".csv",
+                        "fieldSeparator":  ";",
+                        "bom":  true
+                    },
+                    {
+                        "extend":  "pdfHtml5",
+                        "pageSize":  "A3",
+                        "orientation":  "landscape"
+                    },
+                    {
+                        "extend":  "pageLength"
+                    },
+                    {
+                        "extend":  "searchBuilder"
+                    },
+                    {
+                        "extend":  "toggleView",
+                        "text":  "Switch to ScrollX",
+                        "defaultViewMode":  "responsive"
+                    }
+                ],
+    "responsive":  {
+                       "details":  {
+                                       "type":  "inline"
+                                   }
+                   },
+    "responsiveConfig":  {
+                             "details":  {
+                                             "type":  "inline"
+                                         }
+                         }
+}
+                    );
+                    
+                    
+                    
+                });</script><div class="flexElement overflowHidden"><table width="100%" id="DT-hcjsBfSy" class="dataTables wrap display compact"><thead><tr><th>CPU_Name</th><th>CPU_Description</th><th>CPU_Maker</th><th>CPU_LoadPct</th><th>CPU_LogicalCoreCount</th><th>CPU_SocketCount</th><th>CPU_SocketDesignation</th><th>CPU_Speed_Mhz</th></tr></thead><tbody><tr><td style="color:#ffffff;background-color:#008000;text-align:Center">11th Gen Intel(R) Core(TM) i9-11900F @ 2.50GHz</td><td style="color:#ffffff;background-color:#008000;text-align:Center">Intel64 Family 6 Model 167 Stepping 1</td><td style="text-align:Center">GenuineIntel</td><td style="text-align:Center">29</td><td style="text-align:Center">16</td><td style="text-align:Center">1</td><td style="text-align:Center">LGA1200</td><td style="text-align:Center">2496</td></tr></tbody><tfoot><tr><th>CPU_Name</th><th>CPU_Description</th><th>CPU_Maker</th><th>CPU_LoadPct</th><th>CPU_LogicalCoreCount</th><th>CPU_SocketCount</th><th>CPU_SocketDesignation</th><th>CPU_Speed_Mhz</th></tr></tfoot></table></div></div></div></div></div><div id="Tab-67u8sbnz-Content"><div class="defaultSection overflowHidden " style="flex-basis:100%"><div class="defaultSectionHead" style="background-color:#008000"><div class="defaultSectionText"><a name="Drive Information">Drive Information </a>&nbsp;<a id="show_anchor-6k2uwyv" href="javascript:void(0)" onclick="show('anchor-6k2uwyv'); " style="display:none">(Show)</a><a id="hide_anchor-6k2uwyv" href="javascript:void(0)" onclick="hide('anchor-6k2uwyv'); ">(Hide)</a></div></div><div name="anchor-6k2uwyv" id="anchor-6k2uwyv" class="flexParent flexElement overflowHidden defaultSectionContent"><div style="flex-basis:100%" id="anchor-6k2uwyv" class="flexParent flexElement overflowHidden defaultSectionContent collapsable"><script>                $(document).ready(function() {
+                    $.fn.dataTable.moment( 'L' );
+                    
+                    
+                    
+                    //  Table code
+                    var table = $('#DT-QMdvRoJY').DataTable(
+                        {
+    "dom":  "Bfrtip",
+    "searchFade":  false,
+    "scrollCollapse":  false,
+    "ordering":  true,
+    "order":  [
+
+              ],
+    "rowGroup":  "",
+    "info":  true,
+    "procesing":  true,
+    "select":  true,
+    "searching":  true,
+    "stateSave":  true,
+    "paging":  true,
+    "pagingType":  [
+                       "full_numbers"
+                   ],
+    "lengthMenu":  [
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           -1
+                       ],
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           "All"
+                       ]
+                   ],
+    "language":  {
+
+                 },
+    "buttons":  [
+                    {
+                        "extend":  "copyHtml5"
+                    },
+                    {
+                        "extend":  "excelHtml5",
+                        "exportOptions":  {
+                                              "format":      {
+        body: function (data, row, column, node) {
+            data = $('<p>' + data + '</p>').text(); return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+        }
+    }
+                                          }
+                    },
+                    {
+                        "extend":  "csvHtml5",
+                        "text":  "CSV",
+                        "charset":  "utf-8",
+                        "extension":  ".csv",
+                        "fieldSeparator":  ";",
+                        "bom":  true
+                    },
+                    {
+                        "extend":  "pdfHtml5",
+                        "pageSize":  "A3",
+                        "orientation":  "landscape"
+                    },
+                    {
+                        "extend":  "pageLength"
+                    },
+                    {
+                        "extend":  "searchBuilder"
+                    },
+                    {
+                        "extend":  "toggleView",
+                        "text":  "Switch to ScrollX",
+                        "defaultViewMode":  "responsive"
+                    }
+                ],
+    "responsive":  {
+                       "details":  {
+                                       "type":  "inline"
+                                   }
+                   },
+    "responsiveConfig":  {
+                             "details":  {
+                                             "type":  "inline"
+                                         }
+                         }
+}
+                    );
+                    
+                    
+                    
+                });</script><div class="flexElement overflowHidden"><table width="100%" id="DT-QMdvRoJY" class="dataTables wrap display compact"><thead><tr><th>Drive_System</th><th>Drive_System_FreeSpace_GB</th><th>Drive_System_FreeSpace_Pct</th><th>Drive_System_Size_GB</th></tr></thead><tbody><tr><td style="color:#ffffff;background-color:#008000;text-align:Center">C:</td><td style="text-align:Center">591,05</td><td style="text-align:Center">64</td><td style="text-align:Center">930,12</td></tr></tbody><tfoot><tr><th>Drive_System</th><th>Drive_System_FreeSpace_GB</th><th>Drive_System_FreeSpace_Pct</th><th>Drive_System_Size_GB</th></tr></tfoot></table></div></div></div></div><div class="defaultSection overflowHidden " style="flex-basis:100%"><div class="defaultSectionHead" style="background-color:#008000"><div class="defaultSectionText"><a name="Network & Domain Information">Network & Domain Information </a>&nbsp;<a id="show_anchor-ldkb1sv" href="javascript:void(0)" onclick="show('anchor-ldkb1sv'); " style="display:none">(Show)</a><a id="hide_anchor-ldkb1sv" href="javascript:void(0)" onclick="hide('anchor-ldkb1sv'); ">(Hide)</a></div></div><div name="anchor-ldkb1sv" id="anchor-ldkb1sv" class="flexParent flexElement overflowHidden defaultSectionContent"><div style="flex-basis:100%" id="anchor-ldkb1sv" class="flexParent flexElement overflowHidden defaultSectionContent collapsable"><script>                $(document).ready(function() {
+                    $.fn.dataTable.moment( 'L' );
+                    
+                    
+                    
+                    //  Table code
+                    var table = $('#DT-buukQpfZ').DataTable(
+                        {
+    "dom":  "Bfrtip",
+    "searchFade":  false,
+    "scrollCollapse":  false,
+    "ordering":  true,
+    "order":  [
+
+              ],
+    "rowGroup":  "",
+    "info":  true,
+    "procesing":  true,
+    "select":  true,
+    "searching":  true,
+    "stateSave":  true,
+    "paging":  true,
+    "pagingType":  [
+                       "full_numbers"
+                   ],
+    "lengthMenu":  [
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           -1
+                       ],
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           "All"
+                       ]
+                   ],
+    "language":  {
+
+                 },
+    "buttons":  [
+                    {
+                        "extend":  "copyHtml5"
+                    },
+                    {
+                        "extend":  "excelHtml5",
+                        "exportOptions":  {
+                                              "format":      {
+        body: function (data, row, column, node) {
+            data = $('<p>' + data + '</p>').text(); return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+        }
+    }
+                                          }
+                    },
+                    {
+                        "extend":  "csvHtml5",
+                        "text":  "CSV",
+                        "charset":  "utf-8",
+                        "extension":  ".csv",
+                        "fieldSeparator":  ";",
+                        "bom":  true
+                    },
+                    {
+                        "extend":  "pdfHtml5",
+                        "pageSize":  "A3",
+                        "orientation":  "landscape"
+                    },
+                    {
+                        "extend":  "pageLength"
+                    },
+                    {
+                        "extend":  "searchBuilder"
+                    },
+                    {
+                        "extend":  "toggleView",
+                        "text":  "Switch to ScrollX",
+                        "defaultViewMode":  "responsive"
+                    }
+                ],
+    "responsive":  {
+                       "details":  {
+                                       "type":  "inline"
+                                   }
+                   },
+    "responsiveConfig":  {
+                             "details":  {
+                                             "type":  "inline"
+                                         }
+                         }
+}
+                    );
+                    
+                    
+                    
+                });</script><div class="flexElement overflowHidden"><table width="100%" id="DT-buukQpfZ" class="dataTables wrap display compact"><thead><tr><th>Net_Domain</th><th>Net_DomainJoined</th></tr></thead><tbody><tr><td style="color:#ffffff;background-color:#008000;text-align:Center">WORKGROUP</td><td style="text-align:Center">False</td></tr></tbody><tfoot><tr><th>Net_Domain</th><th>Net_DomainJoined</th></tr></tfoot></table></div></div></div></div></div><div id="Tab-k41g3j2y-Content"><div class="defaultSection overflowHidden " style="flex-basis:100%"><div class="defaultSectionHead" style="background-color:#008000"><div class="defaultSectionText"><a name="Network Adapter Information">Network Adapter Information </a>&nbsp;<a id="show_anchor-l49fwnu" href="javascript:void(0)" onclick="show('anchor-l49fwnu'); " style="display:none">(Show)</a><a id="hide_anchor-l49fwnu" href="javascript:void(0)" onclick="hide('anchor-l49fwnu'); ">(Hide)</a></div></div><div name="anchor-l49fwnu" id="anchor-l49fwnu" class="flexParent flexElement overflowHidden defaultSectionContent"><div style="flex-basis:100%" id="anchor-l49fwnu" class="flexParent flexElement overflowHidden defaultSectionContent collapsable"><script>                $(document).ready(function() {
+                    $.fn.dataTable.moment( 'L' );
+                    
+                    
+                    
+                    //  Table code
+                    var table = $('#DT-HLTlswsm').DataTable(
+                        {
+    "dom":  "Bfrtip",
+    "searchFade":  false,
+    "scrollCollapse":  false,
+    "ordering":  true,
+    "order":  [
+
+              ],
+    "rowGroup":  "",
+    "info":  true,
+    "procesing":  true,
+    "select":  true,
+    "searching":  true,
+    "stateSave":  true,
+    "paging":  true,
+    "pagingType":  [
+                       "full_numbers"
+                   ],
+    "lengthMenu":  [
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           -1
+                       ],
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           "All"
+                       ]
+                   ],
+    "language":  {
+
+                 },
+    "buttons":  [
+                    {
+                        "extend":  "copyHtml5"
+                    },
+                    {
+                        "extend":  "excelHtml5",
+                        "exportOptions":  {
+                                              "format":      {
+        body: function (data, row, column, node) {
+            data = $('<p>' + data + '</p>').text(); return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+        }
+    }
+                                          }
+                    },
+                    {
+                        "extend":  "csvHtml5",
+                        "text":  "CSV",
+                        "charset":  "utf-8",
+                        "extension":  ".csv",
+                        "fieldSeparator":  ";",
+                        "bom":  true
+                    },
+                    {
+                        "extend":  "pdfHtml5",
+                        "pageSize":  "A3",
+                        "orientation":  "landscape"
+                    },
+                    {
+                        "extend":  "pageLength"
+                    },
+                    {
+                        "extend":  "searchBuilder"
+                    },
+                    {
+                        "extend":  "toggleView",
+                        "text":  "Switch to ScrollX",
+                        "defaultViewMode":  "responsive"
+                    }
+                ],
+    "responsive":  {
+                       "details":  {
+                                       "type":  "inline"
+                                   }
+                   },
+    "responsiveConfig":  {
+                             "details":  {
+                                             "type":  "inline"
+                                         }
+                         }
+}
+                    );
+                    
+                    
+                    
+                });</script><div class="flexElement overflowHidden"><table width="100%" id="DT-HLTlswsm" class="dataTables wrap display compact"><thead><tr><th>Net_02_AdapterIndex</th><th>Net_02_AdapterName</th><th>Net_02_AdapterManufacturer</th><th>Net_02_AdapterSpeed_Gbit</th><th>Net_02_DefaultGateway</th><th>Net_02_DHCP_Enabled</th><th>Net_02_DHCP_Server</th><th>Net_02_DNS_HostName</th><th>Net_02_IPv4_Address</th><th>Net_02_IPv4_AddressSubnet</th><th>Net_02_IPv4_DNS_Servers</th><th>Net_02_IPv6_Address</th><th>Net_02_IPv6_AddressSubnet</th><th>Net_02_IPv6_DNS_Servers</th><th>Net_02_MAC_Address</th><th>Net_03_AdapterIndex</th><th>Net_03_AdapterName</th><th>Net_03_AdapterManufacturer</th><th>Net_03_AdapterSpeed_Gbit</th><th>Net_03_DefaultGateway</th><th>Net_03_DHCP_Enabled</th><th>Net_03_DHCP_Server</th><th>Net_03_DNS_HostName</th><th>Net_03_IPv4_Address</th><th>Net_03_IPv4_AddressSubnet</th><th>Net_03_IPv4_DNS_Servers</th><th>Net_03_IPv6_Address</th><th>Net_03_IPv6_AddressSubnet</th><th>Net_03_IPv6_DNS_Servers</th><th>Net_03_MAC_Address</th><th>Net_04_AdapterIndex</th><th>Net_04_AdapterName</th><th>Net_04_AdapterManufacturer</th><th>Net_04_AdapterSpeed_Gbit</th><th>Net_04_DefaultGateway</th><th>Net_04_DHCP_Enabled</th><th>Net_04_DHCP_Server</th><th>Net_04_DNS_HostName</th><th>Net_04_IPv4_Address</th><th>Net_04_IPv4_AddressSubnet</th><th>Net_04_IPv4_DNS_Servers</th><th>Net_04_IPv6_Address</th><th>Net_04_IPv6_AddressSubnet</th><th>Net_04_IPv6_DNS_Servers</th><th>Net_04_MAC_Address</th></tr></thead><tbody><tr><td style="text-align:Center">2</td><td style="text-align:Center">Intel(R) Wi-Fi 6E AX210 160MHz</td><td style="text-align:Center">Intel Corporation</td><td style="text-align:Center">1,729</td><td style="text-align:Center">192.168.1.1</td><td style="text-align:Center">True</td><td style="text-align:Center">192.168.1.1</td><td style="text-align:Center">asus11</td><td style="text-align:Center">192.168.1.12</td><td style="text-align:Center">255.255.255.0</td><td style="text-align:Center">1.1.1.1</td><td style="text-align:Center">fe80::e2b0:66b9:af5a:fcb; 2a01:cb05:811e:d00:acbb:4596:7aed:eeb8; 2a01:cb05:811e:d00:83ef:d2ac:d87e:fc12</td><td style="text-align:Center">64</td><td style="text-align:Center"></td><td style="text-align:Center">64:79:F0:78:10:EA</td><td style="text-align:Center">3</td><td style="text-align:Center">VMware Virtual Ethernet Adapter for VMnet8</td><td style="text-align:Center">VMware, Inc.</td><td style="text-align:Center">0,1</td><td style="text-align:Center"></td><td style="text-align:Center">False</td><td style="text-align:Center"></td><td style="text-align:Center">asus11</td><td style="text-align:Center">192.168.174.1</td><td style="text-align:Center">255.255.255.0</td><td style="text-align:Center"></td><td style="text-align:Center">fe80::4ffa:a6d9:22f5:f5a4</td><td style="text-align:Center">64</td><td style="text-align:Center"></td><td style="text-align:Center">00:50:56:C0:00:08</td><td style="text-align:Center">4</td><td style="text-align:Center">VMware Virtual Ethernet Adapter for VMnet1</td><td style="text-align:Center">VMware, Inc.</td><td style="text-align:Center">0,1</td><td style="text-align:Center"></td><td style="text-align:Center">False</td><td style="text-align:Center"></td><td style="text-align:Center">asus11</td><td style="text-align:Center">192.168.66.1</td><td style="text-align:Center">255.255.255.0</td><td style="text-align:Center"></td><td style="text-align:Center">fe80::f8f2:8315:b9a5:b8e4</td><td style="text-align:Center">64</td><td style="text-align:Center"></td><td style="text-align:Center">00:50:56:C0:00:01</td></tr></tbody><tfoot><tr><th>Net_02_AdapterIndex</th><th>Net_02_AdapterName</th><th>Net_02_AdapterManufacturer</th><th>Net_02_AdapterSpeed_Gbit</th><th>Net_02_DefaultGateway</th><th>Net_02_DHCP_Enabled</th><th>Net_02_DHCP_Server</th><th>Net_02_DNS_HostName</th><th>Net_02_IPv4_Address</th><th>Net_02_IPv4_AddressSubnet</th><th>Net_02_IPv4_DNS_Servers</th><th>Net_02_IPv6_Address</th><th>Net_02_IPv6_AddressSubnet</th><th>Net_02_IPv6_DNS_Servers</th><th>Net_02_MAC_Address</th><th>Net_03_AdapterIndex</th><th>Net_03_AdapterName</th><th>Net_03_AdapterManufacturer</th><th>Net_03_AdapterSpeed_Gbit</th><th>Net_03_DefaultGateway</th><th>Net_03_DHCP_Enabled</th><th>Net_03_DHCP_Server</th><th>Net_03_DNS_HostName</th><th>Net_03_IPv4_Address</th><th>Net_03_IPv4_AddressSubnet</th><th>Net_03_IPv4_DNS_Servers</th><th>Net_03_IPv6_Address</th><th>Net_03_IPv6_AddressSubnet</th><th>Net_03_IPv6_DNS_Servers</th><th>Net_03_MAC_Address</th><th>Net_04_AdapterIndex</th><th>Net_04_AdapterName</th><th>Net_04_AdapterManufacturer</th><th>Net_04_AdapterSpeed_Gbit</th><th>Net_04_DefaultGateway</th><th>Net_04_DHCP_Enabled</th><th>Net_04_DHCP_Server</th><th>Net_04_DNS_HostName</th><th>Net_04_IPv4_Address</th><th>Net_04_IPv4_AddressSubnet</th><th>Net_04_IPv4_DNS_Servers</th><th>Net_04_IPv6_Address</th><th>Net_04_IPv6_AddressSubnet</th><th>Net_04_IPv6_DNS_Servers</th><th>Net_04_MAC_Address</th></tr></tfoot></table></div></div></div></div></div><div id="Tab-4n3yaki9-Content"><div class="defaultSection overflowHidden " style="flex-basis:100%"><div class="defaultSectionHead" style="background-color:#008000"><div class="defaultSectionText"><a name="Operating System Information">Operating System Information </a>&nbsp;<a id="show_anchor-bjl1cet" href="javascript:void(0)" onclick="show('anchor-bjl1cet'); " style="display:none">(Show)</a><a id="hide_anchor-bjl1cet" href="javascript:void(0)" onclick="hide('anchor-bjl1cet'); ">(Hide)</a></div></div><div name="anchor-bjl1cet" id="anchor-bjl1cet" class="flexParent flexElement overflowHidden defaultSectionContent"><div style="flex-basis:100%" id="anchor-bjl1cet" class="flexParent flexElement overflowHidden defaultSectionContent collapsable"><script>                $(document).ready(function() {
+                    $.fn.dataTable.moment( 'L' );
+                    
+                    
+                    
+                    //  Table code
+                    var table = $('#DT-OqyMCBua').DataTable(
+                        {
+    "dom":  "Bfrtip",
+    "searchFade":  false,
+    "scrollCollapse":  false,
+    "ordering":  true,
+    "order":  [
+
+              ],
+    "rowGroup":  "",
+    "info":  true,
+    "procesing":  true,
+    "select":  true,
+    "searching":  true,
+    "stateSave":  true,
+    "paging":  true,
+    "pagingType":  [
+                       "full_numbers"
+                   ],
+    "lengthMenu":  [
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           -1
+                       ],
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           "All"
+                       ]
+                   ],
+    "language":  {
+
+                 },
+    "buttons":  [
+                    {
+                        "extend":  "copyHtml5"
+                    },
+                    {
+                        "extend":  "excelHtml5",
+                        "exportOptions":  {
+                                              "format":      {
+        body: function (data, row, column, node) {
+            data = $('<p>' + data + '</p>').text(); return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+        }
+    }
+                                          }
+                    },
+                    {
+                        "extend":  "csvHtml5",
+                        "text":  "CSV",
+                        "charset":  "utf-8",
+                        "extension":  ".csv",
+                        "fieldSeparator":  ";",
+                        "bom":  true
+                    },
+                    {
+                        "extend":  "pdfHtml5",
+                        "pageSize":  "A3",
+                        "orientation":  "landscape"
+                    },
+                    {
+                        "extend":  "pageLength"
+                    },
+                    {
+                        "extend":  "searchBuilder"
+                    },
+                    {
+                        "extend":  "toggleView",
+                        "text":  "Switch to ScrollX",
+                        "defaultViewMode":  "responsive"
+                    }
+                ],
+    "responsive":  {
+                       "details":  {
+                                       "type":  "inline"
+                                   }
+                   },
+    "responsiveConfig":  {
+                             "details":  {
+                                             "type":  "inline"
+                                         }
+                         }
+}
+                    );
+                    
+                    
+                    
+                });</script><div class="flexElement overflowHidden"><table width="100%" id="DT-OqyMCBua" class="dataTables wrap display compact"><thead><tr><th>OS_Architecture</th><th>OS_Language_DisplayName</th><th>OS_Language_LCID</th><th>OS_Language_Name</th><th>OS_LastBootUpTime</th><th>OS_TimeZone</th><th>OS_TimeZone_DST_Active</th><th>OS_TimeZone_Offset</th><th>OS_TimeZone_Offset_Current</th><th>OS_Version</th><th>OS_Version_BuildNumber</th><th>OS_Version_Caption</th><th>OS_Version_ServicePack</th><th>RAM_Free_GB</th><th>RAM_Speed_Mhz</th><th>RAM_Total_GB</th></tr></thead><tbody><tr><td style="text-align:Center">64 bits</td><td style="color:#ffffff;background-color:#008000;text-align:Center">Fran&#231;ais (France)</td><td>1036</td><td style="text-align:Center">fr-FR</td><td style="text-align:Center">09/11/2025 07:16:07</td><td style="text-align:Center">(UTC+01:00) Bruxelles, Copenhague, Madrid, Paris</td><td style="text-align:Center">False</td><td style="text-align:Center">60</td><td style="text-align:Center">60</td><td style="color:#ffffff;background-color:#008000;text-align:Center">10.0.26200</td><td style="text-align:Center">26200</td><td style="color:#ffffff;background-color:#008000;text-align:Center">Microsoft Windows 11 Professionnel</td><td style="text-align:Center"></td><td style="text-align:Center">18,5</td><td style="text-align:Center">2133</td><td style="text-align:Center">31,83</td></tr></tbody><tfoot><tr><th>OS_Architecture</th><th>OS_Language_DisplayName</th><th>OS_Language_LCID</th><th>OS_Language_Name</th><th>OS_LastBootUpTime</th><th>OS_TimeZone</th><th>OS_TimeZone_DST_Active</th><th>OS_TimeZone_Offset</th><th>OS_TimeZone_Offset_Current</th><th>OS_Version</th><th>OS_Version_BuildNumber</th><th>OS_Version_Caption</th><th>OS_Version_ServicePack</th><th>RAM_Free_GB</th><th>RAM_Speed_Mhz</th><th>RAM_Total_GB</th></tr></tfoot></table></div></div></div></div><div class="defaultSection overflowHidden " style="flex-basis:100%"><div class="defaultSectionHead" style="background-color:#008000"><div class="defaultSectionText"><a name="System Information">System Information </a>&nbsp;<a id="show_anchor-1a4cfm3" href="javascript:void(0)" onclick="show('anchor-1a4cfm3'); " style="display:none">(Show)</a><a id="hide_anchor-1a4cfm3" href="javascript:void(0)" onclick="hide('anchor-1a4cfm3'); ">(Hide)</a></div></div><div name="anchor-1a4cfm3" id="anchor-1a4cfm3" class="flexParent flexElement overflowHidden defaultSectionContent"><div style="flex-basis:100%" id="anchor-1a4cfm3" class="flexParent flexElement overflowHidden defaultSectionContent collapsable"><script>                $(document).ready(function() {
+                    $.fn.dataTable.moment( 'L' );
+                    
+                    
+                    
+                    //  Table code
+                    var table = $('#DT-aUbLXPZD').DataTable(
+                        {
+    "dom":  "Bfrtip",
+    "searchFade":  false,
+    "scrollCollapse":  false,
+    "ordering":  true,
+    "order":  [
+
+              ],
+    "rowGroup":  "",
+    "info":  true,
+    "procesing":  true,
+    "select":  true,
+    "searching":  true,
+    "stateSave":  true,
+    "paging":  true,
+    "pagingType":  [
+                       "full_numbers"
+                   ],
+    "lengthMenu":  [
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           -1
+                       ],
+                       [
+                           15,
+                           25,
+                           50,
+                           100,
+                           "All"
+                       ]
+                   ],
+    "language":  {
+
+                 },
+    "buttons":  [
+                    {
+                        "extend":  "copyHtml5"
+                    },
+                    {
+                        "extend":  "excelHtml5",
+                        "exportOptions":  {
+                                              "format":      {
+        body: function (data, row, column, node) {
+            data = $('<p>' + data + '</p>').text(); return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+        }
+    }
+                                          }
+                    },
+                    {
+                        "extend":  "csvHtml5",
+                        "text":  "CSV",
+                        "charset":  "utf-8",
+                        "extension":  ".csv",
+                        "fieldSeparator":  ";",
+                        "bom":  true
+                    },
+                    {
+                        "extend":  "pdfHtml5",
+                        "pageSize":  "A3",
+                        "orientation":  "landscape"
+                    },
+                    {
+                        "extend":  "pageLength"
+                    },
+                    {
+                        "extend":  "searchBuilder"
+                    },
+                    {
+                        "extend":  "toggleView",
+                        "text":  "Switch to ScrollX",
+                        "defaultViewMode":  "responsive"
+                    }
+                ],
+    "responsive":  {
+                       "details":  {
+                                       "type":  "inline"
+                                   }
+                   },
+    "responsiveConfig":  {
+                             "details":  {
+                                             "type":  "inline"
+                                         }
+                         }
+}
+                    );
+                    
+                    
+                    
+                });</script><div class="flexElement overflowHidden"><table width="100%" id="DT-aUbLXPZD" class="dataTables wrap display compact"><thead><tr><th>System_Manufacturer</th><th>System_Model</th><th>System_Name</th><th>System_PCSystemType</th><th>System_PCSystemType_Name</th><th>System_SerialNumber</th><th>System_SystemType</th></tr></thead><tbody><tr><td style="text-align:Center">LDLC</td><td style="text-align:Center">CUSTOM</td><td style="color:#ffffff;background-color:#008000;text-align:Center">ASUS11</td><td style="text-align:Center">1</td><td style="text-align:Center">Desktop</td><td style="text-align:Center">SN000000459828</td><td style="text-align:Center">x64-based PC</td></tr></tbody><tfoot><tr><th>System_Manufacturer</th><th>System_Model</th><th>System_Name</th><th>System_PCSystemType</th><th>System_PCSystemType_Name</th><th>System_SerialNumber</th><th>System_SystemType</th></tr></tfoot></table></div></div></div></div></div></div></div><footer><div class="defaultText"><div Align="center"><span style="font-weight:bold;text-align:center;color:#008000;background-color:#f5f5f5;font-style:Italic">Report generated on : 11/09/2025 13:22:43</span></div></div> <script type="text/javascript">var tabbis = (function () {
+    var fn = {};
+
+    var data;
+    var types = ['tab', 'pane'];
+    var type;
+    var groups = [];
+    var activeGroups = [];
+    var activeChildren = [];
+    var activeItems = [];
+    var indexGroup;
+    var indexItem;
+    var memory = [];
+
+    fn.init = function (options) {
+        data = options;
+        fn.setDefaults();
+        fn.setMemory();
+
+        groups['tab'] = document.querySelectorAll(data.tabGroup);
+        groups['pane'] = document.querySelectorAll(data.paneGroup);
+
+        for (var groupIndex = 0; groupIndex < groups['tab'].length; groupIndex++) {
+            var tabItems = groups['tab'][groupIndex].children;
+
+            for (var itemIndex = 0; itemIndex < tabItems.length; itemIndex++) {
+                tabItems[itemIndex].addEventListener('click', fn.onClick.bind(this, groupIndex, itemIndex), false);
+
+                indexGroup = groupIndex;
+                indexItem = itemIndex;
+
+                if (!fn.hasMemory()) continue;
+                fn.setNodes(groupIndex, itemIndex);
+            }
+        }
+    };
+
+    fn.onClick = function (groupIndex, itemIndex) {
+        fn.setNodes(groupIndex, itemIndex);
+        fn.setCallback(indexGroup, indexItem);
+    };
+
+    fn.setNodes = function (groupIndex, itemIndex) {
+        indexGroup = groupIndex;
+        indexItem = itemIndex;
+
+        for (var i = 0; i < types.length; i++) {
+            type = types[i];
+
+            fn.setActiveGroup();
+            fn.setActiveChildren();
+            fn.setActiveItems();
+            fn.putActiveClass();
+        }
+
+        memory[groupIndex] = [];
+        memory[groupIndex][itemIndex] = true;
+
+        try {
+            localStorage.setItem('tabbis', JSON.stringify(memory));
+        } catch (e) {
+            console.log('Tabs local storage failed. Most likely IE in use.')
+        }
+    };
+
+    //fn.hasMemory = function () {
+    //    if (typeof memory === 'undefined') return;
+    //    if (typeof memory[indexGroup] === 'undefined') return;
+    //    if (typeof memory[indexGroup][indexItem] === 'undefined') return;
+    //    if (memory[indexGroup][indexItem] !== true) return;
+    //    return true;
+    //};
+
+    fn.hasMemory = function () {
+        // https://stackoverflow.com/questions/41902495/javascript-multidimensional-array-is-valid
+
+        if (typeof memory === 'undefined') return;
+        if (typeof memory[indexGroup] === 'undefined') return;
+        if (memory[indexGroup] === null) return;
+        if (typeof memory[indexGroup][indexItem] === 'undefined') return;
+        if (memory[indexGroup][indexItem] === null) return;
+        if (memory[indexGroup][indexItem] !== true) return;
+        return true;
+    };
+
+    fn.setMemory = function () {
+        try {
+            if (localStorage.getItem('tabbis') === null) return;
+            if (localStorage.getItem('tabbis').length == 0) return;
+
+            memory = Object.values(JSON.parse(localStorage.getItem('tabbis')));
+        } catch (e) {
+            console.log('Tabs local storage failed. Most likely IE in use.')
+        }
+    };
+
+    fn.putActiveClass = function () {
+        for (var i = 0; i < activeChildren[type].length; i++) {
+            activeChildren[type][i].classList.remove(data[type + 'Active']);
+        }
+
+        activeItems[type].classList.add(data[type + 'Active']);
+    };
+
+    fn.setDefaults = function () {
+        for (var i = 0; i < types.length; i++) {
+            type = types[i];
+
+            fn.setOption(type + 'Group', '[data-' + type + 's]');
+            fn.setOption(type + 'Active', 'active');
+        }
+    };
+
+    fn.setOption = function (key, value) {
+        data = data || [];
+        data[key] = data[key] || value;
+    };
+
+    fn.setActiveGroup = function () {
+        activeGroups[type] = groups[type][indexGroup];
+    };
+
+    fn.setActiveChildren = function () {
+        activeChildren[type] = activeGroups[type].children;
+    };
+
+    fn.setActiveItems = function () {
+        activeItems[type] = activeChildren[type][indexItem];
+    };
+
+    fn.setCallback = function () {
+        if (typeof data.callback === "function") {
+            data.callback(activeItems.tab, activeItems.pane);
+        }
+    };
+
+    fn.reset = function () {
+        for (var groupIndex = 0; groupIndex < groups['tab'].length; groupIndex++) {
+            tabItems = groups['tab'][groupIndex].children;
+            paneItems = groups['pane'][groupIndex].children;
+
+            for (var itemIndex = 0; itemIndex < tabItems.length; itemIndex++) {
+                tabItems[itemIndex].classList.remove(data['tabActive']);
+                paneItems[itemIndex].classList.remove(data['paneActive']);
+            }
+        }
+        localStorage.removeItem('tabbis');
+    };
+
+    return fn;
+})();</script> <script type="text/javascript">var tabs = tabbis.init({
+    tabGroup: "[data-tabs]",
+    paneGroup: "[data-panes]",
+    tabActive: "active",
+    paneActive: "active",
+    callback: function (tab, pane) {
+        // Ensure redraw runs after pane becomes visible
+        try {
+            var id = (tab && tab.id ? (tab.id + "-Content") : (pane && pane.id ? pane.id : null));
+            if (id) {
+                setTimeout(function () {
+                    try { findObjectsToRedraw(id); } catch (e) {}
+                    try { document.dispatchEvent(new CustomEvent('pswh:tab:shown', { detail: { id: id } })); } catch (e) {}
+                }, 80);
+            }
+        } catch (e) {}
+    }
+});
+
+// Safely clear tab memory on unload (if supported)
+try {
+    if (tabbis && typeof tabbis.reset === 'function') {
+        window.addEventListener("unload", tabbis.reset, false);
+    }
+} catch (e) {}
+</script> <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/evotecit/cdn@0.0.31/JS/redrawObjects.min.js"></script></footer></body></html>
