@@ -3,7 +3,7 @@
 [System.Convert] | Get-Member -Static
 
 # On veut "cacher" (offuscation) une chaine de texte. Ex. :
-$Data2Encode = ‘PowerShell is Great!’
+$Data2Encode = 'PowerShell is Great!'
 # Il existe dans la classe .Net [System.Convert] une méthode ToBase64String, essayons dessus
 $EncodedText = [System.Convert]::ToBase64String($Data2Encode)
 # no way ! Cette méthode requiert que l'entrée soit convertie en Byte avant

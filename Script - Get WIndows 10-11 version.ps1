@@ -71,6 +71,14 @@ switch ($BuildNumber)
     {
         Write-Host 'Windows 11 - 23H2' -ForegroundColor Green
     }
+    26100
+    {
+        Write-Host 'Windows 11 - 24H2' -ForegroundColor Green
+    }
+    26200
+    {
+        Write-Host 'Windows 11 - 25H2' -ForegroundColor Green
+    }    
     Default
     {
         Write-Host 'unable to determine the release off of the build number ' -ForegroundColor Green

@@ -83,12 +83,12 @@ param (
 
     [Parameter(HelpMessage = 'Array of URL strings to query for new feeds')]
     [string[]]
-    $URIs = @('http://powershellisfun.com/feed', 'http://powershellisfun.com/feed'),
+    $URIs = @('http://powershellisfun.com/feed', 'https://korben.info/feed'),
 
     [Parameter(HelpMessage = 'The Way the output will be displayed')]
     [ValidateSet('Console', 'Toast', 'Both')]
     [string]
-    $Method
+    $Method = "Console"
 )
 
 #region import necessary Modules

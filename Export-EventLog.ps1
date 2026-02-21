@@ -26,15 +26,24 @@
 
 .NOTES
     Author  : O. FERRIERE (inspired by Jeffery Hick (https://4sysops.com/archives/managing-the-event-log-with-powershell-part-2-backup/) and Luke Murray (https://github.com/lukemurraynz/PowerOfTheShell/blob/master/Other/Export_EventLogs.ps1)
-    Date    : 30/10/2023
-    Version : 1.0
-    Change  : V1.0 - 30/10/2023 - Initial Version
+    Date    : 20/02/2026
+    Version : 2.0
+    Change  : 
+            - V1.0 - 30/10/2023 - Initial Version
+            - v2.0 - 020/02/2026
+                - Utilisation de Get-CIMInstance au lieu de Get-WMIObject (déprécié)
+                - [OutputTrype([String])] changé en [OutputType([System.IO.FileInfo])]
+                - Ajout d'un try...catch
+                - Ajout du test if (-not $logFile) avec Write-Error
+                - Write-Output polluant le pipeline	Remplacé par Get-Item qui retourne l'objet fichier exporté (exploitable dans le pipeline)
+                - Message verbose WMI obsolète	Supprimé (plus pertinent)
+
+
     #>
 
     [CmdletBinding()]
-    [Alias()]
-    [OutputType([int])]
-    Param
+    [OutputType([System.IO.FileInfo])]
+    param
     (
         # Event Log Name
         [Parameter(Mandatory = $true,
@@ -57,39 +66,59 @@
             ValueFromPipelineByPropertyName = $true,
             Position = 1)]
         [ValidateScript({
-                if (-Not ($_ | Test-Path) )
+                if (-not ($_ | Test-Path) )
                 {
-                    throw "The path doesn't exist"
+                    throw "Le chemin '$_' n'existe pas."
                 }
-                if (-Not ($_ | Test-Path -PathType Container ) )
+                if (-not ($_ | Test-Path -PathType Container ) )
                 {
-                    throw 'The Path argument must be a folder. File paths are not allowed.'
+                    throw "Le chemin '$_' doit être un répertoire. Les chemins de fichier ne sont pas autorisés."
                 }
                 return $true
             })]
-        [System.IO.FileInfo]
+        [System.IO.DirectoryInfo]
         $Path
     )
 
-    Begin
+    begin
     {
         Write-Verbose -Message 'Determining the Name of the Exported Log File'
-        $ExportFileName = $logFileName + '_' + (Get-Date -f yyyyMMdd) + '.evt'
+        $ExportFileName = $logFileName + '_' + (Get-Date -f yyyyMMdd) + '.evtx'
         Write-Verbose -Message "The Name of the log File Exported will be : [$ExportFileName]"
         Write-Verbose -Message 'Parameters and values will be used'
-        $PSBoundParameters
+        Write-Verbose -Message ($PSBoundParameters | Out-String)
 
     }
-    Process
+    process
     {
-        Write-Verbose -Message "We'll use Get-WMIObject cause Get-CIMInstance hasn't the BackupEventlog Method"
-        $logFile = Get-WmiObject -Class Win32_NTEventlogFile | Where-Object { $_.Logfilename -eq $logFileName }
+        $logFile = Get-CimInstance -ClassName Win32_NTEventlogFile |
+            Where-Object { $_.LogFileName -eq $logFileName }
+
+        if (-not $logFile)
+        {
+            Write-Error "L'EventLog '$LogFileName' n'a pas été trouvé via CIM."
+            return
+        }
+
         $FullNameExportPath = Join-Path -Path $Path -ChildPath $ExportFileName
-        $logFile.BackupEventlog($FullNameExportPath)
+        Write-Verbose -Message "Export vers : [$FullNameExportPath]"
+
+        try
+        {
+            Invoke-CimMethod -InputObject $logFile -MethodName BackupEventlog -Arguments @{ ArchiveFileName = $FullNameExportPath } -ErrorAction Stop | Out-Null
+        }
+        catch
+        {
+            Write-Error "Échec de l'export de l'EventLog '$LogFileName' : $_"
+            return
+        }
+
+        Write-Verbose -Message "Export terminé : [$FullNameExportPath]"
+        Get-Item -Path $FullNameExportPath
     }
-    End
+    end
     {
-        Write-Output "The Export File is located here : [$FullNameExportPath]"
+        Write-Verbose 'Fin du script'
     }
 }
 

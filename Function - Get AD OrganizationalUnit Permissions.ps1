@@ -12,13 +12,13 @@ function Get-ActiveDirectoryOUpermissions
             HelpMessage = 'Enter the path to where the CSV file should be stored, e.g c:\temp\OU_ACL.csv')]
         [ValidateScript(
             {
-                If (Test-Path -Path $_ -PathType Leaf -IsValid)
+                if (Test-Path -Path $_ -PathType Leaf -IsValid)
                 {
                     $true
                 }
                 else
                 {
-                    Throw
+                    throw
                     "Invalid path given: $_ The Path must be a path to a file"
                 }
             }
@@ -87,23 +87,23 @@ function Get-ActiveDirectoryOUpermissions
     function Get-NameForGUID
     {
         [CmdletBinding()]
-        Param(
+        param(
             [guid]
             $guid
         )
-        Begin
+        begin
         {
             $DomainDC = ([ADSI]'').distinguishedName
             $ExtendedRightGUIDs = "LDAP://cn=Extended-Rights,cn=configuration,$DomainDC"
             $PropertyGUIDs = "LDAP://cn=schema,cn=configuration,$DomainDC"
         }
-        Process
+        process
         {
-            If ($guid -eq '00000000-0000-0000-0000-000000000000')
+            if ($guid -eq '00000000-0000-0000-0000-000000000000')
             {
-                Return 'All'
+                return 'All'
             }
-            Else
+            else
             {
                 $rightsGuid = $guid
                 $property = 'cn'
@@ -111,26 +111,26 @@ function Get-ActiveDirectoryOUpermissions
                 $SearchAdsi.SearchRoot = $ExtendedRightGUIDs
                 $SearchAdsi.SearchScope = 'OneLevel'
                 $SearchAdsiRes = $SearchAdsi.FindOne()
-                If ($SearchAdsiRes)
+                if ($SearchAdsiRes)
                 {
-                    Return $SearchAdsiRes.Properties[$property]
+                    return $SearchAdsiRes.Properties[$property]
                 }
-                Else
+                else
                 {
                     $SchemaGuid = $guid
-                    $SchemaByteString = '\' + ((([guid]$SchemaGuid).ToByteArray() | ForEach-Object { $_.ToString('x2') }) -Join '\')
+                    $SchemaByteString = '\' + ((([guid]$SchemaGuid).ToByteArray() | ForEach-Object { $_.ToString('x2') }) -join '\')
                     $property = 'ldapDisplayName'
                     $SearchAdsi = ([ADSISEARCHER]"(schemaIDGUID=$SchemaByteString)")
                     $SearchAdsi.SearchRoot = $PropertyGUIDs
                     $SearchAdsi.SearchScope = 'OneLevel'
                     $SearchAdsiRes = $SearchAdsi.FindOne()
-                    If ($SearchAdsiRes)
+                    if ($SearchAdsiRes)
                     {
-                        Return $SearchAdsiRes.Properties[$property]
+                        return $SearchAdsiRes.Properties[$property]
                     }
-                    Else
+                    else
                     {
-                        Return $guid.ToString()
+                        return $guid.ToString()
                     }
                 }
             }
@@ -253,3 +253,4 @@ function Get-ActiveDirectoryOUpermissions
             }
         }
     }
+} # end Get-ActiveDirectoryOUpermissions

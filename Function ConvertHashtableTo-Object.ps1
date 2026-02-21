@@ -1,11 +1,11 @@
 ﻿# source : https://gordon.byers.me/powershell/convert-a-powershell-hashtable-to-object/
-function ConvertHashtableTo-Object
+function Convert-HashtableToObject
 {
     [CmdletBinding()]
-    Param([Parameter(Mandatory = $True, ValueFromPipeline = $True, ValueFromPipelinebyPropertyName = $True)]
+    param([Parameter(Mandatory = $True, ValueFromPipeline = $True, ValueFromPipelinebyPropertyName = $True)]
         [hashtable]$ht
     )
-    PROCESS
+    process
     {
         $results = @()
 

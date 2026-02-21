@@ -1,5 +1,5 @@
 ﻿<#
-.SYNOPSYS
+.SYNOPSIS
    Bulk reboot of Windows Computers
    Script de reboot en masse de machines Windows
 
@@ -53,7 +53,7 @@
 #>
 
 #region Param
-Param
+param
 (
     # Full Path of the server list .txt file  - Full Path du fichier .txt liste des serveurs
     [Parameter(Mandatory = $False,
