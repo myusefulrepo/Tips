@@ -158,13 +158,17 @@ catch
 
 #region Collecte des données du pare-feu
 Write-Verbose -Message 'Collecte des profils (global settings par profil)' -Verbose:$VerboseMode
+Write-Log -Level INFO -Message 'Collecte des profils (global settings par profil)'
+
 try
 {
     $Profiles = Get-NetFirewallProfile -ErrorAction Stop | Select-Object Name, Enabled, DefaultInboundAction, DefaultOutboundAction, AllowLocalFirewallRules, AllowLocalIPsecRules, NotificationSettings, LogFileName, LogFileMaxSizeKilobytes, LogAllowed, LogBlocked
+    Write-Log -Level INFO -Message 'Collecte des profils (global settings par profil)'
 }
 catch
 {
     Write-Verbose -Message "Erreur lors de la collecte des profils du pare-feu: $_" -Verbose:$VerboseMode
+    Write-Log -Level ERROR -Message "Erreur lors de la collecte des profils du pare-feu: $_"
 }
 
 Write-Verbose -Message 'Collecte des règles (Actives + Inactives)' -Verbose:$VerboseMode
@@ -177,16 +181,20 @@ try
         Write-Verbose -Message "Règles actives: $($EnabledRules.Count)" -Verbose:$VerboseMode
         Write-Verbose -Message "Règles inactives: $($DisabledRules.Count)" -Verbose:$VerboseMode
         Write-Verbose -Message "Total règles: $($AllRules.Count)" -Verbose:$VerboseMode
+        Write-Log -Level INFO -Message "Règles actives: $($EnabledRules.Count)" 
+        Write-Log -Level INFO -Message "Règles inactives: $($DisabledRules.Count)"
+        Write-Log -Level INFO -Message "Total règles: $($AllRules.Count)"
     }
 }
 catch
 {
-    Write-Error -Message "Erreur lors de la collecte des règles du pare-feu: $_"
+    Write-Log -Level ERROR -Message "Erreur lors de la collecte des règles du pare-feu: $_"
     exit 1
 }
 
 
 Write-Verbose -Message "Création d'une fonction pour enrichir une règle avec ses filtres" -Verbose:$VerboseMode
+Write-Log -Level INFO -Message "Création d'une fonction pour enrichir une règle avec ses filtres" 
 function Get-FirewallRuleDetail
 {
     [CmdletBinding()]
@@ -301,33 +309,43 @@ function Get-FirewallRuleDetail
 }
 
 Write-Verbose -Message 'Exécution de la fonction pour chaque règle collectée' -Verbose:$VerboseMode
+Write-Log -Level INFO -Message 'Exécution de la fonction pour chaque règle collectée'
 $Details = [System.Collections.Generic.List[psobject]]::new()
 Write-Verbose -Message 'Enrichissement des règles avec leurs filtres associés' -Verbose:$VerboseMode
+Write-Log -Level INFO -Message 'Enrichissement des règles avec leurs filtres associés'
 foreach ($Rule in $allRules)
 {
 
     Write-Verbose -Message "traitement de la règle: $($Rule.Name)" -Verbose:$VerboseMode
+    Write-Log -Level INFO -Message "traitement de la règle: $($Rule.Name)"
     $Details.Add( $(Get-FirewallRuleDetail -Rule $Rule))
 }
 Write-Verbose -Message 'Séparer actives / inactives' -Verbose:$VerboseMode
+Write-Log -Level INFO -Message 'Séparer actives / inactives'
 $ActiveRules = $Details | Where-Object { $_.Enabled -eq 'True' }
 $InactiveRules = $Details | Where-Object { $_.Enabled -ne 'True' }
 
 Write-Verbose -Message 'Compter les règles actives et inactives' -Verbose:$VerboseMode
+Write-Log -Level INFO -Message 'Compter les règles actives et inactives'
 $ActiveRulesCount = $ActiveRules.Count
 $InactiveRulesCount = $InactiveRules.Count
 $TotalRulesCount = $Details.Count
 
 Write-Verbose -Message 'Collecte des paramètres globaux du pare-feu' -Verbose:$VerboseMode
+Write-Log -Level INFO -Message 'Collecte des paramètres globaux du pare-feu' 
 $FWSettings = Get-NetFirewallSetting | Select-Object -Property Name, Description, Exemptions, EnableStatefulFtp , EnableStatefulPptp, ActiveProfile, RequireFullAuthSupport, CertValidationLevel, AllowIPsecThroughNAT, MaxSAIdleTimeSeconds, KeyEncoding, EnablePacketQueuing
 #endregion Collecte des données du pare-feu
 
 #region préparation des fichiers de sortie
-Write-Verbose -Message 'Export dans un fichier html' -Verbose:$VerboseMode
+Write-Verbose -Message "Préparation des path d'export" -Verbose:$VerboseMode
+Write-Log -Level INFO -Message "Préparation des path d'export"
 $CsvPath = Join-Path $OutDir "Firewall_Rules_Detailed_$(Get-Date -Format yyyy-MM-dd_HHmmss).csv"
 $JsonPath = Join-Path $OutDir "Firewall_Rules_$(Get-Date -Format yyyy-MM-dd_HHmmss).json"
 $HtmlPath = Join-Path $OutDir "FirewallReport_$(Get-Date -Format yyyy-MM-dd_HHmmss).html"
 $ProfilesPath = Join-Path $OutDir "Firewall_Profiles_$(Get-Date -Format yyyy-MM-dd_HHmmss).json"
+Write-Log -Level INFO -Message "Csv File : $CsvPath"
+Write-Log -Level INFO -Message "JSON File : $jsonPath"
+Write-Log -Level INFO -Message "Html FIle : $HtmlPath"
 #endregion préparation des fichiers de sortie
 
 #region export des données collectées .csv, et .json
@@ -345,12 +363,15 @@ if (-not (Get-Module -ListAvailable -Name PSWriteHtml))
     {
         Write-Verbose -Message "Le module PSWriteHtml n'est pas installé" -Verbose:$VerboseMode
         Write-Verbose -Message 'Téléchargement et installation ... : ' -Verbose$VerboseMode
-        Install-Module PSWriteHTML -Force -Scope CurrentUser
+        Write-Log -Level INFO -Message "Le module PSWriteHtml n'est pas installé, Téléchargement et installation ..."
+        Install-Module PSWriteHTML -Force -Scope CurrentUser -ErrorAction Stop
     }
     catch
     {
         Write-Verbose -Message "Le module n'a pu être installé. Fin du script." -Verbose:$VerboseMode
-        Write-Verbose -Message"Une erreur est survenue. Message d'erreur : $_." -Verbose:$VerboseMode
+        Write-Log -Level ERROR -Message "Le module n'a pu être installé. Fin du script."
+        Write-Verbose -Message "Une erreur est survenue. Message d'erreur : $_." -Verbose:$VerboseMode
+        Write-Log -Level ERROR -Message "Une erreur est survenue. Message d'erreur : $_."
         break
     }
 }
@@ -358,6 +379,7 @@ if (-not (Get-Module -ListAvailable -Name PSWriteHtml))
 
 #region Importation du module pour avoir les cmdlets disponibles
 Write-Verbose -Message 'Import du module PSWriteHtml ... ' -Verbose:$VerboseMode
+Write-Log -Level INFO -Message 'Import du module PSWriteHtml ... '
 Import-Module PSWriteHTML
 #endregion Importation du module pour avoir les cmdlets disponibles
 
@@ -368,10 +390,12 @@ $PSDefaultParameterValues = @{
     'New-HTMLSection:CanCollapse'           = $true
     '*:Encoding'                            = 'utf8BOM'
 }
+Write-Log -Level INFO -Message "Paramétrage du comportement par défaut de certaines cmdlets : $PSDefaultParameterValues"
 #endregion Paramétrage du comportement par défaut de certaines cmdlets
 
 #region Sortie HTML d'informations multiples dans différents onglets d'une même page html
 Write-Verbose -Message 'Génération du rapport ...' -Verbose:$VerboseMode
+Write-Log -Level INFO -Message 'Génération du rapport ...' 
 New-HTML -FilePath $HtmlPath -Online -ShowHTML {
     # 1er Onglet Résumé des profils
     New-HTMLTab -Name 'Données Générales' {
@@ -447,12 +471,15 @@ $ErrorReport
 #region Arrêt du watcher et affichage du temps d'exécution
 $ScriptWatcher.Stop()
 Write-Verbose -Message "Temps d'exécution du script : " -Verbose:$VerboseMode
+Write-Log -Level INFO -Message "Temps d'exécution du script : "
 $Metrics = @{
     'Script Duration'             = $ScriptWatcher.Elapsed.Minutes.ToString() + ' minutes, ' + $ScriptWatcher.Elapsed.Seconds.ToString() + ' secondes, ' + $ScriptWatcher.Elapsed.Milliseconds.ToString() + ' millisecondes'
     'Rules Processed'             = $TotalRulesCount
     'Processing Speed per second' = $TotalRulesCount / $ScriptWatcher.Elapsed.TotalSeconds
 }
-$Metrics
+Write-Log -Level INFO -Message "Temps d'exécution du script : $($Metrics.'Script Duration')"
+Write-Log -Level INFO -Message "Règles traitées : $($Metrics.'Rules Processed')"
+Write-Log -Level INFO -Message "Vitesse de traitement par sec : $($Metrics.'Processing Speed per second')"
 #endregion Arrêt du watcher et affichage du temps d'exécution
 
 
